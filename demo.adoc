@@ -224,3 +224,18 @@ results in:
 
 [quote, Albert Einstein]
 A person who never made a mistake never tried anything new.
+
+== Math formulas
+
+link:https://www.mathjax.org/[MathJax] formulas are also supported.
+[source, asciidoc]
+--
+$ J(\theta_0,\theta_1) = \sum_{i=0} $
+
+\( x = {-b \pm \sqrt{b^2-4ac} \over 2a} \)
+--
+results in:
+
+$ J(\theta_0,\theta_1) = \sum_{i=0} $
+
+\( x = {-b \pm \sqrt{b^2-4ac} \over 2a} \)
