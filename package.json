@@ -7,10 +7,13 @@
 	"repository": "https://github.com/bzzzil/vscode-asciidoc-presentation.git",
 	"license": "MIT",
 	"engines": {
-		"vscode": "^1.75.0"
+		"vscode": "^1.92.0"
 	},
 	"categories": [
 		"Other"
+	],
+	"activationEvents": [
+    	"*"
 	],
 	"icon": "media/icon.png",
 	"keywords": [
@@ -92,6 +95,7 @@
 		"koa-send": "^5.0.1",
 		"open": "^10.1.0",
 		"reveal.js": "^5.1.0",
+		"reveal.js-plugins": "^4.2.5",
 		"slash": "^5.1.0",
 		"utf-8-validate": "^6.0.4",
 		"web-resource-inliner": "^6.0.1",
