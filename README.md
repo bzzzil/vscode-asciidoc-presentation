@@ -1,7 +1,7 @@
 # AsciiDoc Presentations for Visual Studio Code
 
 ![Azure Badge](https://dev.azure.com/flobilosaurus/vscode-asciidoc-slides/_apis/build/status/flobilosaurus.vscode-asciidoc-slides?branchName=master)
-[![Issues Badge](https://img.shields.io/github/issues-raw/flobilosaurus/vscode-asciidoc-slides)](https://github.com/flobilosaurus/vscode-asciidoc-slides/issues)
+[![Issues Badge](https://img.shields.io/github/issues-raw/bzzzil/vscode-asciidoc-presentation)](https://github.com/flobilosaurus/vscode-asciidoc-slides/issues)
 [![Rating Badge](https://img.shields.io/visual-studio-marketplace/stars/flobilosaurus.vscode-asciidoc-slides)](https://marketplace.visualstudio.com/items?itemName=flobilosaurus.vscode-asciidoc-slides)
 [![Demo Badge](https://img.shields.io/badge/Demo-here-blue)](https://flobilosaurus.github.io/vscode-asciidoc-slides)
 
