@@ -2,7 +2,7 @@ import { Asciidoctor } from 'asciidoctor/types/index'
 import * as path from 'path'
 import * as vscode from 'vscode'
 /**
- * Check if Opal has been loaded already, if not, require through asciidoctor.js
+ * Check if Opal has been loaded already, if not, reuire through asciidoctor.js
  * workaround to dont bridge opal runtime again because it will throw.
  * This can happen if other extensions like joaompinto.asciidoctor-vscode
  * have already required('opal-runtime') or required('asciidoctor.js') or similar
