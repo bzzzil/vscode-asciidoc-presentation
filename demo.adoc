@@ -7,7 +7,7 @@
 :encoding: UTF-8
 :lang: en
 
-= AsciiDoc Slides Extension
+= AsciiDoc Presentation Extension
 
 == Images
 

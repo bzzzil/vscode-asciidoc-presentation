@@ -2,6 +2,5 @@ node_modules
 .vscode-test/
 out/
 dist/
-yarn-error.log
 package-lock.json
-vscode-asciidoc-presentation-2.0.0.vsix
+*.vsix
