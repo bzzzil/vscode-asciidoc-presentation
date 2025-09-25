@@ -2,11 +2,12 @@ import { Asciidoctor } from 'asciidoctor/types/index'
 import * as path from 'path'
 import * as vscode from 'vscode'
 /**
- * Check if Opal has been loaded already, if not, reuire through asciidoctor.js
- * workaround to dont bridge opal runtime again because it will throw.
+ * Check if Opal has been loaded already, if not, require through asciidoctor.js
+ * workaround to don't bridge opal runtime again because it will throw.
  * This can happen if other extensions like joaompinto.asciidoctor-vscode
  * have already required('opal-runtime') or required('asciidoctor.js') or similar
  * and thereby already bridged opal.
+ * So we still tied to asciidoctor/reveal.js 5.0.1
  *  */
 const asciidoctor: Asciidoctor = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')()
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js')
@@ -121,7 +122,7 @@ export class RevealSlides {
             controlsLayout: asciidocAttributes.revealJsControlsLayout,
             controlsBackArrows: asciidocAttributes.revealJsControlsBackArrows,
             progress : asciidocAttributes.revealJsProgress,
-            themeCss: asciidocAttributes.revealJsCustomTheme ? asciidocAttributes.revealJsCustomTheme : `libs/reveal.js/css/theme/${asciidocAttributes.revealJsTheme}.css`,
+            themeCss: asciidocAttributes.revealJsCustomTheme ? asciidocAttributes.revealJsCustomTheme : `libs/reveal.js/theme/${asciidocAttributes.revealJsTheme}.css`,
             hightlightJsThemeCss: `libs/highlight.js/styles/${asciidocAttributes.hightlightJsTheme}.css`,
             transition: asciidocAttributes.revealJsTransition,
             transitionSpeed: asciidocAttributes.revealJsTransitionSpeed,

@@ -3,9 +3,8 @@
     <meta charset="utf-8">
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-    <link rel="stylesheet" href="<%= absolutePath %>libs/reveal.js/css/reset.css">
-    <link rel="stylesheet" href="<%= absolutePath %>libs/reveal.js/css/reveal.css">
-    <link rel="stylesheet" href="<%= absolutePath %>libs/league-gothic-font/webfonts/stylesheet.css">
+    <link rel="stylesheet" href="<%= absolutePath %>libs/reveal.js/reset.css">
+    <link rel="stylesheet" href="<%= absolutePath %>libs/reveal.js/reveal.css">
     <link rel="stylesheet" href="<%= absolutePath %><%= themeCss %>">
     <link rel="stylesheet" href="<%= absolutePath %>libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%= absolutePath %><%= hightlightJsThemeCss %>">
@@ -14,7 +13,7 @@
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '<%= absolutePath %>libs/reveal.js/css/print/pdf.css' : '<%= absolutePath %>libs/reveal.js/css/print/paper.css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '<%= absolutePath %>libs/reveal.js/pdf.scss' : '<%= absolutePath %>libs/reveal.js/paper.scss';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 

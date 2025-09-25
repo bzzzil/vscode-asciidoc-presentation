@@ -1,4 +1,5 @@
 <% if (!isInlined) { %>
+<script src="<%= absolutePath %>libs/reveal.js/plugin/math/math.js"></script>
 <script>
     Reveal.initialize({
         hash: true,
@@ -15,12 +16,12 @@
         slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [
             { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true },
-            { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom-js/zoom.js', async: true },
-            { src: '<%= absolutePath %>libs/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); }},
-            { src: '<%= absolutePath %>libs/reveal.js/plugin/math/math.js', async: true },
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom/zoom.js', async: true },
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.highlightAll(); }},
             { src: '<%= absolutePath %>libs/reveal.js/plugin/qrcode/qrcode.min.js', async: true },
             { src: '<%= absolutePath %>libs/reveal.js/plugin/qrcode/index.js', async: true },
-        ]
+        ],
+        plugins: [ Plugin.MathJax2 ]
     })
 </script>
 <% } %>
