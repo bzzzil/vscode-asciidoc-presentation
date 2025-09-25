@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.0.0]
+
+- feature: support for QR codes
+- feature: support for math.js
+- feature: more reveal.js settings could be altered from presentation file: revealjs_theme, revealjs_customtheme, revealjs_center, revealjs_controls, revealjs_controlslayout, revealjs_controlsbackarrows, revealjs_progress, revealjs_slideNumber, hightlightjs-theme, revealjs_transition, revealjs_backgroundtransition
+- highlight.js 11.11.1
+
 ## [1.3.0]
 
 - feature: printing or exporting as pdf via url parameter `?print-pdf` (see: [revealjs - pdf export](https://github.com/hakimel/reveal.js/#instructions-1))

@@ -1,4 +1,4 @@
-# AsciiDoc Slides for Visual Studio Code
+# AsciiDoc Presentations for Visual Studio Code
 
 ![Azure Badge](https://dev.azure.com/flobilosaurus/vscode-asciidoc-slides/_apis/build/status/flobilosaurus.vscode-asciidoc-slides?branchName=master)
 [![Issues Badge](https://img.shields.io/github/issues-raw/flobilosaurus/vscode-asciidoc-slides)](https://github.com/flobilosaurus/vscode-asciidoc-slides/issues)
@@ -6,6 +6,8 @@
 [![Demo Badge](https://img.shields.io/badge/Demo-here-blue)](https://flobilosaurus.github.io/vscode-asciidoc-slides)
 
 Visual Studio Code extension to create [reveal.js](https://github.com/hakimel/reveal.js) slides via asciidoc documents.
+
+This is fork of AsciiDoc Slides Plugin (github.com/flobilosaurus/vscode-asciidoc-slides/).
 
 ## Features
 
@@ -46,7 +48,7 @@ Inlining currently does not work for:
 * Background Images
 * Background Videos
 * Background IFrames
-* Probably a lot more ...
+* Probably a lot more, see bundled demo.adoc
 
 ### [Kroki](https://github.com/Mogztter/asciidoctor-kroki) integration
 
