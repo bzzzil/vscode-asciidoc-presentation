@@ -262,4 +262,3 @@ $ J(\theta_0,\theta_1) = \sum_{i=0} $
 ++++
 <div class="reveal-js-qrcode" height="400">https://google.com/</div>
 ++++
-

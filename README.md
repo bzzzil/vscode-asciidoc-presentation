@@ -3,11 +3,11 @@
 ![Azure Badge](https://dev.azure.com/flobilosaurus/vscode-asciidoc-slides/_apis/build/status/flobilosaurus.vscode-asciidoc-slides?branchName=master)
 [![Issues Badge](https://img.shields.io/github/issues-raw/bzzzil/vscode-asciidoc-presentation)](https://github.com/flobilosaurus/vscode-asciidoc-slides/issues)
 [![Rating Badge](https://img.shields.io/visual-studio-marketplace/stars/flobilosaurus.vscode-asciidoc-slides)](https://marketplace.visualstudio.com/items?itemName=flobilosaurus.vscode-asciidoc-slides)
-[![Demo Badge](https://img.shields.io/badge/Demo-here-blue)](https://flobilosaurus.github.io/vscode-asciidoc-slides)
+[![Demo Badge](https://img.shields.io/badge/Demo-here-blue)](https://bzzzil.github.io/vscode-asciidoc-presentation)
 
 Visual Studio Code extension to create [reveal.js](https://github.com/hakimel/reveal.js) slides via asciidoc documents.
 
-This is fork of AsciiDoc Slides Plugin (github.com/flobilosaurus/vscode-asciidoc-slides/).
+This is fork of [AsciiDoc Slides Plugin](https://github.com/flobilosaurus/vscode-asciidoc-slides/).
 
 ## Features
 
