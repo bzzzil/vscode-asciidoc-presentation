@@ -1,3 +1,5 @@
+.git
+.github
 .vscode/**
 .vscode-test/**
 out/test/**
@@ -10,3 +12,4 @@ vsc-extension-quickstart.md
 **/*.ts
 !node_modules/reveal.js
 node_modules
+media/*.gif

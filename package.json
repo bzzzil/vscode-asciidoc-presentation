@@ -13,7 +13,10 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onCommand:asciidocSlides.preview",
+		"onCommand:asciidocSlides.exportHtml",
+		"onCommand:asciidocSlides.exportInlinedHtml",
+		"onCommand:asciidocSlides.openInBrowser"
 	],
 	"icon": "media/icon.png",
 	"keywords": [
