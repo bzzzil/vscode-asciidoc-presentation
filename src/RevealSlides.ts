@@ -36,10 +36,12 @@ export type AsciidocAttributes = {
 
 export type RevealConfiguration = {
     absolutePath: string,
+    documentPath: string,
     title: string,
     authors: string,
     revdate: string,
-    themeCss: string,
+    themeCss: string | undefined,
+    customThemeCss: string | undefined,
     slideNumber: string,
     center: string,
     controls: string,
@@ -95,7 +97,7 @@ export class RevealSlides {
             ...accessor.getFullAttributes(),
             title: accessor.getTitle(),
             imageDir: accessor.getAttributeOrDefault('imagesdir', ''),
-            revealJsTheme: accessor.getAttributeOrDefault('revealjs_theme', 'night'),
+            revealJsTheme: accessor.getAttributeOrDefault('revealjs_theme', undefined),
             revealJsCustomTheme: accessor.getAttributeOrDefault('revealjs_customtheme', undefined),
             revealJsCenter: accessor.getAttributeOrDefault('revealjs_center', 'true'),
             revealJsControls: accessor.getAttributeOrDefault('revealjs_controls', 'true'),
@@ -113,6 +115,7 @@ export class RevealSlides {
     private extractRevealConfiguration(asciidocAttributes: AsciidocAttributes) : RevealConfiguration {
         return {
             absolutePath: '',
+            documentPath: '',
             title: asciidocAttributes.title,
             authors : asciidocAttributes.authors,
             revdate : asciidocAttributes.revdate,
@@ -122,7 +125,8 @@ export class RevealSlides {
             controlsLayout: asciidocAttributes.revealJsControlsLayout,
             controlsBackArrows: asciidocAttributes.revealJsControlsBackArrows,
             progress : asciidocAttributes.revealJsProgress,
-            themeCss: asciidocAttributes.revealJsCustomTheme ? asciidocAttributes.revealJsCustomTheme : `libs/reveal.js/theme/${asciidocAttributes.revealJsTheme}.css`,
+            themeCss: asciidocAttributes.revealJsTheme ? `libs/reveal.js/theme/${asciidocAttributes.revealJsTheme}.css`: undefined,
+            customThemeCss: asciidocAttributes.revealJsCustomTheme,
             hightlightJsThemeCss: `libs/highlight.js/styles/${asciidocAttributes.hightlightJsTheme}.css`,
             transition: asciidocAttributes.revealJsTransition,
             transitionSpeed: asciidocAttributes.revealJsTransitionSpeed,

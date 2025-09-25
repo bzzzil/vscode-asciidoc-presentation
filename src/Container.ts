@@ -92,6 +92,10 @@ export class Container {
         return `${this.server.previewUrl}${this.revealSlides.currentSlideId}`
     }
 
+    public get presentationTitle() {
+        return this.revealSlides.configuration.title;
+    }
+
     private refreshWebview() {
         if(this.webviewPanel) {
             this.webviewPanel.webview.html = ''

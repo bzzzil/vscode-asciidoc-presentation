@@ -75,6 +75,7 @@ export class RevealServer {
         return {
             slides: this.revealSlides.getSlidesHtmlForExport(isInlined),
             ...this.revealSlides.configuration,
+            documentPath: slash(this.revealSlides.absoluteDocumentDirectory) + '/',
             absolutePath: slash(this.extensionPath) + '/',
             isInlined,
             isPreview: false
