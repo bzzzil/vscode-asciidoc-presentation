@@ -1,5 +1,13 @@
 :revealjs_theme: moon
-= asciidoc slides extension
+:revealjs_slideNumber: true
+:revealjs_overview: true
+:revealjs_history: false
+:revealjs_center: false
+:hightlightjs-theme: lightfair
+:encoding: UTF-8
+:lang: en
+
+= AsciiDoc Slides Extension
 
 == Images
 
@@ -45,8 +53,7 @@ image::media/suprise.gif[background, size=cover]
 == PlantUml
 [source, asciidoc]
 --
-[graphviz]
-[plantuml,alice-bob]
+[plantuml]
 ....
 alice -> bob
 ....
@@ -54,7 +61,7 @@ alice -> bob
 
 results in:
 
-[plantuml,alice-bob,svg,role=sequence]
+[plantuml]
 ....
 alice -> bob
 ....
@@ -156,6 +163,15 @@ results in:
 .. Step 2b
 . Step 3
 
+=== Lists with steps
+
+* Press any key
+
+[.step]
+* And again
+* And once more
+
+
 === Descriptions
 
 [source, asciidoc]
@@ -239,3 +255,11 @@ results in:
 $ J(\theta_0,\theta_1) = \sum_{i=0} $
 
 \( x = {-b \pm \sqrt{b^2-4ac} \over 2a} \)
+
+
+== QR codes
+
+++++
+<div class="reveal-js-qrcode" height="400">https://google.com/</div>
+++++
+
