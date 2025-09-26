@@ -21,7 +21,14 @@ jobs:
         with:
           node-version: 20.0
 
-      - name: Build
-        run: |
+      - name: Dependencies
+        run: 
           npm install
-          npm test
+
+      - name: Test (Ubuntu)
+        if: contains(matrix.os, 'ubuntu')
+        run: xvfb-run npm test
+
+      - name: Test (Win/Mac)
+        if: !contains(matrix.os, 'ubuntu')
+        run: npm test
