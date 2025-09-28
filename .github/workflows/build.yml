@@ -1,5 +1,7 @@
 name: VSIX + test
 
+permissions:
+  contents: read
 on:
   push:
     branches: [ "master" ]
