@@ -1,9 +1,14 @@
-import * as open from 'open'
-import { ContainerManager } from "../ContainerManager"
+import * as open from 'open';
+import { ContainerManager } from "../ContainerManager";
 
 export function openInBrowser(containerManager: ContainerManager) {
-    containerManager.checkActiveEditor().andDo(
-        async (_editor, container) => {
-            await open.default(container.browserUrl);
-        })
+    const editor = containerManager.checkActiveEditor();
+
+    if (!editor) {
+        return;
+    }
+
+    const container = containerManager.getOrCreateContainer(editor);
+
+    open.default(container.browserUrl);
 }

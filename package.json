@@ -13,12 +13,6 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"onCommand:asciidocSlides.preview",
-		"onCommand:asciidocSlides.exportHtml",
-		"onCommand:asciidocSlides.exportInlinedHtml",
-		"onCommand:asciidocSlides.openInBrowser"
-	],
 	"icon": "media/icon.png",
 	"keywords": [
 		"asciidoc",
@@ -27,36 +21,41 @@
 		"presentation"
 	],
 	"main": "./dist/extension.js",
+	"extensionDependencies": ["asciidoctor.asciidoctor-vscode"],
 	"contributes": {
 		"commands": [
 			{
-				"command": "asciidocPresentation.preview",
-				"title": "Asciidoc Presentation: Show Presentation Preview Beside",
-				"category": "Asciidoc Presentation"
+				"command": "asciiDocPresentation.preview",
+				"title": "Show Presentation Preview Beside",
+				"category": "AsciiDoc Presentation"
 			},
 			{
-				"command": "asciidocPresentation.openInBrowser",
-				"title": "Asciidoc Presentation: Open Presentation in Browser",
-				"category": "Asciidoc Presentation"
+				"command": "asciiDocPresentation.openInBrowser",
+				"title": "Open Presentation in Browser",
+				"category": "AsciiDoc Presentation"
 			},
 			{
-				"command": "asciidocPresentation.exportHtml",
-				"title": "Asciidoc Presentation: Export presentation to Html file",
-				"category": "Asciidoc Presentation"
+				"command": "asciiDocPresentation.exportHtml",
+				"title": "Export presentation to Html file",
+				"category": "AsciiDoc Presentation"
 			},
 			{
-				"command": "asciidocPresentation.exportInlinedHtml",
-				"title": "Asciidoc Presentation: Export presentation to inlined Html file",
-				"category": "Asciidoc Presentation"
+				"command": "asciiDocPresentation.exportInlinedHtml",
+				"title": "Export presentation to inlined Html file",
+				"category": "AsciiDoc Presentation"
 			}
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "webpack --mode production",
-		"webpack": "webpack --mode development",
-		"webpack-dev": "webpack --mode development --watch",
-		"pretest": "tsc -p ./",
-		"test": "node ./out/test/runTest.js"
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack --mode development",
+		"watch": "webpack --watch --mode development",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src",
+		"test": "vscode-test"
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.7",
@@ -65,13 +64,14 @@
 		"@types/web-resource-inliner": "^4.2.5",
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
 		"@typescript-eslint/parser": "^8.0.0",
-		"@vscode/test-electron": "^2.4.1",
+		"@vscode/test-cli": "^0.0.11",
+		"@vscode/test-electron": "^2.5.2",
 		"eslint": "^9.8.0",
 		"glob": "^11.0.0",
 		"mocha": "^10.7.0",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.5.4",
-		"webpack": "^5.93.0",
+		"webpack": "^5.101.3",
 		"webpack-cli": "^6.0.1"
 	},
 	"dependencies": {
