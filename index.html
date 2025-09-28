@@ -405,29 +405,41 @@
 
       <section class="title" data-state="title">
     <h1>AsciiDoc Presentation Extension</h1>
-    <h2></h2>
+    <h2>A Demonstration</h2>
     <div class="revdate"></div>
 </section>
 
 <section><section id="_images"><h2>Images</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/morpheus.jpg[]</code></pre></div></div><div class="paragraph"><p>results in:</p></div><div class="imageblock"><img src="media/morpheus.jpg" alt="morpheus"></div></div></section><section id="_background_images" data-background-image="media/background.jpg" data-background-size="cover"><h2>Background Images</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/background.jpg[background, size=cover]</code></pre></div></div>
 <div class="paragraph"><p>results in:</p></div></div></section><section id="_background_gifs" data-background-image="media/suprise.gif" data-background-size="cover"><h2>Background Gifs</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/suprise.gif[background, size=cover]</code></pre></div></div>
-<div class="paragraph"><p>results in:</p></div></div></section><section id="_background_videos" data-background-video="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" data-background-video-loop data-background-video-muted><h2>Background Videos</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[background-video="https://video.de/my.mp4",options="loop,muted"]</code></pre></div></div></div></section></section>
+<div class="paragraph"><p>results in:</p></div></div></section><section id="_background_videos" data-background-video="https://videos.pexels.com/video-files/856787/856787-sd_640_360_30fps.mp4" data-background-video-loop data-background-video-muted><h2>Background Videos</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[background-video="https://url.org/video.mp4",options="loop,muted"]</code></pre></div></div></div></section></section>
 <section><section id="_plantuml"><h2>PlantUml</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[plantuml]
 ....
-alice -&gt; bob
-....</code></pre></div></div><div class="paragraph"><p>results in:</p></div><div class="imageblock kroki"><img src="https://kroki.io/plantuml/svg/eNpLzMlMTlXQtVNIyk8CABoDA90=" alt="Diagram"></div></div></section><section id="_graphviz"><h2>Graphviz</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[graphviz]
-....
+database Git
+actor Alice
+Git -&gt; Alice: Pull
+Alice -&gt; Alice: Work
+Git -[#red]&gt; Git: Push
+....</code></pre></div></div><div class="paragraph"><p>results in:</p></div><div class="imageblock kroki"><img src="https://kroki.io/plantuml/svg/eNrLyExJVUjLzy9Jyq_gSkwuyS9ScMzJTE7lSkksSUxKLE5VcM8s4QJiBV07iIyVQkBpTg4XmI0kGJ5flA0TjFYuSk2JtQNpVVAAqS_OAAAioSGD" alt="Diagram"></div></div></section><section id="_graphviz"><h2>Graphviz</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">....
+[graphviz]
 digraph foo {
+  rankdir=LR;
   node [style=rounded]
   node1 [shape=box]
   node2 [fillcolor=yellow, style="rounded,filled", shape=diamond]
   node3 [shape=record, label="{ a | b | c }"]
-
   node1 -&gt; node2 -&gt; node3
 }
 ....</code></pre></div></div>
 <div class="paragraph"><p>results in:</p></div>
-<div class="imageblock kroki"><img src="https://kroki.io/graphviz/svg/eNo9jjEOwjAMRfee4itzGKBzuEjVIaldWsnEVQBBVXp3AqQdLFlP_32bxkvy04BeFUsFRCVGc7vPwi7pIxJTW_Ax88FP7IK-NnZC048inYomN7OIPi3-tim6_QaYTOY_m0Z_1bi31ltr4k4TWYgPLM4s8Hgj5Omwmrbanzicy-Wy1NX6AUS2QVQ=" alt="Diagram"></div></div></section></section>
+<div class="imageblock kroki"><img src="https://kroki.io/graphviz/svg/eNo9jjEOwjAMRfeewspcBuiIwgmYWKsOSe3SCBNXBgRV6d0JkHawZD_5fRvDWd3QQycCUwGgLl4wqD2e9mmKggT17T4yWZVHRMIm423ivRvIenktbAd1F5hbYVE7ErM8S_jbJuvld4HQJP6zMbirxDW1WlKVWlEsgZ0ntmYCB2_wqVqYTVOsT2wO-XJuqmL-ALyyRZ8=" alt="Diagram"></div></div></section><section id="_mermaid"><h2>Mermaid</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">....
+[mermaid]
+%%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': true}} }%%
+   gitGraph
+       commit id:"1"
+       xxx
+....</code></pre></div></div>
+<div class="paragraph"><p>results in:</p></div>
+<div class="imageblock kroki"><img src="https://kroki.io/mermaid/svg/eNptjTsKwzAQBfucYjEINUmRP7hNkcaXkOSNJWxJZlkFgvHdE5n8Cm31GGZYISYXHNcwgRxi1-AdB1mDbFGnTq5BskWPmQRMTGrIrHN8JTXaF54kRVaMl-i940bpJWdKOM8wC7ECgI-edz6zuODautpWBbgrwf0XalLBWLih4kRYUA-l_viDFk0fE4NXLhTMUyk__-dEj83oTP_-9gT3M1ot" alt="Diagram"></div></div></section></section>
 <section><section id="_column_layout" class="columns"><h2>Column layout</h2><div class="slide-content"><div class="openblock column"><div class="content"><div class="ulist"><ul><li><p><strong>Edgar Allen Poe</strong></p></li><li><p>Sheri S. Tepper</p></li><li><p>Bill Bryson</p></li></ul></div></div></div><div class="openblock column"><div class="content"><div class="paragraph"><p>Edgar Allan Poe (/poʊ/; born Edgar Poe; Ja
 nuary 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.</p></div></div></div></div></section><section id="_columns_with_size" class="columns"><h2>Columns with size</h2><div class="slide-content"><div class="openblock column is-one-third"><div class="content"><div class="ulist"><ul><li><p><strong>Kotlin</strong></p></li><li><p>Java</p></li><li><p>Scala</p></li></ul></div></div></div>
 <div class="openblock column"><div class="content"><div class="paragraph"><p>Programming language for Android, mobile cross-platform
