@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.2]
+- fix: explicit dependency of AsciiDoc extension: it is essential for plugin to run.
+- more documentation for easy start
+- minor bugs fixed
+
+## [2.0.1]
+- internal: CI infrastructure
+
 ## [2.0.0]
 
 - feature: support for QR codes
