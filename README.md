@@ -8,11 +8,19 @@ Visual Studio Code extension to create [reveal.js](https://github.com/hakimel/re
 
 This is fork of [AsciiDoc Slides Plugin](https://github.com/flobilosaurus/vscode-asciidoc-slides/).
 
+Requires base extension [AsciiDoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode) ru run.
+
+## Quickstart
+
+1. Install extension.
+2. Download demo [AsciiDoc Presentation](https://raw.githubusercontent.com/bzzzil/vscode-asciidoc-presentation/refs/heads/master/demo.adoc) and open it in Visual Studio Code.
+3. From menu View -> Command Palette (`Ctrl/Cmd`+`Shift`+`P`) and run command `AsciiDoc Presentation: Open Presentation in Browser`.
+
 ## Features
 
 ### Slide Preview Panel 
 
-![demo slide preview panel](https://github.com/flobilosaurus/vscode-asciidoc-slides/raw/master/media/PreviewPanel.gif)
+![demo slide preview panel](https://github.com/bzzzil/vscode-asciidoc-presentation/raw/master/media/PreviewPanel.gif)
 
 * Shows reveal.js slides of asciidoc document beside it.
 * Preview is updated on every save of base document.
@@ -20,7 +28,7 @@ This is fork of [AsciiDoc Slides Plugin](https://github.com/flobilosaurus/vscode
 
 ### Open in Browser
 
-![demo open in browser](https://github.com/flobilosaurus/vscode-asciidoc-slides/raw/master/media/openInBrowser.gif)
+![demo open in browser](https://github.com/bzzzil/vscode-asciidoc-presentation/raw/master/media/openInBrowser.gif)
 
 * Show reveal.js slides of asciidoc document in browser.
 * Website in browser is updated on every save of base document.
@@ -30,7 +38,7 @@ This is fork of [AsciiDoc Slides Plugin](https://github.com/flobilosaurus/vscode
 
 Export your slides into a html file which will work locally on your computer (containing links to all required resources as scripts, styles and images).
 
-![demo export html](https://github.com/flobilosaurus/vscode-asciidoc-slides/raw/master/media/ExportSlidesHtml.gif)
+![demo export html](https://github.com/bzzzil/vscode-asciidoc-presentation/raw/master/media/ExportSlidesHtml.gif)
 
 ### Export to inlined (shareable) reveal.js html file
 
@@ -47,7 +55,7 @@ Inlining currently does not work for:
 * Background Images
 * Background Videos
 * Background IFrames
-* Probably a lot more, see bundled demo.adoc
+* Probably a lot more, see [demo.adoc](https://github.com/bzzzil/vscode-asciidoc-presentation/blob/master/demo.adoc)
 
 ### [Kroki](https://github.com/Mogztter/asciidoctor-kroki) integration
 
@@ -69,4 +77,4 @@ digraph foo {
 
 ### Print Slides / Export as PDF
 
-While slides are __shown in browser__ or __exported as html/inlined html__ to same computer, they can transformed into a printable format via url parameter `?print-pdf`. The resulting website is printable (or exportable as pdf) via default print menu of chrome/chromium browser (`ctrl + p` or `cmd + p`). 
+While slides are __shown in browser__ or __exported as html/inlined html__ to same computer, they can transformed into a printable format via url parameter `?print-pdf`. The resulting website is printable (or exportable as pdf) via default print menu of chrome/chromium browser (`Ctrl/Cmd` + `P`). 

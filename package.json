@@ -36,12 +36,12 @@
 			},
 			{
 				"command": "asciiDocPresentation.exportHtml",
-				"title": "Export presentation to Html file",
+				"title": "Export presentation to HTML file",
 				"category": "AsciiDoc Presentation"
 			},
 			{
 				"command": "asciiDocPresentation.exportInlinedHtml",
-				"title": "Export presentation to inlined Html file",
+				"title": "Export presentation to inlined HTML file",
 				"category": "AsciiDoc Presentation"
 			}
 		]
