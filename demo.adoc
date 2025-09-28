@@ -3,7 +3,7 @@
 :revealjs_theme: moon
 
 // For custom themes, provide path to CSS file relative to the document:
-// :revealjs_customtheme: custom.css
+// :revealjs_customTheme: custom.css
 
 :revealjs_slideNumber: true
 :revealjs_overview: true
@@ -11,7 +11,7 @@
 :revealjs_center: false
 
 // Syntax highlighting theme for code blocks
-:hightlightjs-theme: lightfair
+:highlightjs-theme: lightfair
 
 // Presentation title
 = AsciiDoc Presentation Extension
@@ -41,16 +41,16 @@ results in:
 
 image::media/background.jpg[background, size=cover]
 
-=== Background Gifs
+=== Background GIFs
 
 [source, asciidoc]
 --
-image::media/suprise.gif[background, size=cover]
+image::media/surprise.gif[background, size=cover]
 --
 
 results in:
 
-image::media/suprise.gif[background, size=cover]
+image::media/surprise.gif[background, size=cover]
 
 [background-video="https://videos.pexels.com/video-files/856787/856787-sd_640_360_30fps.mp4",options="loop,muted"]
 === Background Videos
@@ -160,8 +160,7 @@ results in:
 
 [.column]
 --
-Edgar Allan Poe (/poʊ/; born Edgar Poe; Ja
-nuary 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.
+Edgar Allan Poe (/poʊ/; born Edgar Poe; January 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.
 --
 
 [.columns]
@@ -246,8 +245,8 @@ second term:: definition of second term
 (def lazy-fib
   (concat
    [0 1]
-   ((fn rfib [a b]
-        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
+   ((fn fibonacci [a b]
+        (lazy-cons (+ a b) (fibonacci b (+ a b)))) 0 1)))
 ----
 --
 
@@ -258,8 +257,8 @@ results in:
 (def lazy-fib
   (concat
    [0 1]
-   ((fn rfib [a b]
-        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
+   ((fn fibonacci [a b]
+        (lazy-cons (+ a b) (fibonacci b (+ a b)))) 0 1)))
 ----
 
 == Tables

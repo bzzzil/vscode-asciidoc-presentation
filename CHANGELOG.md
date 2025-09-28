@@ -12,7 +12,7 @@
 
 - feature: support for QR codes
 - feature: support for math.js
-- feature: more reveal.js settings could be altered from presentation file: revealjs_theme, revealjs_customtheme, revealjs_center, revealjs_controls, revealjs_controlslayout, revealjs_controlsbackarrows, revealjs_progress, revealjs_slideNumber, hightlightjs-theme, revealjs_transition, revealjs_backgroundtransition
+- feature: more reveal.js settings could be altered from presentation file: revealjs_theme, revealjs_customTheme, revealjs_center, revealjs_controls, revealjs_controlsLayout, revealjs_controlsBackArrows, revealjs_progress, revealjs_slideNumber, highlightJs-theme, revealjs_transition, revealjs_backgroundTransition
 - highlight.js 11.11.1
 
 ## [1.3.0]
