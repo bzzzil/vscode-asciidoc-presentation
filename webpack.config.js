@@ -36,6 +36,14 @@ const config = {
         ]
       }
     ]
+  },
+  ignoreWarnings: [
+    {
+      message: /require\.extensions is not supported by webpack/
+    }
+  ],
+  stats: {
+    errorDetails: true
   }
 };
 module.exports = config;
