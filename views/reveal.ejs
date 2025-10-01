@@ -1,7 +1,24 @@
-<section class="title" data-state="title">
-    <h1><%= title %></h1>
-    <h2><%= authors %></h2>
-    <div class="revdate"><%= revDate %></div>
-</section>
+<!doctype html>
+<html lang="en">
+<%- include('header'); -%>
+<body>
+  <div class="reveal">
+    <div class="slides">
+        <section class="title" data-state="title">
+            <h1><%= title %></h1>
+            <h2><%= authors %></h2>
+            <div class="revdate"><%= revDate %></div>
+        </section>
 
-<%- slides %>
+        <%- slides %>
+    </div>
+  </div>
+  <script src="<%= absolutePath %>libs/highlight.js/highlight.js"></script>
+  <script src="<%= absolutePath %>libs/reveal.js/reveal.js"></script>
+  
+  <%- include('initialize'); -%>
+
+  <%- include('browser-refresh-script'); -%>
+</body>
+
+</html>
