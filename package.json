@@ -13,6 +13,12 @@
 	"categories": [
 		"Other"
 	],
+	"activationEvents": [
+			"onCommand:asciidocSlides.preview",
+			"onCommand:asciidocSlides.exportHtml",
+			"onCommand:asciidocSlides.exportInlinedHtml",
+			"onCommand:asciidocSlides.openInBrowser"
+	],
 	"icon": "media/icon.png",
 	"keywords": [
 		"asciidoc",
@@ -21,7 +27,9 @@
 		"presentation"
 	],
 	"main": "./dist/extension.js",
-	"extensionDependencies": ["asciidoctor.asciidoctor-vscode"],
+	"extensionDependencies": [
+		"asciidoctor.asciidoctor-vscode"
+	],
 	"contributes": {
 		"commands": [
 			{
@@ -58,8 +66,11 @@
 		"test": "vscode-test"
 	},
 	"devDependencies": {
+		"@types/ejs": "^3.1.5",
+		"@types/express": "^5.0.3",
 		"@types/mocha": "^10.0.7",
 		"@types/node": "^22.1.0",
+		"@types/serve-favicon": "^2.5.7",
 		"@types/vscode": "^1.92.0",
 		"@types/web-resource-inliner": "^4.2.5",
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
@@ -76,27 +87,19 @@
 	},
 	"dependencies": {
 		"@asciidoctor/reveal.js": "5.0.1",
-		"@types/koa": "^2.15.0",
-		"@types/koa-ejs": "^4.3.3",
-		"@types/koa-favicon": "^2.1.3",
-		"@types/koa-logger": "^3.1.5",
-		"@types/koa-send": "^4.1.6",
 		"@types/ws": "^8.5.12",
 		"asciidoctor": "^3.0.4",
 		"asciidoctor-kroki": "^0.18.1",
 		"axios": "^1.7.3",
 		"bufferutil": "^4.0.8",
+		"ejs": "^3.1.10",
+		"express": "^5.1.0",
 		"font-awesome": "^4.7.0",
 		"highlight.js": "^11.10.0",
-		"koa": "^2.15.3",
-		"koa-easy-ws": "^2.1.0",
-		"koa-ejs": "^4.3.0",
-		"koa-favicon": "^2.1.0",
-		"koa-logger": "^3.2.1",
-		"koa-send": "^5.0.1",
 		"open": "^10.1.0",
 		"reveal.js": "^5.1.0",
 		"reveal.js-plugins": "^4.2.5",
+		"serve-favicon": "^2.5.1",
 		"slash": "^5.1.0",
 		"utf-8-validate": "^6.0.4",
 		"web-resource-inliner": "^7.0.0",
