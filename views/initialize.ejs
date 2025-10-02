@@ -1,5 +1,4 @@
 <script type="text/javascript" src="<%= absolutePath %>libs/highlight.js/highlight.min.js"></script>
-<script type="text/javascript" src="<%= absolutePath %>node_modules/reveal.js/plugin/math/math.js"></script>
 <% if (!isInlined) { %>
 <script>
     Reveal.initialize({
@@ -14,14 +13,15 @@
         transition: '<%= transition %>',
         transitionSpeed: '<%= transitionSpeed %>',
         backgroundTransition: '<%= backgroundTransition %>',
+        showNotes: true,
         slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [
-            { src: '<%= absolutePath %>node_modules/reveal.js/plugin/notes/notes.js', async: true },
-            { src: '<%= absolutePath %>node_modules/reveal.js/plugin/zoom/zoom.js', async: true },
-            { src: '<%= absolutePath %>libs/plugins/qrcode/qrcode.min.js', async: true },
-            { src: '<%= absolutePath %>libs/plugins/qrcode/index.js', async: true },
-        ],
-        plugins: [ Plugin.MathJax2 ]
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom)} },
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/math/math.js', async: true, callback: () => { Reveal.registerPlugin(RevealMath)} },
+            { src: '<%= absolutePath %>libs/qrcode/qrcode.min.js', async: true },
+            { src: '<%= absolutePath %>libs/qrcode/index.js', async: true },
+        ]
     })
     
     hljs.highlightAll();
@@ -29,9 +29,9 @@
 <% } %>
 
 <% if (isInlined) { %>
-<script type="text/javascript" src="<%= absolutePath %>node_modules/reveal.js/plugin/zoom/zoom.js"></script>
-<script type="text/javascript" src="<%= absolutePath %>libs/plugins/qrcode/qrcode.min.js"></script>
-<script type="text/javascript" src="<%= absolutePath %>libs/plugins/qrcode/index.js"></script>
+<script type="text/javascript" src="<%= absolutePath %>libs/qrcode/qrcode.min.js"></script>
+<script type="text/javascript" src="<%= absolutePath %>libs/qrcode/index.js"></script>
+<script type="text/javascript" src="<%= absolutePath %>libs/reveal.js/plugin/math/math.js"></script>
 <script>
     Reveal.initialize({
         hash: true,

@@ -33,8 +33,7 @@ export class RevealServer {
 
         this.app.use(favicon(path.join(this.extensionPath, 'media/favicon.ico')));
 
-        // Static files for /node_modules/
-        this.app.use('/node_modules', express.static(path.join(this.extensionPath, 'node_modules')));
+        // Static files
         this.app.use('/libs', express.static(path.join(this.extensionPath, 'libs')));
 
         // WebSocket server
