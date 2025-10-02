@@ -3,22 +3,22 @@
     <meta charset="utf-8">
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-    <link rel="stylesheet" href="<%= absolutePath %>libs/reveal.js/reset.css">
-    <link rel="stylesheet" href="<%= absolutePath %>libs/reveal.js/reveal.css">
+    <link rel="stylesheet" href="<%= absolutePath %>node_modules/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="<%= absolutePath %>node_modules/reveal.js/dist/reveal.css">
     <% if (themeCss) { %>
     <link rel="stylesheet" href="<%= absolutePath %><%= themeCss %>">
     <% } %>
     <% if (customThemeCss) { %>
     <link rel="stylesheet" href="<%= documentPath %><%= customThemeCss %>">
     <% } %>
-    <link rel="stylesheet" href="<%= absolutePath %>libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<%= absolutePath %>node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%= absolutePath %><%= highlightJsThemeCss %>">
 
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/x-scss';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '<%= absolutePath %>libs/reveal.js/pdf.scss' : '<%= absolutePath %>libs/reveal.js/paper.scss';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '<%= absolutePath %>node_modules/reveal.js/css/print/pdf.scss' : '<%= absolutePath %>node_modules/reveal.js/css/print/paper.scss';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 
