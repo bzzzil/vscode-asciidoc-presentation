@@ -14,10 +14,10 @@
 		"Other"
 	],
 	"activationEvents": [
-			"onCommand:asciidocSlides.preview",
-			"onCommand:asciidocSlides.exportHtml",
-			"onCommand:asciidocSlides.exportInlinedHtml",
-			"onCommand:asciidocSlides.openInBrowser"
+		"onCommand:asciidocSlides.preview",
+		"onCommand:asciidocSlides.exportHtml",
+		"onCommand:asciidocSlides.exportInlinedHtml",
+		"onCommand:asciidocSlides.openInBrowser"
 	],
 	"icon": "media/icon.png",
 	"keywords": [
@@ -55,7 +55,6 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run package",
 		"compile": "webpack --mode development",
 		"watch": "webpack --watch --mode development",
 		"package": "webpack --mode production --devtool hidden-source-map",
@@ -63,7 +62,8 @@
 		"watch-tests": "tsc -p . -w --outDir out",
 		"pretest": "npm run compile-tests && npm run compile && npm run lint",
 		"lint": "eslint src",
-		"test": "vscode-test"
+		"test": "vscode-test",
+		"build:highlight": "node scripts/build-highlight-bundle.js"
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.5",
@@ -87,6 +87,7 @@
 	},
 	"dependencies": {
 		"@asciidoctor/reveal.js": "5.0.1",
+		"@highlightjs/cdn-assets": "^11.11.1",
 		"@types/ws": "^8.5.12",
 		"asciidoctor": "^3.0.4",
 		"asciidoctor-kroki": "^0.18.1",
