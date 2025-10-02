@@ -4,3 +4,5 @@ out/
 dist/
 package-lock.json
 *.vsix
+libs/
+

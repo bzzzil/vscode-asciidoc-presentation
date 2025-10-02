@@ -125,7 +125,7 @@ export class RevealSlides {
             controlsLayout: asciidocAttributes.revealJsControlsLayout,
             controlsBackArrows: asciidocAttributes.revealJsControlsBackArrows,
             progress : asciidocAttributes.revealJsProgress,
-            themeCss: asciidocAttributes.revealJsTheme ? `node_modules/reveal.js/dist/theme/${asciidocAttributes.revealJsTheme}.css`: undefined,
+            themeCss: asciidocAttributes.revealJsTheme ? `libs/reveal.js/theme/${asciidocAttributes.revealJsTheme}.css`: undefined,
             customThemeCss: asciidocAttributes.revealJsCustomTheme,
             highlightJsThemeCss: `libs/highlight.js/styles/${asciidocAttributes.highlightJsTheme}.css`,
             transition: asciidocAttributes.revealJsTransition,
