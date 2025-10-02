@@ -19,9 +19,7 @@ const config = {
   devtool: 'source-map',
   externals: {
     // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
-    vscode: 'commonjs vscode', 
-    ejs: 'commonjs ejs',
-    express: 'commonjs express'
+    vscode: 'commonjs vscode'
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader

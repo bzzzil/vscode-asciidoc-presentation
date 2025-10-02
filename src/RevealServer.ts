@@ -27,6 +27,7 @@ export class RevealServer {
 
         // Set up EJS view engine
         this.app.set('views', path.resolve(this.extensionPath, 'views'));
+        this.app.engine('ejs', require('ejs').__express);
         this.app.set('view engine', 'ejs');
         this.app.set('view cache', false);
 
