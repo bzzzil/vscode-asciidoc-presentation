@@ -31,7 +31,7 @@ export class RevealServer {
         this.app.set('view engine', 'ejs');
         this.app.set('view cache', false);
 
-        this.app.use(favicon(path.join(this.extensionPath, 'media/favicon.ico')));
+        this.app.use(favicon(path.join(this.extensionPath, 'media/favicon.png')));
 
         // Static files for /libs
         this.app.use('/libs', express.static(path.join(this.extensionPath, 'libs')));
