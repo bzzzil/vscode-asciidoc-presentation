@@ -38,7 +38,6 @@ languageFiles.forEach(lang => {
 
 // Write the bundle
 fs.writeFileSync(outFile, bundle, 'utf8');
-console.log(`Custom Highlight.js bundle created at ${outFile}`);
 
 // Detect all not minimized styles or other files
 const styleFiles = fs.readdirSync(stylesDir)
@@ -50,8 +49,7 @@ styleFiles.forEach(style => {
   const outStyleFile = path.join(outStylesDir, style);
   if (fs.existsSync(styleFile) && fs.statSync(styleFile).isFile()) {
     fs.copyFileSync(styleFile, outStyleFile);
-    console.log(`Copied style: ${style}`);
   }
 });
 
-console.log('Done.');
+console.log(`Custom Highlight.js bundle created at ${outFile}`);

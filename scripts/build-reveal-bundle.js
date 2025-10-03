@@ -39,5 +39,4 @@ function copyEssentialFiles(srcDir, destDir) {
 copyEssentialFiles(revealDistDir, outDir);
 copyEssentialFiles(revealPluginDir, path.join(outDir, 'plugin'));
 
-console.log('Copied Reveal.js essential files to libs/reveal.js');
-console.log('Done.');
+console.log('Copied Reveal.js essentials to {$outDir}');
