@@ -4,17 +4,17 @@
 ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/bzzzil.vscode-asciidoc-presentation)
 [![Demo Badge](https://img.shields.io/badge/Demo-here-blue)](https://bzzzil.github.io/vscode-asciidoc-presentation)
 
-Visual Studio Code extension to create [reveal.js](https://github.com/hakimel/reveal.js) slides via asciidoc documents.
+Visual Studio Code extension to create [reveal.js](https://github.com/hakimel/reveal.js) slides via AsciiDoc documents.
 
 This is fork of [AsciiDoc Slides Plugin](https://github.com/flobilosaurus/vscode-asciidoc-slides/).
 
-Requires base extension [AsciiDoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode) ru run.
+AsciiDoc Presentations requires base extension [AsciiDoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode) to run.
 
 ## Quickstart
 
 1. Install extension.
 2. Download demo [AsciiDoc Presentation](https://raw.githubusercontent.com/bzzzil/vscode-asciidoc-presentation/refs/heads/master/demo.adoc) and open it in Visual Studio Code.
-3. From menu View -> Command Palette (`Ctrl/Cmd`+`Shift`+`P`) and run command `AsciiDoc Presentation: Open Presentation in Browser`.
+3. Open command palette (View -> Command Palette  or `Ctrl/Cmd`+`Shift`+`P`) and run command `AsciiDoc Presentation: Open Presentation in Browser`.
 
 ## Features
 

@@ -19,6 +19,18 @@
 A Demonstration
 
 // And here we go...
+
+== Basic commands
+
+* Do you see the arrows at the bottom right corner?
+* You can use them to navigate the slides. Or use your keyboard arrows.
+* Or *Space* to go forward, and *Shift+Space* to go back.
+
+* There are much more special keys for you to try:
+** *ESC* to get a slide overview
+** *F* to toggle fullscreen mode
+** *?* to see all the available commands. There are much more!
+
 == Images
 
 [source, asciidoc]
@@ -119,22 +131,21 @@ digraph foo {
 
 === Mermaid
 
+Sample Git Flow diagram done by link:https://mermaid.js.org/[Mermaid.Js]
+
 [source, asciidoc]
 --
-....
 [mermaid]
-%%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': true}} }%%
+%%{init: { 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': false}} }%%
    gitGraph
        commit id:"1"
-       xxx
-....
 --
 
 results in:
 
 [mermaid]
 ....
-%%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': true}} }%%
+%%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': false}} }%%
    gitGraph
        commit id:"1"
        commit id:"2"
