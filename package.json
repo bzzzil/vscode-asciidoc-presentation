@@ -14,10 +14,10 @@
 		"Other"
 	],
 	"activationEvents": [
-			"onCommand:asciidocSlides.preview",
-			"onCommand:asciidocSlides.exportHtml",
-			"onCommand:asciidocSlides.exportInlinedHtml",
-			"onCommand:asciidocSlides.openInBrowser"
+		"onCommand:asciidocSlides.preview",
+		"onCommand:asciidocSlides.exportHtml",
+		"onCommand:asciidocSlides.exportInlinedHtml",
+		"onCommand:asciidocSlides.openInBrowser"
 	],
 	"icon": "media/icon.png",
 	"keywords": [
@@ -55,7 +55,7 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run package",
+		"precompile": "npm run build:libs-highlight && npm run build:libs-reveal",
 		"compile": "webpack --mode development",
 		"prewatch": "npm run precompile",
 		"watch": "webpack --watch --mode development",
@@ -64,7 +64,9 @@
 		"watch-tests": "tsc -p . -w --outDir out",
 		"pretest": "npm run compile-tests && npm run compile && npm run lint",
 		"lint": "eslint src",
-		"test": "vscode-test"
+		"test": "vscode-test",
+		"build:libs-highlight": "node scripts/build-highlight-bundle.js",
+		"build:libs-reveal": "node scripts/build-reveal-bundle.js"
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.5",
@@ -88,6 +90,7 @@
 	},
 	"dependencies": {
 		"@asciidoctor/reveal.js": "5.0.1",
+		"@highlightjs/cdn-assets": "^11.11.1",
 		"@types/ws": "^8.5.12",
 		"asciidoctor": "^3.0.4",
 		"asciidoctor-kroki": "^0.18.1",
@@ -95,7 +98,6 @@
 		"bufferutil": "^4.0.8",
 		"ejs": "^3.1.10",
 		"express": "^5.1.0",
-		"font-awesome": "^4.7.0",
 		"highlight.js": "^11.10.0",
 		"open": "^10.1.0",
 		"reveal.js": "^5.1.0",

@@ -11,14 +11,13 @@
     <% if (customThemeCss) { %>
     <link rel="stylesheet" href="<%= documentPath %><%= customThemeCss %>">
     <% } %>
-    <link rel="stylesheet" href="<%= absolutePath %>libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<%= absolutePath %><%= highlightJsThemeCss %>">
 
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/x-scss';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '<%= absolutePath %>libs/reveal.js/pdf.scss' : '<%= absolutePath %>libs/reveal.js/paper.scss';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '<%= absolutePath %>node_modules/reveal.js/css/print/pdf.scss' : '<%= absolutePath %>node_modules/reveal.js/css/print/paper.scss';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 

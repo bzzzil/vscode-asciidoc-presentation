@@ -9,6 +9,7 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 !node_modules/reveal.js
+!node_modules/font-awesome
 node_modules
 media/*.gif
 Webpack.config.js
