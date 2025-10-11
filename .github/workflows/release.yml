@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.0
+
+      - name: Dependencies
+        run: 
+          npm install
+
+      - name: Test (Ubuntu)
+        if: contains(matrix.os, 'ubuntu')
+        run: xvfb-run npm test
+
+      - name: Test (Win/Mac)
+        if: contains(matrix.os, 'ubuntu') == false
+        run: npm test
+
+      - name: Package
+        run: |
+          npm install -g @vscode/vsce
+          npm run package
+          vsce package
+      - name: Upload Release Assets
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        uses: phuonghuynh/action-ghrelease@v1.1.0
+        with:
+          files: '*.vsix'
