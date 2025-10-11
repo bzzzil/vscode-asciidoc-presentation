@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.1.0]
+- use as a server express instead of unmaintained koa
+- fixed zoom plugin
+- greatly reduced extension size
+- tons of smaller updates
+
 ## [2.0.2]
 - fix: explicit dependency of AsciiDoc extension: it is essential for plugin to run.
 - more documentation for easy start
