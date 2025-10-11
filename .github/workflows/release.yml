@@ -36,3 +36,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: '*.vsix'
+
+      - name: Update GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: | 
+            'index.html'
+            'libs/**'
+            'media/**'
