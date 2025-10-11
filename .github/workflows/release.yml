@@ -37,10 +37,14 @@ jobs:
         with:
           files: '*.vsix'
 
+      - name: Prepare GitHub Pages artifact
+        run: |
+          mkdir gh-pages-artifact
+          cp index.html gh-pages-artifact/
+          cp -r libs gh-pages-artifact/
+          cp -r media gh-pages-artifact/
+
       - name: Update GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: | 
-            index.html
-            libs/**
-            media/**
+          path: gh-pages-artifact
