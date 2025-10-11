@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <title>AsciiDoc Presentation Extension</title>
     <meta charset="utf-8">
@@ -12,14 +11,13 @@
     <link rel="stylesheet" href="libs/reveal.js/theme/moon.css">
     
     
-    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="libs/highlight.js/styles/lightfair.css">
 
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/x-scss';
-      link.href = window.location.search.match( /print-pdf/gi ) ? 'libs/reveal.js/pdf.scss' : 'libs/reveal.js/paper.scss';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'node_modules/reveal.js/css/print/pdf.scss' : 'node_modules/reveal.js/css/print/paper.scss';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 
@@ -396,21 +394,18 @@
         flex: none;
         width: 20%;
     }
-</style>  </head>
-<body>
-
+</style>  </head><body>
   <div class="reveal">
-
     <div class="slides">
+        <section class="title" data-state="title">
+            <h1>AsciiDoc Presentation Extension</h1>
+            <h2>A Demonstration</h2>
+            <div class="revdate"></div>
+        </section>
 
-      <section class="title" data-state="title">
-    <h1>AsciiDoc Presentation Extension</h1>
-    <h2>A Demonstration</h2>
-    <div class="revdate"></div>
-</section>
-
+        <section id="_basic_commands"><h2>Basic commands</h2><div class="slide-content"><div class="ulist"><ul><li><p>Do you see the arrows at the bottom right corner?</p></li><li><p>You can use them to navigate the slides. Or use your keyboard arrows.</p></li><li><p>Or <strong>Space</strong> to go forward, and <strong>Shift+Space</strong> to go back.</p></li><li><p>There are much more special keys for you to try:</p><div class="ulist"><ul><li><p><strong>ESC</strong> to get a slide overview</p></li><li><p><strong>F</strong> to toggle fullscreen mode</p></li><li><p><strong>?</strong> to see all the available commands. There are much more!</p></li></ul></div></li></ul></div></div></section>
 <section><section id="_images"><h2>Images</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/morpheus.jpg[]</code></pre></div></div><div class="paragraph"><p>results in:</p></div><div class="imageblock"><img src="media/morpheus.jpg" alt="morpheus"></div></div></section><section id="_background_images" data-background-image="media/background.jpg" data-background-size="cover"><h2>Background Images</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/background.jpg[background, size=cover]</code></pre></div></div>
-<div class="paragraph"><p>results in:</p></div></div></section><section id="_background_gifs" data-background-image="media/suprise.gif" data-background-size="cover"><h2>Background Gifs</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/suprise.gif[background, size=cover]</code></pre></div></div>
+<div class="paragraph"><p>results in:</p></div></div></section><section id="_background_gifs" data-background-image="media/surprise.gif" data-background-size="cover"><h2>Background GIFs</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">image::media/surprise.gif[background, size=cover]</code></pre></div></div>
 <div class="paragraph"><p>results in:</p></div></div></section><section id="_background_videos" data-background-video="https://videos.pexels.com/video-files/856787/856787-sd_640_360_30fps.mp4" data-background-video-loop data-background-video-muted><h2>Background Videos</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[background-video="https://url.org/video.mp4",options="loop,muted"]</code></pre></div></div></div></section></section>
 <section><section id="_plantuml"><h2>PlantUml</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[plantuml]
 ....
@@ -431,17 +426,14 @@ digraph foo {
 }
 ....</code></pre></div></div>
 <div class="paragraph"><p>results in:</p></div>
-<div class="imageblock kroki"><img src="https://kroki.io/graphviz/svg/eNo9jjEOwjAMRfeewspcBuiIwgmYWKsOSe3SCBNXBgRV6d0JkHawZD_5fRvDWd3QQycCUwGgLl4wqD2e9mmKggT17T4yWZVHRMIm423ivRvIenktbAd1F5hbYVE7ErM8S_jbJuvld4HQJP6zMbirxDW1WlKVWlEsgZ0ntmYCB2_wqVqYTVOsT2wO-XJuqmL-ALyyRZ8=" alt="Diagram"></div></div></section><section id="_mermaid"><h2>Mermaid</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">....
-[mermaid]
-%%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': true}} }%%
+<div class="imageblock kroki"><img src="https://kroki.io/graphviz/svg/eNo9jjEOwjAMRfeewspcBuiIwgmYWKsOSe3SCBNXBgRV6d0JkHawZD_5fRvDWd3QQycCUwGgLl4wqD2e9mmKggT17T4yWZVHRMIm423ivRvIenktbAd1F5hbYVE7ErM8S_jbJuvld4HQJP6zMbirxDW1WlKVWlEsgZ0ntmYCB2_wqVqYTVOsT2wO-XJuqmL-ALyyRZ8=" alt="Diagram"></div></div></section><section id="_mermaid"><h2>Mermaid</h2><div class="slide-content"><div class="paragraph"><p>Sample Git Flow diagram done by <a href="https://mermaid.js.org/">Mermaid.Js</a></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[mermaid]
+%%{init: { 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': false}} }%%
    gitGraph
-       commit id:"1"
-       xxx
-....</code></pre></div></div>
+       commit id:"1"</code></pre></div></div>
 <div class="paragraph"><p>results in:</p></div>
-<div class="imageblock kroki"><img src="https://kroki.io/mermaid/svg/eNptjTsKwzAQBfucYjEINUmRP7hNkcaXkOSNJWxJZlkFgvHdE5n8Cm31GGZYISYXHNcwgRxi1-AdB1mDbFGnTq5BskWPmQRMTGrIrHN8JTXaF54kRVaMl-i940bpJWdKOM8wC7ECgI-edz6zuODautpWBbgrwf0XalLBWLih4kRYUA-l_viDFk0fE4NXLhTMUyk__-dEj83oTP_-9gT3M1ot" alt="Diagram"></div></div></section></section>
-<section><section id="_column_layout" class="columns"><h2>Column layout</h2><div class="slide-content"><div class="openblock column"><div class="content"><div class="ulist"><ul><li><p><strong>Edgar Allen Poe</strong></p></li><li><p>Sheri S. Tepper</p></li><li><p>Bill Bryson</p></li></ul></div></div></div><div class="openblock column"><div class="content"><div class="paragraph"><p>Edgar Allan Poe (/poʊ/; born Edgar Poe; Ja
-nuary 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.</p></div></div></div></div></section><section id="_columns_with_size" class="columns"><h2>Columns with size</h2><div class="slide-content"><div class="openblock column is-one-third"><div class="content"><div class="ulist"><ul><li><p><strong>Kotlin</strong></p></li><li><p>Java</p></li><li><p>Scala</p></li></ul></div></div></div>
+<div class="imageblock kroki"><img src="https://kroki.io/mermaid/svg/eNptjTsKwzAQBfucYjEINUmRP7hNkcaXWMtrS1iyjLIKBOO7JzL5FdrqMcywQkxmMFzCBNL6rqI7WVmCbKiOnVyDZE2OEhkockCbWGf4GnDULzzJ4BmZLt45wxXWS96ivdE8wyzECgA-ftrp1CKDacpiW2TgLgf3X1gHHJSGlpBjoIx6yPXHH9Skeh8ZHJohY55y-fk_D-GxGY3q39-eWYdaeA==" alt="Diagram"></div></div></section></section>
+<section><section id="_column_layout" class="columns"><h2>Column layout</h2><div class="slide-content"><div class="openblock column"><div class="content"><div class="ulist"><ul><li><p><strong>Edgar Allen Poe</strong></p></li><li><p>Sheri S. Tepper</p></li><li><p>Bill Bryson</p></li></ul></div></div></div><div class="openblock column"><div class="content"><div class="paragraph"><p>Edgar Allan Poe (/poʊ/; born Edgar Poe; January 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.</p></div></div></div></div></section><section id="_columns_with_size" class="columns"><h2>Columns with size</h2><div class="slide-content"><div class="openblock column is-one-third"><div class="content"><div class="ulist"><ul><li><p><strong>Kotlin</strong></p></li><li><p>Java</p></li><li><p>Scala</p></li></ul></div></div></div>
 <div class="openblock column"><div class="content"><div class="paragraph"><p>Programming language for Android, mobile cross-platform
 and web development, server-side, native,
 and data science. Open source forever Github.</p></div></div></div></div></section></section>
@@ -463,15 +455,15 @@ second term:: definition of second term</code></pre></div></div>
 (def lazy-fib
   (concat
    [0 1]
-   ((fn rfib [a b]
-        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
+   ((fn fibonacci [a b]
+        (lazy-cons (+ a b) (fibonacci b (+ a b)))) 0 1)))
 ----</code></pre></div></div>
 <div class="paragraph"><p>results in:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-clojure" data-lang="clojure">(def lazy-fib
   (concat
    [0 1]
-   ((fn rfib [a b]
-        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))</code></pre></div></div></div></section>
+   ((fn fibonacci [a b]
+        (lazy-cons (+ a b) (fibonacci b (+ a b)))) 0 1)))</code></pre></div></div></div></section>
 <section id="_tables"><h2>Tables</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[%header, cols=2*]
 |===
 |Character
@@ -491,14 +483,11 @@ second term:: definition of second term</code></pre></div></div>
 <div class="paragraph"><p>$ J(\theta_0,\theta_1) = \sum_{i=0} $</p></div>
 <div class="paragraph"><p>\( x = {-b \pm \sqrt{b^2-4ac} \over 2a} \)</p></div></div></section>
 <section id="_qr_codes"><h2>QR codes</h2><div class="slide-content"><div class="reveal-js-qrcode" height="400">https://google.com/</div></div></section>
-
-    </div>
-
+    </div>  
   </div>
-  <script src="libs/highlight.js/highlight.js"></script>
   <script src="libs/reveal.js/reveal.js"></script>
   
-  <script type="text/javascript" src="libs/reveal.js/plugin/math/math.js"></script>
+  <script type="text/javascript" src="libs/highlight.js/highlight.min.js"></script>
 
 <script>
     Reveal.initialize({
@@ -513,16 +502,18 @@ second term:: definition of second term</code></pre></div></div>
         transition: 'slide',
         transitionSpeed: 'default',
         backgroundTransition: 'fade',
+        showNotes: true,
         slideNumber: ['true', 'false'].includes('true') ? 'true' === 'true' : 'true',
         dependencies: [
-            { src: 'libs/reveal.js/plugin/notes/notes.js', async: true },
-            { src: 'libs/reveal.js/plugin/zoom/zoom.js', async: true },
-            { src: 'libs/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.highlightAll(); }},
-            { src: 'libs/reveal.js/plugin/qrcode/qrcode.min.js', async: true },
-            { src: 'libs/reveal.js/plugin/qrcode/index.js', async: true },
-        ],
-        plugins: [ Plugin.MathJax2 ]
+            { src: 'libs/reveal.js/plugin/notes/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
+            { src: 'libs/reveal.js/plugin/zoom/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom)} },
+            { src: 'libs/reveal.js/plugin/math/math.js', async: true, callback: () => { Reveal.registerPlugin(RevealMath)} },
+            { src: 'libs/qrcode/qrcode.min.js', async: true },
+            { src: 'libs/qrcode/index.js', async: true },
+        ]
     })
+    
+    hljs.highlightAll();
 </script>
 
 
