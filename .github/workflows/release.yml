@@ -8,7 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,14 +22,14 @@ jobs:
       - name: Dependencies
         run: |
           npm install
-          npm run package
+          npm install -g @vscode/vsce
 
-      - name: Test (Ubuntu)
+      - name: Test
         run: xvfb-run npm test
 
       - name: Package
         run: |
-          npm install -g @vscode/vsce
+          npm run package
           vsce package
 
       - name: Upload Release Assets
