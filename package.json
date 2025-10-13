@@ -19,7 +19,7 @@
 		"onCommand:asciidocSlides.exportInlinedHtml",
 		"onCommand:asciidocSlides.openInBrowser"
 	],
-	"icon": "media/icon.png",
+	"icon": "media/favicon.png",
 	"keywords": [
 		"asciidoc",
 		"reveal.js",
