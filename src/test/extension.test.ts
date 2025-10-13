@@ -2,8 +2,9 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 
-suite('Extension Test Suite', () => {
+suite('Extension Test Suite', function() {
     vscode.window.showInformationMessage('Start all tests.');
+    this.timeout(10000); // 10 seconds for all tests
 
     test('Open "demo.adoc"', async () => {
         var document = await vscode.workspace.openTextDocument(__dirname + '/../../demo.adoc');
