@@ -17,7 +17,8 @@
 		"onCommand:asciidocSlides.preview",
 		"onCommand:asciidocSlides.exportHtml",
 		"onCommand:asciidocSlides.exportInlinedHtml",
-		"onCommand:asciidocSlides.openInBrowser"
+		"onCommand:asciidocSlides.openInBrowser",
+		"onLanguage:asciidoc"
 	],
 	"icon": "media/favicon.png",
 	"keywords": [
