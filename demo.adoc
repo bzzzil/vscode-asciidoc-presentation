@@ -317,6 +317,16 @@ $ J(\theta_0,\theta_1) = \sum_{i=0} $
 
 \( x = {-b \pm \sqrt{b^2-4ac} \over 2a} \)
 
+== Speakers View
+
+Press *`'S'`* to show speakers view in separate window.
+There is extra info visible in that window!
+
+[.notes]
+--
+* And here are speakers notes visible just here
+* Any block marked as `[.notes]` will appear here
+--
 
 == QR codes
 
