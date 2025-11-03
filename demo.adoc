@@ -72,7 +72,7 @@ image::media/surprise.gif[background, size=cover]
 [background-video="https://url.org/video.mp4",options="loop,muted"]
 --
 
-== PlantUml
+== PlantUML
 [source, asciidoc]
 --
 [plantuml]
@@ -81,7 +81,7 @@ database Git
 actor Alice
 Git -> Alice: Pull
 Alice -> Alice: Work
-Git -[#red]> Git: Push
+Alice -[#red]> Git  : Push
 ....
 --
 
@@ -333,3 +333,33 @@ There is extra info visible in that window!
 ++++
 <div class="reveal-js-qrcode" height="400">https://google.com/</div>
 ++++
+
+== Some other features
+
+Classics: * *bold* *, _ _italic_ _, ` `monospace` `.
+
+^Superscript^ and ~ ~Subscript~ ~.
+
+[.small]
+Use `[.small]` to make text smaller.
+
+* Plus (`+`) can +
+be used +
+to make linebreaks. +
+But this is still one paragraph!
+
+== Links
+
+* https://google.com[] or link:https://google.com[Google.com]
+
+* <<Quotes>> — link to another slide by title. Well, looks not great.
+
+* But there is a workaround: <<Quotes, Quotes>>.
+
+== Something is missing?
+
+* link:https://github.com/bzzzil/vscode-asciidoc-presentation/issues[Write an issue]
+* Propose a pull request 😉
+
+
+== Cheers!
