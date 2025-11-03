@@ -13,7 +13,7 @@
         transition: '<%= transition %>',
         transitionSpeed: '<%= transitionSpeed %>',
         backgroundTransition: '<%= backgroundTransition %>',
-        showNotes: true,
+        showNotes: false,
         slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [
             { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
