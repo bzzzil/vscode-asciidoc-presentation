@@ -37,9 +37,7 @@
     
     hljs.highlightAll();
 </script>
-<% } %>
-
-<% if (isInlined) { %>
+<% } else { %>
 <script type="text/javascript" src="<%= absolutePath %>libs/qrcode/qrcode.min.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/qrcode/index.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js/plugin/math/math.js"></script>
