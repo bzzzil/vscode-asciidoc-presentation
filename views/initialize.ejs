@@ -28,8 +28,15 @@
         dependencies: [
             { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
             { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom)} },
+<<<<<<< HEAD
         ],
         plugins: [ Plugin.MathJax2, RevealLoadContent, RevealAnimate, RevealQRCode ]
+=======
+            { src: '<%= absolutePath %>libs/qrcode/qrcode.min.js', async: true },
+            { src: '<%= absolutePath %>libs/qrcode/index.js', async: true },
+        ],
+        plugins: [ Plugin.MathJax2, RevealLoadContent, RevealAnimate ]
+>>>>>>> f1b8df2 (new: experiments with animate plugin)
     })
 </script>
 <% } else { %>
