@@ -334,6 +334,14 @@ There is extra info visible in that window!
 <div class="reveal-js-qrcode" height="400">https://google.com/</div>
 ++++
 
+== QR codes
+
+[qrcode, format="png", xdim=4]
+....
+Hello World!
+....
+
+
 == Some other features
 
 Classics: * *bold* *, _ _italic_ _, ` `monospace` `.
