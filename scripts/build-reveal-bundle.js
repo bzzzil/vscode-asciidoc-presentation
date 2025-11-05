@@ -60,7 +60,9 @@ function copyRevealPlugins(srcRoot, destRoot) {
     entries.forEach(entry => {
         const pluginPath = path.join(srcRoot, entry);
         const stat = fs.statSync(pluginPath);
-        if (!stat.isDirectory()) return;
+        if (!stat.isDirectory()) {
+            return;
+        }
 
         // prefer dist folder inside plugin package, fallback to plugin root
         const pluginDist = path.join(pluginPath, 'dist');
