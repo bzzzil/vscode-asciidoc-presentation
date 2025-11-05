@@ -1,8 +1,8 @@
 node_modules
-.vscode-test/
-out/
-dist/
-package-lock.json
-*.vsix
-libs/
-
+/.vscode-test/
+/out/
+/dist/
+/package-lock.json
+/*.vsix
+/libs/
+/index.html
