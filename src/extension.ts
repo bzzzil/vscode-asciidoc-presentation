@@ -8,57 +8,74 @@ import { ContainerManager } from './ContainerManager';
 const completionItemsJson = [
 	{
 		'label' : ':revealjs_theme:',
+		'description': 'Presentation theme',
 		'detail' : 'Presentation theme (see https://revealjs.com/themes/)',
 		'values' : ['beige', 'blood', 'moon', 'simple', 'solarized', 'sky', 'black', 'league', 'night', 'serif', 'white'],
 	},
 	{
 		'label' : ':revealjs_slideNumber:',
+		'description': 'Slide number format',
 		'detail' : 'Display the page number of the current slide? true/false or format string',
 		'values' : ['true', 'false', 'h.v', 'h/v', 'c', 'c/t'],
 	},
 	{
 		'label' : ':revealjs_center:',
+		'description': 'Center slides vertically',
 		'detail' : 'Center slides vertically? true/false',
 		'values' : ['true', 'false'],
 	},
 	{
 		'label' : ':revealjs_customtheme:',
+		'description': 'Custom theme CSS file location',
 		'detail' : 'Custom theme CSS file location',
 	},
 	{
 		'label' : ':revealjs_controls:',
+		'description': 'Show slide controls',
 		'detail' : 'Show slide controls? true/false',
 		'values' : ['true', 'false'],
 	},
 	{
 		'label' : ':revealjs_controlsLayout:',
+		'description': 'Controls layout',
 		'detail' : 'Determines where controls appear, "edges" or "bottom-right"',
 		'values' : ['edges', 'bottom-right'],
 	},
 	{
 		'label' : ':revealjs_controlsBackArrows:',
+		'description': 'Back arrows visibility',
 		'detail' : 'Visibility rule for backwards navigation arrows',
 		'values' : ['faded', 'hidden', 'visible'],
 	},
 	{
 		'label' : ':revealjs_progress:',
+		'description': 'Show presentation progress bar',
 		'detail' : 'Display a presentation progress bar',
 		'values' : ['true', 'false'],
 	},
 	{
 		'label' : ':revealjs_transition:',
-		'detail' : 'Slides transition type',
+		'description': 'Slides transition type',
+		'detail' : 'Default slides transition type',
 		'values' : ['none', 'fade', 'slide', 'convex', 'concave', 'zoom'],
 	},
 	{
 		'label' : ':revealjs_transitionSpeed:',
+		'description': 'Slides transition speed',
 		'detail' : 'Slides transition speed: default/fast/slow',
 		'values' : ['default', 'fast', 'slow'],
 	},
 	{
 		'label' : ':revealjs_backgroundTransition:',
+		'description': 'Background transition type',
 		'detail' : 'Slide background transition: none/fade/slide/convex/concave/zoom',
 		'values' : ['none', 'fade', 'slide', 'convex', 'concave', 'zoom'],
+	},
+	{
+		'label' : ':kroki-server-url:',
+		'description': 'Kroki server URL',
+		'detail' : 'Custom Kroki server URL (instead of default https://kroki.io)',
+		'values' : ['https://kroki.io'],
 	},
 ];
 
@@ -122,9 +139,15 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('asciiDocPresentation.openInBrowser', () => openInBrowser(containerManager)));
 
 	completionItemsJson.forEach((item) => {
-		let ci = new vscode.CompletionItem(item.label,vscode.CompletionItemKind.Property);
+		let ci = new vscode.CompletionItem(
+			{
+				label:item.label,
+				description: item.description
+			},
+			vscode.CompletionItemKind.Text
+		);
 		ci.detail = item.detail;
-		ci.insertText = item.label.substring(1) + ' ';
+		ci.insertText = new vscode.SnippetString(item.label.substring(1));
 		if (item.values) {
 			ci.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' };
 		}
