@@ -81,50 +81,16 @@ const completionItemsJson = [
 
 var completionItems : vscode.CompletionItem[] = [];
 
-function provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-	const currentText = document.lineAt(position).text;
-	const currentTextNoSpaces = currentText.replace(/\s/g, '');
-	if (currentTextNoSpaces.length) {
-		// Find all completion items fitting current string
-		var filtered = completionItems.filter(x => 
-			(typeof x.label === "string" && x.label.startsWith(currentTextNoSpaces)) ||
-			(typeof x.label === "object" && (x.label as vscode.CompletionItemLabel).label.startsWith(currentTextNoSpaces))
-		);
-		if (filtered.length === 0) {
-			return undefined;
-		}
-		else if (filtered.length === 1) {
-			var lastSymbol = currentText.substring(currentText.length-1);
-			if (lastSymbol === ' ' || lastSymbol === ':') {
-				// For filtered property try to propose values
-				var filteredValues = completionItemsJson.filter(x => x.label.startsWith(currentTextNoSpaces));
-				if (filteredValues.length === 1 && filteredValues[0].values) {
-					var subCompletionItems : vscode.CompletionItem[] = [];
-					filteredValues[0].values.forEach((item) => {
-						let ci = new vscode.CompletionItem(item, vscode.CompletionItemKind.Value);
-						ci.sortText = "_";
-						subCompletionItems.push(ci);
-					} );
-					return subCompletionItems;
-				} else {
-					// No separator after value - no suggestions
-					return undefined;
-				}
-			} else {
-				if (currentTextNoSpaces === filtered[0].label) {
-					// Everything already entered. Nothing to suggest
-					return undefined;
-				} else {
-					// The only option
-					return filtered;
-				}
-			}
-		} else {
-			return filtered;
-		}
-	}
+async function provideCompletionItems(
+    textDocument: vscode.TextDocument,
+    position: vscode.Position): Promise<vscode.CompletionItem[]|undefined> {
+    const currentText = textDocument.lineAt(position).text;
+    const currentTextNoSpaces = currentText.replace(/\s/g, '');
+    if (currentTextNoSpaces.length === 0 || !currentTextNoSpaces.startsWith(':')) {
+        return undefined;
+    }
 
-	return undefined;
+    return completionItems;
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -147,14 +113,36 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.CompletionItemKind.Text
 		);
 		ci.detail = item.detail;
-		ci.insertText = new vscode.SnippetString(item.label.substring(1));
-		if (item.values) {
-			ci.command = { command: 'editor.action.triggerSuggest', title: 'Re-trigger completions...' };
-		}
+		ci.insertText = new vscode.SnippetString(item.label.substring(1) + ' ');
 		completionItems.push(ci);
 	} );
 
 	const completionProvider = vscode.languages.registerCompletionItemProvider('asciidoc', {provideCompletionItems} , ':',' ');
 
 	context.subscriptions.push(completionProvider);
+
+    // Inline suggestions for second-level values
+    const inlineProvider = vscode.languages.registerInlineCompletionItemProvider(
+        { language: 'asciidoc' },
+        {
+            provideInlineCompletionItems(document, position) {
+                const line = document.lineAt(position).text;
+                const uptoCursor = line.slice(0, position.character);
+                const noSpaces = uptoCursor.replace(/\s/g, '');
+
+                if (!uptoCursor.endsWith(': ')) {
+					return;
+				}
+
+                const match = completionItemsJson.find(x => x.label === noSpaces);
+                if (!match || !match.values) {
+					return;
+				}
+
+                const items = match.values.map(v => new vscode.InlineCompletionItem(v, new vscode.Range(position, position)));
+                return new vscode.InlineCompletionList(items);
+            }
+        }
+    );
+    context.subscriptions.push(inlineProvider);
 }
