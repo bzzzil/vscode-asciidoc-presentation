@@ -112,11 +112,9 @@ export function activate(context: vscode.ExtensionContext) {
 				position: vscode.Position): vscode.CompletionItem[]|undefined {
 				const currentText = textDocument.lineAt(position).text;
 				const currentTextNoSpaces = currentText.replace(/\s/g, '');
-				if (currentTextNoSpaces.length === 0 || !currentTextNoSpaces.startsWith(':')) {
-					return;
+				if (currentTextNoSpaces === ':') {
+					return completionItems;
 				}
-
-				return completionItems;
 			}
 		},
 		':', ' ',
