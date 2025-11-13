@@ -17,7 +17,13 @@ const initQRCode = function(deck) {
         e.style.display = "flex";
         e.style.flexDirection = "column";
         e.style.alignItems = "center";
-        new QRCode(e, {text:url, height:height, width: height});
+        new QRCode(e, 
+			{
+				text: url,
+				height: height,
+				width: height,
+			}
+		);
         if(e.classList.contains("reveal-js-qrcode-display-link")) {
             var p = document.createElement("p");
             var a = document.createElement("a");
