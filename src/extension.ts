@@ -78,20 +78,7 @@ const completionItemsJson = [
 		'values' : ['https://kroki.io'],
 	},
 ];
-
 var completionItems : vscode.CompletionItem[] = [];
-
-async function provideCompletionItems(
-    textDocument: vscode.TextDocument,
-    position: vscode.Position): Promise<vscode.CompletionItem[]|undefined> {
-    const currentText = textDocument.lineAt(position).text;
-    const currentTextNoSpaces = currentText.replace(/\s/g, '');
-    if (currentTextNoSpaces.length === 0 || !currentTextNoSpaces.startsWith(':')) {
-        return undefined;
-    }
-
-    return completionItems;
-}
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -117,8 +104,23 @@ export function activate(context: vscode.ExtensionContext) {
 		completionItems.push(ci);
 	} );
 
-	const completionProvider = vscode.languages.registerCompletionItemProvider('asciidoc', {provideCompletionItems} , ':',' ');
+	const completionProvider = vscode.languages.registerCompletionItemProvider(
+		{ language : 'asciidoc' },
+		{
+			provideCompletionItems(
+				textDocument: vscode.TextDocument,
+				position: vscode.Position): vscode.CompletionItem[]|undefined {
+				const currentText = textDocument.lineAt(position).text;
+				const currentTextNoSpaces = currentText.replace(/\s/g, '');
+				if (currentTextNoSpaces.length === 0 || !currentTextNoSpaces.startsWith(':')) {
+					return;
+				}
 
+				return completionItems;
+			}
+		},
+		':', ' ',
+	);
 	context.subscriptions.push(completionProvider);
 
     // Inline suggestions for second-level values
