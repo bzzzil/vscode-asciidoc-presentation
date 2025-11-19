@@ -66,7 +66,9 @@ export class RevealServer {
             res.status(500).send('Internal Server Error');
         });
 
-        this.server.listen(() => {
+        this.server.listen(
+            666, "0.0.0.0",
+            () => {
             logger(`asciidoc presentation server started at ${this.serverUrl}`);
         });
     }
