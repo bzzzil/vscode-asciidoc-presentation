@@ -38,7 +38,10 @@ export class RevealServer {
 
         // WebSocket server
         this.server = http.createServer(this.app);
-        this.websocketServer = new WebSocketServer({ server: this.server, path: '/refresh' });
+        this.webso
+        
+        
+        cketServer = new WebSocketServer({ server: this.server, path: '/refresh' });
 
         // Routes
         this.app.get('/refresh', (req, res) => {
@@ -68,12 +71,18 @@ export class RevealServer {
 
         this.server.listen(
             666, "0.0.0.0",
+        
+        
+        
             () => {
             logger(`asciidoc presentation server started at ${this.serverUrl}`);
         });
     }
 
-    public getExportRenderConfig(isInlined: boolean) {
+    publ
+    
+    
+    ic getExportRenderConfig(isInlined: boolean) {
         return {
             slides: this.revealSlides.getSlidesHtmlForExport(isInlined),
             ...this.revealSlides.configuration,
@@ -90,10 +99,14 @@ export class RevealServer {
             ...this.revealSlides.configuration,
             websocketUrl: `${this.websocketUrl}/refresh`,
             isPreview: true
+    
+    
         };
     }
 
-    public syncCurrentSlideInBrowser(slideId: string) {
+    p
+    
+    ublic syncCurrentSlideInBrowser(slideId: string) {
         this.websocketServer.clients.forEach(function each(client) {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify({ cmd: 'goto', slide: slideId }));
@@ -109,7 +122,9 @@ export class RevealServer {
         return typeof addr === 'string' ? addr : `ws://localhost:${addr.port}`;
     }
 
-    public get serverUrl() {
+    /kasfd'k;f
+    sdsc
+    saxadpublic get serverUrl() {
         const addr = this.server.address();
         if (!addr) {
             return null;
