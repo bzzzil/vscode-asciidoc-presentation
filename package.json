@@ -100,7 +100,7 @@
 		"ejs": "^3.1.10",
 		"express": "^5.1.0",
 		"highlight.js": "^11.10.0",
-		"open": "^10.1.0",
+		"open": "^11.0.0",
 		"reveal.js": "^5.1.0",
 		"reveal.js-plugins": "^4.2.5",
 		"serve-favicon": "^2.5.1",
