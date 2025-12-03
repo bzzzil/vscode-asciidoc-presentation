@@ -71,7 +71,7 @@
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.5",
-		"@types/express": "^5.0.5",
+		"@types/express": "^5.0.6",
 		"@types/mocha": "^10.0.7",
 		"@types/node": "^24.10.1",
 		"@types/serve-favicon": "^2.5.7",
@@ -98,7 +98,7 @@
 		"axios": "^1.13.1",
 		"bufferutil": "^4.0.8",
 		"ejs": "^3.1.10",
-		"express": "^5.1.0",
+		"express": "^5.2.1",
 		"highlight.js": "^11.10.0",
 		"open": "^11.0.0",
 		"reveal.js": "^5.1.0",
