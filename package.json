@@ -75,7 +75,7 @@
 		"@types/mocha": "^10.0.7",
 		"@types/node": "^25.0.2",
 		"@types/serve-favicon": "^2.5.7",
-		"@types/vscode": "^1.106.1",
+		"@types/vscode": "^1.107.0",
 		"@types/web-resource-inliner": "^4.2.5",
 		"@typescript-eslint/eslint-plugin": "^8.49.0",
 		"@typescript-eslint/parser": "^8.49.0",
