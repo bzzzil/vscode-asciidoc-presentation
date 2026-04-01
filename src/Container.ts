@@ -25,7 +25,7 @@ export class Container {
         }
         this.revealSlides.update();
         this.server.syncCurrentSlideInBrowser(this.revealSlides.currentSlideId);
-        void this.refreshWebview();
+        this.refreshWebview();
         this.logger('currentSlideId [' + this.revealSlides.currentSlideId + ']');
     }
 
@@ -87,7 +87,7 @@ export class Container {
             webviewPanel.onDidDispose(() => {
                 this.setWebviewPanel(undefined);
             });
-            void this.refreshWebview();
+            this.refreshWebview();
         }
     }
 
