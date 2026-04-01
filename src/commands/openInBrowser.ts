@@ -10,5 +10,9 @@ export async function openInBrowser(containerManager: ContainerManager) {
 
     const container = containerManager.getOrCreateContainer(editor);
 
-    open.default(await container.getBrowserUrl());
+    try {
+        await open.default(await container.getBrowserUrl());
+    } catch (error) {
+        console.error('Failed to open URL in browser:', error);
+    }
 }
