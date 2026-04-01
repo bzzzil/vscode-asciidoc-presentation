@@ -16,6 +16,7 @@ export class RevealServer {
     private readonly server: http.Server;
     private readonly websocketServer: WebSocketServer;
     private readonly websocketPath: string = '/refresh';
+    private readonly _ready: Promise<void>;
     private logger: (line: string) => void;
     private revealSlides: RevealSlides;
 
@@ -67,9 +68,18 @@ export class RevealServer {
             res.status(500).send('Internal Server Error');
         });
 
-        this.server.listen(0, 'localhost', () => {
-            logger(`asciidoc presentation server started at ${this.serverUrl}`);
+        this._ready = new Promise((resolve, reject) => {
+            this.server.once('error', reject);
+            this.server.listen(0, '127.0.0.1', () => {
+                this.server.off('error', reject);
+                logger(`asciidoc presentation server started at ${this.serverUrl}`);
+                resolve();
+            });
         });
+    }
+
+    public get ready() {
+        return this._ready;
     }
 
     public getExportRenderConfig(isInlined: boolean) {
@@ -105,7 +115,11 @@ export class RevealServer {
         if (!addr) {
             return null;
         }
-        return typeof addr === 'string' ? addr : `http://${addr.address}:${addr.port}`;
+        if (typeof addr === 'string') {
+            return addr;
+        }
+
+        return `http://${addr.address}:${addr.port}`;
     }
 
     public get previewUrl() {
