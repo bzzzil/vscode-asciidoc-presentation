@@ -15,6 +15,8 @@ export class RevealServer {
     private readonly extensionPath: string;
     private readonly server: http.Server;
     private readonly websocketServer: WebSocketServer;
+    private readonly websocketPath: string = '/refresh';
+    private readonly _ready: Promise<void>;
     private logger: (line: string) => void;
     private revealSlides: RevealSlides;
 
@@ -38,10 +40,10 @@ export class RevealServer {
 
         // WebSocket server
         this.server = http.createServer(this.app);
-        this.websocketServer = new WebSocketServer({ server: this.server, path: '/refresh' });
+        this.websocketServer = new WebSocketServer({ server: this.server, path: this.websocketPath });
 
         // Routes
-        this.app.get('/refresh', (req, res) => {
+        this.app.get(this.websocketPath, (req, res) => {
             res.sendStatus(200); // WebSocket handled separately
         });
 
@@ -66,9 +68,18 @@ export class RevealServer {
             res.status(500).send('Internal Server Error');
         });
 
-        this.server.listen(() => {
-            logger(`asciidoc presentation server started at ${this.serverUrl}`);
+        this._ready = new Promise((resolve, reject) => {
+            this.server.once('error', reject);
+            this.server.listen(0, '127.0.0.1', () => {
+                this.server.off('error', reject);
+                logger(`asciidoc presentation server started at ${this.serverUrl}`);
+                resolve();
+            });
         });
+    }
+
+    public get ready() {
+        return this._ready;
     }
 
     public getExportRenderConfig(isInlined: boolean) {
@@ -86,7 +97,7 @@ export class RevealServer {
         return {
             slides: this.revealSlides.revealJsSlidesHtml,
             ...this.revealSlides.configuration,
-            websocketUrl: `${this.websocketUrl}/refresh`,
+            websocketPath: this.websocketPath,
             isPreview: true
         };
     }
@@ -99,20 +110,16 @@ export class RevealServer {
         });
     }
 
-    public get websocketUrl() {
-        const addr = this.server.address();
-        if (!addr) {
-            return null;
-        }
-        return typeof addr === 'string' ? addr : `ws://localhost:${addr.port}`;
-    }
-
     public get serverUrl() {
         const addr = this.server.address();
         if (!addr) {
             return null;
         }
-        return typeof addr === 'string' ? addr : `http://localhost:${addr.port}`;
+        if (typeof addr === 'string') {
+            return addr;
+        }
+
+        return `http://${addr.address}:${addr.port}`;
     }
 
     public get previewUrl() {

@@ -145,4 +145,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
     context.subscriptions.push(inlineProvider);
+
+	return {
+		"containerManager" : containerManager
+	};
 }

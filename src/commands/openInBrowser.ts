@@ -1,7 +1,7 @@
 import * as open from 'open';
 import { ContainerManager } from "../ContainerManager";
 
-export function openInBrowser(containerManager: ContainerManager) {
+export async function openInBrowser(containerManager: ContainerManager) {
     const editor = containerManager.checkActiveEditor();
 
     if (!editor) {
@@ -10,5 +10,9 @@ export function openInBrowser(containerManager: ContainerManager) {
 
     const container = containerManager.getOrCreateContainer(editor);
 
-    open.default(container.browserUrl);
+    try {
+        await open.default(await container.getBrowserUrl());
+    } catch (error) {
+        console.error('Failed to open URL in browser:', error);
+    }
 }

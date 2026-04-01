@@ -39,6 +39,7 @@ export class Container {
     }
 
     public async exportAsHtml(targetFile: string) {
+        await this.server.ready;
         if(this.server.exportUrl) {
             try{
                 const resp = await Axios.get(this.server.exportUrl);
@@ -52,6 +53,7 @@ export class Container {
     }
 
     public async exportAsInlinedHtml(targetFile: string) {
+        await this.server.ready;
         if(this.server.exportInlinedUrl) {
             try{
                 const resp = await Axios.get(this.server.exportInlinedUrl);
@@ -89,7 +91,8 @@ export class Container {
         }
     }
 
-    public get browserUrl() {
+    public async getBrowserUrl() {
+        await this.server.ready;
         return `${this.server.previewUrl}${this.revealSlides.currentSlideId}`;
     }
 
@@ -97,12 +100,13 @@ export class Container {
         return this.revealSlides.configuration.title;
     }
 
-    private refreshWebview() {
+    private async refreshWebview() {
         if(this.webviewPanel) {
+            const browserUrl = await this.getBrowserUrl();
             this.webviewPanel.webview.html = '';
             this.webviewPanel.webview.html = `
                 <style>html, body, iframe { height: 100% }</style>
-                <iframe src="${this.browserUrl}" frameBorder="0" style="width: 100%; height: 100%" />`;
+                <iframe src="${browserUrl}" frameBorder="0" style="width: 100%; height: 100%" />`;
         }
     }
 }
