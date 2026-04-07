@@ -1,9 +1,26 @@
 import * as vscode from 'vscode';
 import * as assert from 'assert';
-import { RevealSlides } from '../RevealSlides';
 
 suite('RevealSlides Tests', function () {
     this.timeout(20000);
+
+    let RevealSlides: typeof import('../RevealSlides').RevealSlides;
+
+    suiteSetup(async function () {
+        // Activate the extension so the webpack bundle runs and initialises
+        // Opal + registers the revealjs backend before we load the un-bundled
+        // out/RevealSlides.js.  Without this the raw require of @asciidoctor/
+        // reveal.js crashes with "TypeError: stubs.split is not a function"
+        // because reveal.js 5.0.1 was compiled against an older Opal version
+        // that passes arrays to add_stubs(), while opal-runtime 3.0.1 expects
+        // a comma-separated string.  Once the bundle has run global.Opal is set
+        // and the alreadyInitialized guard in RevealSlides.ts skips register().
+        const ext = vscode.extensions.getExtension('bzzzil.vscode-asciidoc-presentation');
+        if (ext && !ext.isActive) {
+            await ext.activate();
+        }
+        RevealSlides = require('../RevealSlides').RevealSlides;
+    });
 
     async function openDoc(content: string, line = 0): Promise<vscode.TextEditor> {
         const doc = await vscode.workspace.openTextDocument({ language: 'asciidoc', content });
