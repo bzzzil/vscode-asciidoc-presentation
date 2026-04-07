@@ -3,7 +3,7 @@ const path = require('path');
 
 const revealDir = path.join(__dirname, '..', 'node_modules', 'reveal.js');
 const revealDistDir = path.join(revealDir, 'dist');
-const revealPluginDir = path.join(revealDir, 'plugin');
+const revealPluginDir = path.join(revealDistDir, 'plugin');
 const outDir = path.join(__dirname, '..', 'libs','reveal.js');
 
 function copyEssentialFiles(srcDir, destDir) {
