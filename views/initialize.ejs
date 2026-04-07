@@ -1,7 +1,7 @@
 <script type="text/javascript" src="<%= absolutePath %>libs/qrcode/qrcode.min.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/qrcode/index.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/highlight.js/highlight.min.js"></script>
-<script type="text/javascript" src="<%= absolutePath %>libs/reveal.js/plugin/math/math.js"></script>
+<script type="text/javascript" src="<%= absolutePath %>libs/reveal.js/plugin/math.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js-plugins/loadcontent/plugin.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js-plugins/animate/svg.min.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js-plugins/animate/plugin.js"></script>
@@ -26,8 +26,8 @@
             autoplay: true // default is false
         },
         dependencies: [
-            { src: '<%= absolutePath %>libs/reveal.js/plugin/notes/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
-            { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom)} },
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
+            { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom)} },
         ],
         plugins: [ Plugin.MathJax2, RevealLoadContent, RevealAnimate, RevealQRCode ]
     })
