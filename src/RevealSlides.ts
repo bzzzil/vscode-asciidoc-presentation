@@ -8,12 +8,24 @@ import * as vscode from 'vscode';
  * have already required('opal-runtime') or required('asciidoctor.js') or similar
  * and thereby already bridged opal.
  * So we still tied to asciidoctor/reveal.js 5.0.1
- *  */
-const asciidoctor: Asciidoctor = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')();
+ *
+ * The same guard also covers the reveal.js and kroki backend registrations:
+ * if Opal is already initialised (e.g. because the webpack bundle was loaded first
+ * and this un-bundled module is loaded a second time by the test runner) calling
+ * register() again causes "TypeError: stubs.split is not a function" inside the
+ * Opal runtime. When Opal is already up the backends are already registered, so
+ * it is safe to skip the register() calls.
+ */
+const alreadyInitialized = !!((<any>global).Opal && (<any>global).Opal.Asciidoctor);
+const asciidoctor: Asciidoctor = alreadyInitialized
+    ? (<any>global).Opal.Asciidoctor as Asciidoctor
+    : require('@asciidoctor/core')();
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 const kroki = require("asciidoctor-kroki");
-asciidoctorRevealjs.register();
-kroki.register(asciidoctor.Extensions);
+if (!alreadyInitialized) {
+    asciidoctorRevealjs.register();
+    kroki.register(asciidoctor.Extensions);
+}
 
 export type AsciidocAttributes = {
     title: string,
