@@ -79,4 +79,41 @@ suite('Extension Test Suite', function() {
         content = content.replace(regex, '');
         fs.writeFileSync(outputFile, content, 'utf8');        
     });
+
+    test('showPreview command creates a webview panel', async () => {
+        var document = await vscode.workspace.openTextDocument(__dirname + '/../../demo.adoc');
+        assert.ok(document);
+        var editor = await vscode.window.showTextDocument(document);
+        assert.ok(editor);
+        var ext = vscode.extensions.getExtension('bzzzil.vscode-asciidoc-presentation');
+        assert.ok(ext);
+        const context = await ext.activate();
+        assert.equal(ext.isActive, true);
+
+        await vscode.commands.executeCommand('asciiDocPresentation.preview');
+
+        const container = context.containerManager.getOrCreateContainer(editor);
+        assert.ok(container.hasWebviewPanel(), 'Expected webview panel to be created by preview command');
+    });
+
+    test('onDidSaveTextDocument with non-asciidoc document does not throw', async () => {
+        var document = await vscode.workspace.openTextDocument(__dirname + '/../../demo.adoc');
+        assert.ok(document);
+        var editor = await vscode.window.showTextDocument(document);
+        assert.ok(editor);
+        var ext = vscode.extensions.getExtension('bzzzil.vscode-asciidoc-presentation');
+        assert.ok(ext);
+        const context = await ext.activate();
+        assert.equal(ext.isActive, true);
+
+        const container = context.containerManager.getOrCreateContainer(editor);
+        assert.ok(container);
+
+        // Create a non-asciidoc document and simulate a save event
+        const plainDoc = await vscode.workspace.openTextDocument({ language: 'plaintext', content: 'hello' });
+        // onDidSaveTextDocument checks languageId and returns early for non-asciidoc
+        assert.doesNotThrow(() => {
+            container.onDidSaveTextDocument(plainDoc);
+        }, 'onDidSaveTextDocument should not throw for non-asciidoc documents');
+    });
 });
