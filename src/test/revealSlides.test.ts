@@ -7,14 +7,14 @@ suite('RevealSlides Tests', function () {
     let RevealSlides: typeof import('../RevealSlides').RevealSlides;
 
     suiteSetup(async function () {
-        // Activate the extension so the webpack bundle runs and initialises
-        // Opal + registers the revealjs backend before we load the un-bundled
-        // out/RevealSlides.js.  Without this the raw require of @asciidoctor/
-        // reveal.js crashes with "TypeError: stubs.split is not a function"
-        // because reveal.js 5.0.1 was compiled against an older Opal version
-        // that passes arrays to add_stubs(), while opal-runtime 3.0.1 expects
-        // a comma-separated string.  Once the bundle has run global.Opal is set
-        // and the alreadyInitialized guard in RevealSlides.ts skips register().
+        // Activate the extension first so that the VS Code test host loads all
+        // installed extensions (including joaompinto.asciidoctor-vscode).  That
+        // extension sets global.Opal to its own older asciidoctor-opal-runtime
+        // which DOES support passing arrays to add_stubs() — matching the way
+        // @asciidoctor/reveal.js 5.0.1 (compiled with Opal 0.11.99.dev) calls it.
+        // Without this, loading out/RevealSlides.js would require @asciidoctor/
+        // opal-runtime 3.0.1 directly, whose add_stubs() only accepts strings,
+        // causing "TypeError: stubs.split is not a function".
         const ext = vscode.extensions.getExtension('bzzzil.vscode-asciidoc-presentation');
         if (ext && !ext.isActive) {
             await ext.activate();
