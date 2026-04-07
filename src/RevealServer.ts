@@ -1,8 +1,8 @@
 import * as http from 'http';
-import * as express from 'express';
+import express = require('express');
 import { Request, Response, NextFunction } from 'express';
 import * as ejs from 'ejs';
-import * as favicon from 'serve-favicon';
+import favicon = require('serve-favicon');
 import * as path from 'path';
 import slash from 'slash';
 import { RevealSlides } from './RevealSlides';
