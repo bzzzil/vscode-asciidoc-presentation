@@ -50,6 +50,25 @@ suite('RevealSlides Tests', function () {
         assert.strictEqual(config.themeCss, undefined);
         assert.strictEqual(config.customThemeCss, undefined);
         assert.strictEqual(config.isInlined, false);
+        assert.strictEqual(config.hash, 'true');
+        assert.strictEqual(config.history, 'true');
+        assert.strictEqual(config.overview, 'true');
+        assert.strictEqual(config.loop, 'false');
+        assert.strictEqual(config.rtl, 'false');
+        assert.strictEqual(config.navigationMode, 'default');
+        assert.strictEqual(config.touch, 'true');
+        assert.strictEqual(config.keyboard, 'true');
+        assert.strictEqual(config.fragments, 'true');
+        assert.strictEqual(config.shuffle, 'false');
+        assert.strictEqual(config.autoSlide, '0');
+        assert.strictEqual(config.autoSlideStoppable, 'true');
+        assert.strictEqual(config.mouseWheel, 'false');
+        assert.strictEqual(config.previewLinks, 'false');
+        assert.strictEqual(config.viewDistance, '3');
+        assert.strictEqual(config.parallaxBackgroundImage, '');
+        assert.strictEqual(config.parallaxBackgroundSize, '');
+        assert.strictEqual(config.parallaxBackgroundHorizontal, '');
+        assert.strictEqual(config.parallaxBackgroundVertical, '');
     });
 
     test('revealjs_theme attribute sets themeCss path', async () => {
@@ -122,6 +141,120 @@ suite('RevealSlides Tests', function () {
         const editor = await openDoc(':revealjs_controlsBackArrows: hidden\n\n= Title\n\n== Slide\n');
         const slides = new RevealSlides(editor);
         assert.strictEqual(slides.configuration.controlsBackArrows, 'hidden');
+    });
+
+    test('revealjs_hash false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_hash: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.hash, 'false');
+    });
+
+    test('revealjs_history false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_history: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.history, 'false');
+    });
+
+    test('revealjs_overview false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_overview: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.overview, 'false');
+    });
+
+    test('revealjs_loop true attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_loop: true\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.loop, 'true');
+    });
+
+    test('revealjs_rtl true attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_rtl: true\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.rtl, 'true');
+    });
+
+    test('revealjs_navigationMode linear attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_navigationMode: linear\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.navigationMode, 'linear');
+    });
+
+    test('revealjs_touch false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_touch: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.touch, 'false');
+    });
+
+    test('revealjs_keyboard false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_keyboard: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.keyboard, 'false');
+    });
+
+    test('revealjs_fragments false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_fragments: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.fragments, 'false');
+    });
+
+    test('revealjs_shuffle true attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_shuffle: true\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.shuffle, 'true');
+    });
+
+    test('revealjs_autoSlide attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_autoSlide: 5000\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.autoSlide, '5000');
+    });
+
+    test('revealjs_autoSlideStoppable false attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_autoSlideStoppable: false\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.autoSlideStoppable, 'false');
+    });
+
+    test('revealjs_mouseWheel true attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_mouseWheel: true\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.mouseWheel, 'true');
+    });
+
+    test('revealjs_previewLinks true attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_previewLinks: true\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.previewLinks, 'true');
+    });
+
+    test('revealjs_viewDistance attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_viewDistance: 5\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.viewDistance, '5');
+    });
+
+    test('revealjs_parallaxBackgroundImage attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_parallaxBackgroundImage: https://example.com/bg.jpg\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.parallaxBackgroundImage, 'https://example.com/bg.jpg');
+    });
+
+    test('revealjs_parallaxBackgroundSize attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_parallaxBackgroundSize: 3000px 2000px\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.parallaxBackgroundSize, '3000px 2000px');
+    });
+
+    test('revealjs_parallaxBackgroundHorizontal attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_parallaxBackgroundHorizontal: 200\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.parallaxBackgroundHorizontal, '200');
+    });
+
+    test('revealjs_parallaxBackgroundVertical attribute is applied', async () => {
+        const editor = await openDoc(':revealjs_parallaxBackgroundVertical: 50\n\n= Title\n\n== Slide\n');
+        const slides = new RevealSlides(editor);
+        assert.strictEqual(slides.configuration.parallaxBackgroundVertical, '50');
     });
 
     // ── Slide ID under cursor ─────────────────────────────────────────────────
