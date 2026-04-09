@@ -159,6 +159,180 @@ results in:
        cherry-pick id:"4"
 ....
 
+=== Ditaa
+
+Turns ASCII art into proper diagrams with link:https://ditaa.sourceforge.net/[Ditaa]
+
+[source, asciidoc]
+--
+[ditaa]
+....
++--------+     +--------+
+|  write | --> | deploy |
+|  code  |     |        |
++---+----+     +---+----+
+    ^               |
+    +-- fix bugs ---+
+....
+--
+
+results in:
+
+[ditaa]
+....
++--------+     +--------+
+|  write | --> | deploy |
+|  code  |     |        |
++---+----+     +---+----+
+    ^               |
+    |               v
+    |          +--------+
+    +----------| fix    |
+               | bugs   |
+               +--------+
+....
+
+=== WaveDrom
+
+Digital timing diagrams via link:https://wavedrom.com/[WaveDrom]
+
+[source, asciidoc]
+--
+[wavedrom]
+....
+{ signal: [
+  { name: "clk",     wave: "p.....|..." },
+  { name: "Data",    wave: "x.345x|=.x",
+    data: ["head","body","tail","data"] },
+  { name: "Request", wave: "0.1..0|1.0" },
+  {},
+  { name: "Ack",     wave: "1.....|01." }
+]}
+....
+--
+
+results in:
+
+[wavedrom]
+....
+{ signal: [
+  { name: "clk",     wave: "p.....|..." },
+  { name: "Data",    wave: "x.345x|=.x",
+    data: ["head", "body", "tail", "data"] },
+  { name: "Request", wave: "0.1..0|1.0" },
+  {},
+  { name: "Ack",     wave: "1.....|01." }
+]}
+....
+
+=== Nomnoml
+
+Casual class diagrams via link:https://www.nomnoml.com/[Nomnoml]
+
+[source, asciidoc]
+--
+[nomnoml]
+....
+[Cat] - ignores -> [Human]
+[Human] - feeds -> [Cat]
+....
+--
+
+results in:
+
+[nomnoml]
+....
+#stroke: #a86128
+#font: 14
+[<abstract>Cat|
+  name: Whiskers
+  mood: indifferent
+] - nibbles -> [Keyboard]
+[Cat] - ignores -> [Human]
+[Human|
+  name: Developer
+] - feeds -> [Cat]
+[Human] - buys -> [Cat Toys]
+[Cat] - ignores -> [Cat Toys]
+....
+
+=== Vega-Lite
+
+Data visualization with link:https://vega.github.io/vega-lite/[Vega-Lite]
+
+[source, asciidoc]
+--
+[vegalite]
+....
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "mark": "bar",
+  "data": { "values": [...] },
+  "encoding": { "x": {...}, "y": {...} }
+}
+....
+--
+
+results in:
+
+[vegalite]
+....
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Coffees consumed per day of the week",
+  "data": {
+    "values": [
+      {"day": "Mon", "coffees": 3},
+      {"day": "Tue", "coffees": 4},
+      {"day": "Wed", "coffees": 2},
+      {"day": "Thu", "coffees": 5},
+      {"day": "Fri", "coffees": 7},
+      {"day": "Sat", "coffees": 1},
+      {"day": "Sun", "coffees": 0}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "day", "type": "nominal", "sort": null},
+    "y": {"field": "coffees", "type": "quantitative"},
+    "color": {"field": "coffees", "type": "quantitative",
+              "scale": {"scheme": "reds"}}
+  }
+}
+....
+
+=== D2
+
+Modern diagramming with link:https://d2lang.com/[D2]
+
+[source, asciidoc]
+--
+[d2]
+....
+user -> api: request
+api -> db: query
+db -> api: result
+api -> user: response
+....
+--
+
+results in:
+
+[d2]
+....
+user: User {shape: person}
+api: REST API {shape: hexagon}
+db: PostgreSQL {shape: cylinder}
+cache: Redis {shape: cylinder}
+
+user -> api: "POST /order"
+api -> cache: "check cache"
+cache -> api: "miss!"
+api -> db: "INSERT order"
+db -> api: "ok"
+api -> user: "202 Accepted"
+....
+
 [.columns]
 == Column layout
 
