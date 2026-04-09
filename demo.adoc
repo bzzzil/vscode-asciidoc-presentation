@@ -18,10 +18,10 @@
 // :revealjs_autoSlideStoppable: true
 
 // Parallax background (set image URL to enable)
-// :revealjs_parallaxBackgroundImage: https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/200px-PNG_transparency_demonstration_1.png
-// :revealjs_parallaxBackgroundSize: 2100px 1200px
-// :revealjs_parallaxBackgroundHorizontal: 200
-// :revealjs_parallaxBackgroundVertical: 50
+:revealjs_parallaxBackgroundImage: media/parallax_bg.svg
+:revealjs_parallaxBackgroundSize: 3000px 2500px
+:revealjs_parallaxBackgroundHorizontal: 200
+:revealjs_parallaxBackgroundVertical: 100
 
 // Syntax highlighting theme for code blocks
 :highlightjs-theme: lightfair
@@ -410,7 +410,7 @@ See link:https://github.com/rajgoel/reveal.js-plugins/tree/master/animate[rajgoe
 
 == Reveal.js Parameters
 
-Many reveal.js parameters can be set as document attributes.
+Many reveal.js parameters can be set as document attributes to change the behavior of the slideshow.
 
 [source, asciidoc]
 --
