@@ -333,6 +333,633 @@ db -> api: "ok"
 api -> user: "202 Accepted"
 ....
 
+=== BPMN
+
+Business Process Model and Notation via link:https://www.omg.org/spec/BPMN/2.0/[BPMN 2.0]
+
+[source, asciidoc]
+--
+[bpmn]
+....
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions ...>
+  <process id="morning"> ... </process>
+</definitions>
+....
+--
+
+results in:
+
+[bpmn]
+....
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://example.com/morning">
+  <process id="morning_process" name="Morning Routine" isExecutable="false">
+    <startEvent id="start" name="Alarm rings"><outgoing>f1</outgoing></startEvent>
+    <task id="snooze" name="Hit snooze x3"><incoming>f1</incoming><outgoing>f2</outgoing></task>
+    <task id="coffee" name="Make coffee"><incoming>f2</incoming><outgoing>f3</outgoing></task>
+    <task id="email" name="Check emails"><incoming>f3</incoming><outgoing>f4</outgoing></task>
+    <endEvent id="end" name="Start coding"><incoming>f4</incoming></endEvent>
+    <sequenceFlow id="f1" sourceRef="start"  targetRef="snooze"/>
+    <sequenceFlow id="f2" sourceRef="snooze" targetRef="coffee"/>
+    <sequenceFlow id="f3" sourceRef="coffee" targetRef="email"/>
+    <sequenceFlow id="f4" sourceRef="email"  targetRef="end"/>
+  </process>
+  <bpmndi:BPMNDiagram><bpmndi:BPMNPlane bpmnElement="morning_process">
+    <bpmndi:BPMNShape bpmnElement="start">  <dc:Bounds x="50"  y="82" width="36"  height="36"/></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement="snooze"> <dc:Bounds x="140" y="60" width="100" height="80"/></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement="coffee"> <dc:Bounds x="300" y="60" width="100" height="80"/></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement="email">  <dc:Bounds x="460" y="60" width="100" height="80"/></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape bpmnElement="end">    <dc:Bounds x="620" y="82" width="36"  height="36"/></bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge bpmnElement="f1"><di:waypoint x="86"  y="100"/><di:waypoint x="140" y="100"/></bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement="f2"><di:waypoint x="240" y="100"/><di:waypoint x="300" y="100"/></bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement="f3"><di:waypoint x="400" y="100"/><di:waypoint x="460" y="100"/></bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge bpmnElement="f4"><di:waypoint x="560" y="100"/><di:waypoint x="620" y="100"/></bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane></bpmndi:BPMNDiagram>
+</definitions>
+....
+
+=== C4PlantUML
+
+link:https://github.com/plantuml-stdlib/C4-PlantUML[C4 architecture diagrams] built on top of PlantUML
+
+[source, asciidoc]
+--
+[c4plantuml]
+....
+@startuml
+!include <C4/C4_Context>
+Person(user, "User", "An online shopper")
+System(shop, "Online Shop", "Sells everything")
+...
+@enduml
+....
+--
+
+results in:
+
+[c4plantuml]
+....
+@startuml
+!include <C4/C4_Context>
+
+Person(user, "User", "An online shopper")
+System(shop, "Online Shop", "Sells everything")
+System_Ext(payment, "Payment Gateway", "Charges cards")
+System_Ext(email, "Email System", "Sends receipts")
+
+Rel(user, shop, "Browses and orders")
+Rel(shop, payment, "Charges card via")
+Rel(shop, email, "Sends confirmation via")
+@enduml
+....
+
+=== BlockDiag
+
+Simple block diagrams via link:http://blockdiag.com/[BlockDiag]
+
+[source, asciidoc]
+--
+[blockdiag]
+....
+blockdiag {
+  Dough -> Oven -> Pizza -> Box -> Customer;
+  Sauce -> Oven;
+  Cheese -> Oven;
+}
+....
+--
+
+results in:
+
+[blockdiag]
+....
+blockdiag {
+  orientation = portrait;
+  Dough   [color = "#ffd700"];
+  Sauce   [color = "#ff6347"];
+  Cheese  [color = "#fffacd"];
+  Oven    [color = "#ff8c00", shape = roundedbox];
+  Pizza   [color = "#ff6347"];
+  Box     [color = "#deb887"];
+  Customer [color = "#90ee90", shape = roundedbox];
+
+  Dough  -> Oven;
+  Sauce  -> Oven;
+  Cheese -> Oven;
+  Oven   -> Pizza -> Box -> Customer;
+}
+....
+
+=== SeqDiag
+
+Sequence diagrams via link:http://blockdiag.com/en/seqdiag/[SeqDiag]
+
+[source, asciidoc]
+--
+[seqdiag]
+....
+seqdiag {
+  Developer -> "ChatGPT" -> "Stack Overflow";
+  "Stack Overflow" --> "ChatGPT" --> Developer;
+}
+....
+--
+
+results in:
+
+[seqdiag]
+....
+seqdiag {
+  Developer -> "ChatGPT" [label = "help me fix this bug"];
+  "ChatGPT"  -> "Stack Overflow" [label = "searches internally"];
+  "Stack Overflow" --> "ChatGPT" [label = "404 Not Found"];
+  "ChatGPT" --> Developer [label = "Have you tried turning it off?"];
+  Developer -> Developer [label = "cries softly"];
+}
+....
+
+=== NwDiag
+
+Network diagrams via link:http://blockdiag.com/en/nwdiag/[NwDiag]
+
+[source, asciidoc]
+--
+[nwdiag]
+....
+nwdiag {
+  network internet { Router; }
+  network home { Router; Laptop; Phone; }
+}
+....
+--
+
+results in:
+
+[nwdiag]
+....
+nwdiag {
+  network internet {
+    address = "8.8.x.x/16";
+    Router   [address = "8.8.8.8, 203.0.113.1"];
+  }
+  network home {
+    address = "192.168.1.x/24";
+    Router   [address = "192.168.1.1"];
+    Laptop   [address = "192.168.1.10"];
+    Phone    [address = "192.168.1.11"];
+    "Smart TV" [address = "192.168.1.12"];
+  }
+}
+....
+
+=== RackDiag
+
+Server rack diagrams via link:http://blockdiag.com/en/nwdiag/rackdiag-demo.html[RackDiag]
+
+[source, asciidoc]
+--
+[rackdiag]
+....
+rackdiag {
+  16U;
+  1: UPS [2U];
+  3: Switch;
+  4-6: Web Server [3U];
+}
+....
+--
+
+results in:
+
+[rackdiag]
+....
+rackdiag {
+  16U;
+  description = "Startup Server Closet";
+  1-2: UPS 2000VA        [2U, color = "#ffd700"];
+  3:   Patch Panel       [1U, color = "#d3d3d3"];
+  4:   Switch 24-Port    [1U, color = "#87ceeb"];
+  5-7: Web Server        [3U, color = "#90ee90"];
+  8-10: Database Server  [3U, color = "#ff6347"];
+  11-13: Cache (Redis)   [3U, color = "#dda0dd"];
+  14-15: Spare           [2U, color = "#f5f5f5"];
+  16:  Temperature Sensor [1U, color = "#ffa500"];
+}
+....
+
+=== PacketDiag
+
+Packet / frame header diagrams via link:http://blockdiag.com/en/nwdiag/packetdiag-demo.html[PacketDiag]
+
+[source, asciidoc]
+--
+[packetdiag]
+....
+packetdiag {
+  colwidth = 32;
+  0-15: Src Port; 16-31: Dst Port;
+  32-63: Sequence Number;
+  ...
+}
+....
+--
+
+results in:
+
+[packetdiag]
+....
+packetdiag {
+  colwidth = 32;
+  node_height = 72;
+  0-15:   Source Port;
+  16-31:  Destination Port;
+  32-63:  Sequence Number;
+  64-95:  Acknowledgment Number;
+  96-99:  Data Offset;
+  100-105: Reserved;
+  106:    URG;
+  107:    ACK;
+  108:    PSH;
+  109:    RST;
+  110:    SYN;
+  111:    FIN;
+  112-127: Window Size;
+  128-143: Checksum;
+  144-159: Urgent Pointer;
+}
+....
+
+=== ERD
+
+Entity-relationship diagrams via link:https://github.com/nicowillis/erd[erd]
+
+[source, asciidoc]
+--
+[erd]
+....
+[Person] *id name
+[Pet]    *id name +owner_id
+Person 1--* Pet
+....
+--
+
+results in:
+
+[erd]
+....
+[Developer]
+*id
+name
+coffee_per_day
+github_stars
+
+[Project]
+*id
+title
++developer_id
+deadline
+is_on_fire
+
+[Bug]
+*id
+description
++project_id
+status
+priority
+reproducible
+
+Developer 1--* Project
+Project   1--* Bug
+....
+
+=== DBML
+
+Database schema as code via link:https://dbml.dbdiagram.io/[DBML]
+
+[source, asciidoc]
+--
+[dbml]
+....
+Table users { id integer [pk] username varchar }
+Table posts { id integer [pk] author_id integer [ref: > users.id] }
+....
+--
+
+results in:
+
+[dbml]
+....
+Table users {
+  id         integer   [pk, increment]
+  username   varchar   [unique, not null]
+  email      varchar   [unique, not null]
+  bio        text
+  created_at timestamp [default: `now()`]
+}
+
+Table posts {
+  id         integer   [pk, increment]
+  title      varchar   [not null]
+  content    text
+  author_id  integer   [ref: > users.id]
+  likes      integer   [default: 0]
+  created_at timestamp [default: `now()`]
+}
+
+Table follows {
+  follower_id  integer [ref: > users.id]
+  following_id integer [ref: > users.id]
+  created_at   timestamp
+
+  indexes {
+    (follower_id, following_id) [pk]
+  }
+}
+....
+
+=== SVGBob
+
+ASCII art converted to clean SVG via link:https://ivanceras.github.io/svgbob-editor/[SVGBob]
+
+[source, asciidoc]
+--
+[svgbob]
+....
+Client ----> Server ----> Database
+....
+--
+
+results in:
+
+[svgbob]
+....
+                          request
+    .---------.          .---------.          .---------.
+    |         |  HTTP    |         |   SQL    |         |
+    | Browser +--------->+   API   +--------->+   DB    |
+    |         |          |         |          |         |
+    '---------'          '----+----'          '---------'
+                              |
+                              | cache miss
+                              v
+                         .---------.
+                         |         |
+                         |  Redis  |
+                         |         |
+                         '---------'
+....
+
+=== ByteField
+
+Byte-level field diagrams via link:https://github.com/Deep-Symmetry/bytefield-svg[ByteField]
+
+[source, asciidoc]
+--
+[bytefield]
+....
+(draw-column-headers)
+(draw-box "Version" {:span 4})
+(draw-box "IHL" {:span 4})
+...
+....
+--
+
+results in:
+
+[bytefield]
+....
+(draw-column-headers)
+(draw-box "Version"          {:span 4})
+(draw-box "IHL"              {:span 4})
+(draw-box "DSCP"             {:span 6})
+(draw-box "ECN"              {:span 2})
+(draw-box "Total Length"     {:span 16})
+(draw-box "Identification"   {:span 16})
+(draw-box "Flags"            {:span 3})
+(draw-box "Fragment Offset"  {:span 13})
+(draw-box "TTL"              {:span 8})
+(draw-box "Protocol"         {:span 8})
+(draw-box "Header Checksum"  {:span 16})
+(draw-box "Source Address"   {:span 32})
+(draw-box "Destination Address" {:span 32})
+....
+
+=== Pikchr
+
+Lightweight diagram scripting via link:https://pikchr.org/[Pikchr]
+
+[source, asciidoc]
+--
+[pikchr]
+....
+box "Idea" fit
+arrow
+box "Code" fit
+....
+--
+
+results in:
+
+[pikchr]
+....
+down
+oval "Idea" fit
+arrow
+box "Research" fit
+arrow
+box "Prototype" fit
+arrow
+diamond "Users love it?" fit
+arrow right "yes" aligned
+oval "Ship It!" fit
+arrow from last diamond.s down
+box "Pivot" fit
+arrow to 2nd box.s
+....
+
+=== Structurizr
+
+C4 architecture via the link:https://structurizr.com/dsl[Structurizr DSL]
+
+[source, asciidoc]
+--
+[structurizr]
+....
+workspace {
+  model {
+    user = person "User"
+    system = softwareSystem "System"
+    user -> system "Uses"
+  }
+  views { systemContext system { include * } }
+}
+....
+--
+
+results in:
+
+[structurizr]
+....
+workspace "Coffee Shop" "System landscape" {
+  model {
+    customer = person "Customer" "Wants coffee badly"
+
+    coffeeShop = softwareSystem "Coffee Shop System" {
+      pos       = container "Point of Sale"
+      inventory = container "Inventory"
+      loyalty   = container "Loyalty App"
+    }
+
+    payment = softwareSystem "Payment Gateway" "External"
+
+    customer  -> pos       "Orders at"
+    customer  -> loyalty   "Checks points in"
+    pos       -> inventory "Updates stock in"
+    pos       -> payment   "Processes payment via"
+  }
+
+  views {
+    systemContext coffeeShop {
+      include *
+      autoLayout lr
+    }
+  }
+}
+....
+
+=== WireViz
+
+Cable and harness diagrams via link:https://github.com/wireviz/WireViz[WireViz]
+
+[source, asciidoc]
+--
+[wireviz]
+....
+connectors:
+  X1:
+    type: USB-A
+    pincount: 4
+    pinlabels: [VBUS, D-, D+, GND]
+cables:
+  W1:
+    wirecount: 4
+    colors: [RD, WH, GN, BK]
+connections:
+  - [X1, [1,2,3,4], W1, [1,2,3,4], X2, [1,2,3,5]]
+....
+--
+
+results in:
+
+[wireviz]
+....
+connectors:
+  X1:
+    type: USB-A
+    subtype: plug
+    pincount: 4
+    pinlabels: [VBUS, D-, D+, GND]
+  X2:
+    type: Micro-USB
+    subtype: plug
+    pincount: 5
+    pinlabels: [VBUS, D-, D+, ID, GND]
+
+cables:
+  W1:
+    wirecount: 4
+    colors: [RD, WH, GN, BK]
+    notes: "Charging cable — not for data!"
+
+connections:
+  -
+    - [X1, [1, 2, 3, 4]]
+    - [W1, [1, 2, 3, 4]]
+    - [X2, [1, 2, 3, 5]]
+....
+
+=== Vega
+
+Full link:https://vega.github.io/vega/[Vega] specification (superset of Vega-Lite)
+
+[source, asciidoc]
+--
+[vega]
+....
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "marks": [...]
+}
+....
+--
+
+results in:
+
+[vega]
+....
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Bugs closed per developer per sprint",
+  "width": 400,
+  "height": 200,
+  "padding": 5,
+  "data": [{
+    "name": "table",
+    "values": [
+      {"dev": "Alice", "sprint": "S1", "bugs": 12},
+      {"dev": "Alice", "sprint": "S2", "bugs": 8},
+      {"dev": "Alice", "sprint": "S3", "bugs": 15},
+      {"dev": "Bob",   "sprint": "S1", "bugs": 7},
+      {"dev": "Bob",   "sprint": "S2", "bugs": 11},
+      {"dev": "Bob",   "sprint": "S3", "bugs": 5},
+      {"dev": "Carol", "sprint": "S1", "bugs": 9},
+      {"dev": "Carol", "sprint": "S2", "bugs": 14},
+      {"dev": "Carol", "sprint": "S3", "bugs": 10}
+    ]
+  }],
+  "scales": [
+    {"name": "xscale", "type": "band", "domain": {"data": "table", "field": "sprint"},
+     "range": "width", "padding": 0.2},
+    {"name": "yscale", "domain": {"data": "table", "field": "bugs"},
+     "nice": true, "range": "height"},
+    {"name": "color",  "type": "ordinal", "domain": {"data": "table", "field": "dev"},
+     "range": {"scheme": "category10"}}
+  ],
+  "axes": [
+    {"orient": "bottom", "scale": "xscale"},
+    {"orient": "left",   "scale": "yscale"}
+  ],
+  "legends": [{"fill": "color", "title": "Developer"}],
+  "marks": [{
+    "type": "group",
+    "from": {"facet": {"data": "table", "name": "facet", "groupby": "dev"}},
+    "encode": {"enter": {"x": {"scale": "xscale", "field": "sprint"}}},
+    "signals": [{"name": "width", "update": "bandwidth('xscale')"}],
+    "scales": [{"name": "pos", "type": "band", "range": "width",
+                "domain": {"data": "facet", "field": "dev"}}],
+    "marks": [{
+      "type": "rect",
+      "from": {"data": "facet"},
+      "encode": {
+        "enter": {
+          "x":     {"scale": "pos", "field": "dev"},
+          "width": {"scale": "pos", "band": 1},
+          "y":     {"scale": "yscale", "field": "bugs"},
+          "y2":    {"scale": "yscale", "value": 0},
+          "fill":  {"scale": "color", "field": "dev"}
+        }
+      }
+    }]
+  }]
+}
+....
+
+
 [.columns]
 == Column layout
 
