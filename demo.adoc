@@ -19,9 +19,10 @@
 
 // Parallax background (set image URL to enable)
 :revealjs_parallaxBackgroundImage: media/parallax_bg.svg
-:revealjs_parallaxBackgroundSize: 3000px 2500px
-:revealjs_parallaxBackgroundHorizontal: 200
+:revealjs_parallaxBackgroundSize: 2000px 1000px
+:revealjs_parallaxBackgroundHorizontal: 150
 :revealjs_parallaxBackgroundVertical: 100
+
 
 // Syntax highlighting theme for code blocks
 :highlightjs-theme: lightfair
