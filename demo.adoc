@@ -10,6 +10,19 @@
 :revealjs_history: false
 :revealjs_center: false
 
+// Navigation: 'default', 'linear', or 'grid'
+// :revealjs_navigationMode: default
+
+// Auto-advance slides (milliseconds, 0 = disabled)
+// :revealjs_autoSlide: 0
+// :revealjs_autoSlideStoppable: true
+
+// Parallax background (set image URL to enable)
+:revealjs_parallaxBackgroundImage: media/parallax_bg.svg
+:revealjs_parallaxBackgroundSize: 3000px 2500px
+:revealjs_parallaxBackgroundHorizontal: 200
+:revealjs_parallaxBackgroundVertical: 100
+
 // Syntax highlighting theme for code blocks
 :highlightjs-theme: lightfair
 
@@ -1195,5 +1208,31 @@ See link:https://github.com/rajgoel/reveal.js-plugins/tree/master/animate[rajgoe
 
 * link:https://github.com/bzzzil/vscode-asciidoc-presentation/issues[Write an issue]
 * Propose a pull request 😉
+
+== Reveal.js Parameters
+
+Many reveal.js parameters can be set as document attributes to change the behavior of the slideshow.
+
+[source, asciidoc]
+--
+// Navigation mode: 'default', 'linear', 'grid'
+:revealjs_navigationMode: linear
+
+// Loop the presentation
+:revealjs_loop: true
+
+// Enable mouse wheel navigation
+:revealjs_mouseWheel: true
+
+// Auto-advance slides every 3 seconds
+:revealjs_autoSlide: 3000
+:revealjs_autoSlideStoppable: true
+
+// Parallax background
+:revealjs_parallaxBackgroundImage: https://example.com/bg.jpg
+:revealjs_parallaxBackgroundSize: 2100px 1200px
+:revealjs_parallaxBackgroundHorizontal: 200
+:revealjs_parallaxBackgroundVertical: 50
+--
 
 == Cheers!

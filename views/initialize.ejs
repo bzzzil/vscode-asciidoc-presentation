@@ -9,17 +9,34 @@
 <% if (!isInlined) { %>
 <script>
     Reveal.initialize({
-        hash: true,
-        history: true,
+        hash: 'true' === '<%= hash %>',
+        history: 'true' === '<%= history %>',
         pdfMaxPagesPerSlide: 1,
         center: 'true' === '<%= center %>',
         controls: 'true' === '<%= controls %>',
         controlsLayout: '<%= controlsLayout %>',
         controlsBackArrows: '<%= controlsBackArrows %>',
         progress: 'true' === '<%= progress %>',
+        overview: 'true' === '<%= overview %>',
+        loop: 'true' === '<%= loop %>',
+        rtl: 'true' === '<%= rtl %>',
+        navigationMode: '<%= navigationMode %>',
+        touch: 'true' === '<%= touch %>',
+        keyboard: 'true' === '<%= keyboard %>',
+        fragments: 'true' === '<%= fragments %>',
+        shuffle: 'true' === '<%= shuffle %>',
+        autoSlide: +'<%= autoSlide %>',
+        autoSlideStoppable: 'true' === '<%= autoSlideStoppable %>',
+        mouseWheel: 'true' === '<%= mouseWheel %>',
+        previewLinks: 'true' === '<%= previewLinks %>',
+        viewDistance: +'<%= viewDistance %>',
         transition: '<%= transition %>',
         transitionSpeed: '<%= transitionSpeed %>',
         backgroundTransition: '<%= backgroundTransition %>',
+        <% if (parallaxBackgroundImage) { %>parallaxBackgroundImage: '<%- parallaxBackgroundImage %>',<% } %>
+        <% if (parallaxBackgroundSize) { %>parallaxBackgroundSize: '<%- parallaxBackgroundSize %>',<% } %>
+        <% if (parallaxBackgroundHorizontal) { %>parallaxBackgroundHorizontal: +'<%- parallaxBackgroundHorizontal %>',<% } %>
+        <% if (parallaxBackgroundVertical) { %>parallaxBackgroundVertical: +'<%- parallaxBackgroundVertical %>',<% } %>
         showNotes: false,
         slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         animate: {
@@ -35,16 +52,33 @@
 <% } else { %>
 <script>
     Reveal.initialize({
-        hash: true,
-        history: true,
+        hash: 'true' === '<%= hash %>',
+        history: 'true' === '<%= history %>',
         center: 'true' === '<%= center %>',
         controls: 'true' === '<%= controls %>',
         controlsLayout: '<%= controlsLayout %>',
         controlsBackArrows: '<%= controlsBackArrows %>',
         progress: 'true' === '<%= progress %>',
+        overview: 'true' === '<%= overview %>',
+        loop: 'true' === '<%= loop %>',
+        rtl: 'true' === '<%= rtl %>',
+        navigationMode: '<%= navigationMode %>',
+        touch: 'true' === '<%= touch %>',
+        keyboard: 'true' === '<%= keyboard %>',
+        fragments: 'true' === '<%= fragments %>',
+        shuffle: 'true' === '<%= shuffle %>',
+        autoSlide: +'<%= autoSlide %>',
+        autoSlideStoppable: 'true' === '<%= autoSlideStoppable %>',
+        mouseWheel: 'true' === '<%= mouseWheel %>',
+        previewLinks: 'true' === '<%= previewLinks %>',
+        viewDistance: +'<%= viewDistance %>',
         transition: '<%= transition %>',
         transitionSpeed: '<%= transitionSpeed %>',
         backgroundTransition: '<%= backgroundTransition %>',
+        <% if (parallaxBackgroundImage) { %>parallaxBackgroundImage: '<%- parallaxBackgroundImage %>',<% } %>
+        <% if (parallaxBackgroundSize) { %>parallaxBackgroundSize: '<%- parallaxBackgroundSize %>',<% } %>
+        <% if (parallaxBackgroundHorizontal) { %>parallaxBackgroundHorizontal: +'<%- parallaxBackgroundHorizontal %>',<% } %>
+        <% if (parallaxBackgroundVertical) { %>parallaxBackgroundVertical: +'<%- parallaxBackgroundVertical %>',<% } %>
         slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [],
         plugins: [ Plugin.MathJax2, RevealQRCode ]
