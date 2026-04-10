@@ -1,7 +1,7 @@
 # AsciiDoc Presentations for Visual Studio Code
 
 [![Issues Badge](https://img.shields.io/github/issues-raw/bzzzil/vscode-asciidoc-presentation)](https://github.com/flobilosaurus/vscode-asciidoc-slides/issues)
-![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/bzzzil.vscode-asciidoc-presentation)
+![Visual Studio Marketplace Version]([https://img.shields.io/visual-studio-marketplace/v/bzzzil.vscode-asciidoc-presentation](https://badgen.net/vs-marketplace/v/bzzzil.vscode-asciidoc-presentation))
 [![Demo Badge](https://img.shields.io/badge/Demo-here-blue)](https://bzzzil.github.io/vscode-asciidoc-presentation)
 
 Visual Studio Code extension to create [reveal.js](https://github.com/hakimel/reveal.js) slides via AsciiDoc documents.
