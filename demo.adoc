@@ -85,21 +85,25 @@ image::media/surprise.gif[background, size=cover]
 [background-video="https://url.org/video.mp4",options="loop,muted"]
 --
 
+[.columns]
 == PlantUML
-[source, asciidoc]
+
+[.column]
 --
+[source, asciidoc]
+----
 [plantuml]
 ....
-database Git
 actor Alice
+database Git
 Git -> Alice: Pull
-Alice -> Alice: Work
-Alice -[#red]> Git  : Push
+Alice -[#red]> Git: Push
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [plantuml]
 ....
 hide footbox
@@ -109,13 +113,31 @@ Git -> Alice: Pull
 Alice -> Alice: Work
 Alice -[#red]> Git  : Push
 ....
+--
 
+[.columns]
 === Graphviz
 
+[.column]
+--
+link:https://graphviz.org/[Graphviz] DOT-language graphs
+
 [source, asciidoc]
---
-....
+----
 [graphviz]
+....
+digraph G {
+  rankdir=LR
+  A -> B -> C
+}
+....
+----
+--
+
+[.column]
+--
+[graphviz]
+....
 digraph foo {
   rankdir=LR;
   node [style=rounded]
@@ -127,35 +149,27 @@ digraph foo {
 ....
 --
 
-results in:
-
-[graphviz]
-....
-digraph foo {
-  rankdir=LR;
-  node [style=rounded]
-  node1 [shape=box]
-  node2 [fillcolor=yellow, style="rounded,filled", shape=diamond]
-  node3 [shape=record, label="{ a | b | c }"]
-
-  node1 -> node2 -> node3
-}
-....
-
+[.columns]
 === Mermaid
 
-Sample Git Flow diagram done by link:https://mermaid.js.org/[Mermaid.Js]
+[.column]
+--
+link:https://mermaid.js.org/[Mermaid.js] diagrams as text
 
 [source, asciidoc]
---
+----
 [mermaid]
-%%{init: { 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': false}} }%%
-   gitGraph
-       commit id:"1"
+....
+gitGraph
+  commit id:"1"
+  branch feature
+  commit id:"2"
+....
+----
 --
 
-results in:
-
+[.column]
+--
 [mermaid]
 ....
 %%{init: { 'logLevel': 'debug', 'theme': 'neutral', 'gitGraph': {'rotateCommitLabel': false}} }%%
@@ -171,26 +185,28 @@ results in:
        commit id:"7"
        cherry-pick id:"4"
 ....
+--
 
+[.columns]
 === Ditaa
 
-Turns ASCII art into proper diagrams with link:https://ditaa.sourceforge.net/[Ditaa]
+[.column]
+--
+link:https://ditaa.sourceforge.net/[Ditaa] ASCII art to diagrams
 
 [source, asciidoc]
---
+----
 [ditaa]
 ....
-+--------+     +--------+
-|  write | --> | deploy |
-|  code  |     |        |
-+---+----+     +---+----+
-    ^               |
-    +-- fix bugs ---+
++-------+   +--------+
+| write +-->| deploy |
++-------+   +--------+
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [ditaa]
 ....
 +--------+     +--------+
@@ -204,28 +220,29 @@ results in:
                | bugs   |
                +--------+
 ....
+--
 
+[.columns]
 === WaveDrom
 
-Digital timing diagrams via link:https://wavedrom.com/[WaveDrom]
+[.column]
+--
+link:https://wavedrom.com/[WaveDrom] digital timing diagrams
 
 [source, asciidoc]
---
+----
 [wavedrom]
 ....
 { signal: [
-  { name: "clk",     wave: "p.....|..." },
-  { name: "Data",    wave: "x.345x|=.x",
-    data: ["head","body","tail","data"] },
-  { name: "Request", wave: "0.1..0|1.0" },
-  {},
-  { name: "Ack",     wave: "1.....|01." }
+  { name: "clk", wave: "p...." },
+  { name: "req", wave: "0.1.0" }
 ]}
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [wavedrom]
 ....
 { signal: [
@@ -237,22 +254,27 @@ results in:
   { name: "Ack",     wave: "1.....|01." }
 ]}
 ....
+--
 
+[.columns]
 === Nomnoml
 
-Casual class diagrams via link:https://www.nomnoml.com/[Nomnoml]
+[.column]
+--
+link:https://www.nomnoml.com/[Nomnoml] casual class diagrams
 
 [source, asciidoc]
---
+----
 [nomnoml]
 ....
 [Cat] - ignores -> [Human]
 [Human] - feeds -> [Cat]
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [nomnoml]
 ....
 #stroke: #a86128
@@ -268,58 +290,17 @@ results in:
 [Human] - buys -> [Cat Toys]
 [Cat] - ignores -> [Cat Toys]
 ....
-
-=== Vega-Lite
-
-Data visualization with link:https://vega.github.io/vega-lite/[Vega-Lite]
-
-[source, asciidoc]
---
-[vegalite]
-....
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "mark": "bar",
-  "data": { "values": [...] },
-  "encoding": { "x": {...}, "y": {...} }
-}
-....
 --
 
-results in:
-
-[vegalite]
-....
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Coffees consumed per day of the week",
-  "data": {
-    "values": [
-      {"day": "Mon", "coffees": 3},
-      {"day": "Tue", "coffees": 4},
-      {"day": "Wed", "coffees": 2},
-      {"day": "Thu", "coffees": 5},
-      {"day": "Fri", "coffees": 7},
-      {"day": "Sat", "coffees": 1},
-      {"day": "Sun", "coffees": 0}
-    ]
-  },
-  "mark": "bar",
-  "encoding": {
-    "x": {"field": "day", "type": "nominal", "sort": null},
-    "y": {"field": "coffees", "type": "quantitative"},
-    "color": {"field": "coffees", "type": "quantitative",
-              "scale": {"scheme": "reds"}}
-  }
-}
-....
-
+[.columns]
 === D2
 
-Modern diagramming with link:https://d2lang.com/[D2]
+[.column]
+--
+link:https://d2lang.com/[D2] modern diagramming language
 
 [source, asciidoc]
---
+----
 [d2]
 ....
 user -> api: request
@@ -327,10 +308,11 @@ api -> db: query
 db -> api: result
 api -> user: response
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [d2]
 ....
 user: User {shape: person}
@@ -345,24 +327,33 @@ api -> db: "INSERT order"
 db -> api: "ok"
 api -> user: "202 Accepted"
 ....
+--
 
+[.columns]
 === BPMN
 
-Business Process Model and Notation via link:https://www.omg.org/spec/BPMN/2.0/[BPMN 2.0]
+[.column]
+--
+link:https://www.omg.org/spec/BPMN/2.0/[BPMN 2.0] business process diagrams
 
 [source, asciidoc]
---
+----
 [bpmn]
 ....
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <definitions ...>
-  <process id="morning"> ... </process>
+  <process id="p">
+    <startEvent id="s"/>
+    <task id="t" name="Work"/>
+    <endEvent id="e"/>
+  </process>
 </definitions>
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [bpmn]
 ....
 <?xml version="1.0" encoding="UTF-8"?>
@@ -395,26 +386,31 @@ results in:
   </bpmndi:BPMNPlane></bpmndi:BPMNDiagram>
 </definitions>
 ....
+--
 
+[.columns]
 === C4PlantUML
 
-link:https://github.com/plantuml-stdlib/C4-PlantUML[C4 architecture diagrams] built on top of PlantUML
+[.column]
+--
+link:https://github.com/plantuml-stdlib/C4-PlantUML[C4-PlantUML] architecture diagrams
 
 [source, asciidoc]
---
+----
 [c4plantuml]
 ....
 @startuml
 !include <C4/C4_Context>
-Person(user, "User", "An online shopper")
-System(shop, "Online Shop", "Sells everything")
-...
+Person(user, "User")
+System(shop, "Online Shop")
+Rel(user, shop, "Uses")
 @enduml
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [c4plantuml]
 ....
 @startuml
@@ -430,29 +426,32 @@ Rel(shop, payment, "Charges card via")
 Rel(shop, email, "Sends confirmation via")
 @enduml
 ....
+--
 
+[.columns]
 === BlockDiag
 
-Simple block diagrams via link:http://blockdiag.com/[BlockDiag]
+[.column]
+--
+link:http://blockdiag.com/[BlockDiag] simple block diagrams
 
 [source, asciidoc]
---
+----
 [blockdiag]
 ....
 blockdiag {
-  Dough -> Oven -> Pizza -> Box -> Customer;
-  Sauce -> Oven;
-  Cheese -> Oven;
+  Dough -> Oven -> Pizza
+  Sauce -> Oven
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [blockdiag]
 ....
 blockdiag {
-  orientation = portrait;
   Dough   [color = "#ffd700"];
   Sauce   [color = "#ff6347"];
   Cheese  [color = "#fffacd"];
@@ -467,24 +466,29 @@ blockdiag {
   Oven   -> Pizza -> Box -> Customer;
 }
 ....
+--
 
+[.columns]
 === SeqDiag
 
-Sequence diagrams via link:http://blockdiag.com/en/seqdiag/[SeqDiag]
+[.column]
+--
+link:http://blockdiag.com/en/seqdiag/[SeqDiag] sequence diagrams
 
 [source, asciidoc]
---
+----
 [seqdiag]
 ....
 seqdiag {
-  Developer -> "ChatGPT" -> "Stack Overflow";
-  "Stack Overflow" --> "ChatGPT" --> Developer;
+  Dev -> GPT -> SO;
+  SO --> GPT --> Dev;
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [seqdiag]
 ....
 seqdiag {
@@ -495,24 +499,31 @@ seqdiag {
   Developer -> Developer [label = "cries softly"];
 }
 ....
+--
 
+[.columns]
 === NwDiag
 
-Network diagrams via link:http://blockdiag.com/en/nwdiag/[NwDiag]
+[.column]
+--
+link:http://blockdiag.com/en/nwdiag/[NwDiag] network diagrams
 
 [source, asciidoc]
---
+----
 [nwdiag]
 ....
 nwdiag {
   network internet { Router; }
-  network home { Router; Laptop; Phone; }
+  network home {
+    Router; Laptop; Phone;
+  }
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [nwdiag]
 ....
 nwdiag {
@@ -529,61 +540,70 @@ nwdiag {
   }
 }
 ....
+--
 
+[.columns]
 === RackDiag
 
-Server rack diagrams via link:http://blockdiag.com/en/nwdiag/rackdiag-demo.html[RackDiag]
+[.column]
+--
+link:http://blockdiag.com/en/nwdiag/rackdiag-demo.html[RackDiag] server rack diagrams
 
 [source, asciidoc]
---
+----
 [rackdiag]
 ....
 rackdiag {
-  16U;
+  8U;
   1: UPS [2U];
   3: Switch;
-  4-6: Web Server [3U];
+  4: Web Server [3U];
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [rackdiag]
 ....
 rackdiag {
   16U;
-  description = "Startup Server Closet";
-  1-2: UPS 2000VA        [2U, color = "#ffd700"];
-  3:   Patch Panel       [1U, color = "#d3d3d3"];
-  4:   Switch 24-Port    [1U, color = "#87ceeb"];
-  5-7: Web Server        [3U, color = "#90ee90"];
-  8-10: Database Server  [3U, color = "#ff6347"];
-  11-13: Cache (Redis)   [3U, color = "#dda0dd"];
-  14-15: Spare           [2U, color = "#f5f5f5"];
-  16:  Temperature Sensor [1U, color = "#ffa500"];
+  1: UPS 2000VA [2U];
+  3: Patch Panel;
+  4: Switch 24-Port;
+  5: Web Server [3U];
+  8: Database Server [3U];
+  11: Cache Redis [3U];
+  14: Spare [2U];
+  16: Temperature Sensor;
 }
 ....
+--
 
+[.columns]
 === PacketDiag
 
-Packet / frame header diagrams via link:http://blockdiag.com/en/nwdiag/packetdiag-demo.html[PacketDiag]
+[.column]
+--
+link:http://blockdiag.com/en/nwdiag/packetdiag-demo.html[PacketDiag] packet header diagrams
 
 [source, asciidoc]
---
+----
 [packetdiag]
 ....
 packetdiag {
   colwidth = 32;
-  0-15: Src Port; 16-31: Dst Port;
-  32-63: Sequence Number;
-  ...
+  0-15: Src Port;
+  16-31: Dst Port;
+  32-63: Seq Number;
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [packetdiag]
 ....
 packetdiag {
@@ -606,36 +626,42 @@ packetdiag {
   144-159: Urgent Pointer;
 }
 ....
+--
 
+[.columns]
 === ERD
 
-Entity-relationship diagrams via link:https://github.com/nicowillis/erd[erd]
+[.column]
+--
+link:https://github.com/nicowillis/erd[erd] entity-relationship diagrams
 
 [source, asciidoc]
---
+----
 [erd]
 ....
-[Person] *id name
-[Pet]    *id name +owner_id
-Person 1--* Pet
+[Developer] *id name
+[Project]   *id title +developer_id
+[Bug]       *id description +project_id
+
+Developer 1--* Project
+Project   1--* Bug
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [erd]
 ....
 [Developer]
 *id
 name
 coffee_per_day
-github_stars
 
 [Project]
 *id
 title
 +developer_id
-deadline
 is_on_fire
 
 [Bug]
@@ -643,42 +669,50 @@ is_on_fire
 description
 +project_id
 status
-priority
-reproducible
 
 Developer 1--* Project
 Project   1--* Bug
 ....
+--
 
+[.columns]
 === DBML
 
-Database schema as code via link:https://dbml.dbdiagram.io/[DBML]
+[.column]
+--
+link:https://dbml.dbdiagram.io/[DBML] database schema as code
 
 [source, asciidoc]
---
+----
 [dbml]
 ....
-Table users { id integer [pk] username varchar }
-Table posts { id integer [pk] author_id integer [ref: > users.id] }
+Table users {
+  id integer [pk]
+  username varchar
+}
+Table posts {
+  id integer [pk]
+  author_id integer
+  [ref: > users.id]
+}
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [dbml]
 ....
 Table users {
   id         integer   [pk, increment]
   username   varchar   [unique, not null]
   email      varchar   [unique, not null]
-  bio        text
   created_at timestamp [default: `now()`]
 }
 
 Table posts {
   id         integer   [pk, increment]
   title      varchar   [not null]
-  content    text
   author_id  integer   [ref: > users.id]
   likes      integer   [default: 0]
   created_at timestamp [default: `now()`]
@@ -687,28 +721,33 @@ Table posts {
 Table follows {
   follower_id  integer [ref: > users.id]
   following_id integer [ref: > users.id]
-  created_at   timestamp
-
   indexes {
     (follower_id, following_id) [pk]
   }
 }
 ....
+--
 
+[.columns]
 === SVGBob
 
-ASCII art converted to clean SVG via link:https://ivanceras.github.io/svgbob-editor/[SVGBob]
+[.column]
+--
+link:https://ivanceras.github.io/svgbob-editor/[SVGBob] ASCII art to clean SVG
 
 [source, asciidoc]
---
+----
 [svgbob]
 ....
-Client ----> Server ----> Database
+.---------.   .---------.   .---------.
+| Browser +-->+   API   +-->+   DB    |
+'---------'   '---------'   '---------'
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [svgbob]
 ....
                           request
@@ -721,63 +760,73 @@ results in:
                               | cache miss
                               v
                          .---------.
-                         |         |
                          |  Redis  |
-                         |         |
                          '---------'
 ....
+--
 
+[.columns]
 === ByteField
 
-Byte-level field diagrams via link:https://github.com/Deep-Symmetry/bytefield-svg[ByteField]
+[.column]
+--
+link:https://github.com/Deep-Symmetry/bytefield-svg[ByteField] byte-level field diagrams
 
 [source, asciidoc]
---
+----
 [bytefield]
 ....
+(set-options! {:bits-per-row 32})
 (draw-column-headers)
 (draw-box "Version" {:span 4})
-(draw-box "IHL" {:span 4})
-...
+(draw-box "IHL"     {:span 4})
+(draw-box "Length"  {:span 16})
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [bytefield]
 ....
+(set-options! {:bits-per-row 32})
 (draw-column-headers)
-(draw-box "Version"          {:span 4})
-(draw-box "IHL"              {:span 4})
-(draw-box "DSCP"             {:span 6})
-(draw-box "ECN"              {:span 2})
-(draw-box "Total Length"     {:span 16})
-(draw-box "Identification"   {:span 16})
-(draw-box "Flags"            {:span 3})
-(draw-box "Fragment Offset"  {:span 13})
-(draw-box "TTL"              {:span 8})
-(draw-box "Protocol"         {:span 8})
-(draw-box "Header Checksum"  {:span 16})
-(draw-box "Source Address"   {:span 32})
+(draw-box "Version"            {:span 4})
+(draw-box "IHL"                {:span 4})
+(draw-box "DSCP"               {:span 6})
+(draw-box "ECN"                {:span 2})
+(draw-box "Total Length"       {:span 16})
+(draw-box "Identification"     {:span 16})
+(draw-box "Flags"              {:span 3})
+(draw-box "Fragment Offset"    {:span 13})
+(draw-box "TTL"                {:span 8})
+(draw-box "Protocol"           {:span 8})
+(draw-box "Header Checksum"    {:span 16})
+(draw-box "Source Address"     {:span 32})
 (draw-box "Destination Address" {:span 32})
 ....
+--
 
+[.columns]
 === Pikchr
 
-Lightweight diagram scripting via link:https://pikchr.org/[Pikchr]
+[.column]
+--
+link:https://pikchr.org/[Pikchr] lightweight diagram scripting
 
 [source, asciidoc]
---
+----
 [pikchr]
 ....
 box "Idea" fit
 arrow
 box "Code" fit
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [pikchr]
 ....
 down
@@ -794,28 +843,35 @@ arrow from last diamond.s down
 box "Pivot" fit
 arrow to 2nd box.s
 ....
+--
 
+[.columns]
 === Structurizr
 
-C4 architecture via the link:https://structurizr.com/dsl[Structurizr DSL]
+[.column]
+--
+link:https://structurizr.com/dsl[Structurizr DSL] C4 architecture diagrams
 
 [source, asciidoc]
---
+----
 [structurizr]
 ....
 workspace {
   model {
     user = person "User"
-    system = softwareSystem "System"
-    user -> system "Uses"
+    sys  = softwareSystem "Sys"
+    user -> sys "Uses"
   }
-  views { systemContext system { include * } }
+  views {
+    systemContext sys { include * }
+  }
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [structurizr]
 ....
 workspace "Coffee Shop" "System landscape" {
@@ -844,13 +900,17 @@ workspace "Coffee Shop" "System landscape" {
   }
 }
 ....
+--
 
+[.columns]
 === WireViz
 
-Cable and harness diagrams via link:https://github.com/wireviz/WireViz[WireViz]
+[.column]
+--
+link:https://github.com/wireviz/WireViz[WireViz] cable and harness diagrams
 
 [source, asciidoc]
---
+----
 [wireviz]
 ....
 connectors:
@@ -863,12 +923,16 @@ cables:
     wirecount: 4
     colors: [RD, WH, GN, BK]
 connections:
-  - [X1, [1,2,3,4], W1, [1,2,3,4], X2, [1,2,3,5]]
+  -
+    - [X1, [1, 2, 3, 4]]
+    - [W1, [1, 2, 3, 4]]
+    - [X2, [1, 2, 3, 4]]
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [wireviz]
 ....
 connectors:
@@ -880,39 +944,46 @@ connectors:
   X2:
     type: Micro-USB
     subtype: plug
-    pincount: 5
-    pinlabels: [VBUS, D-, D+, ID, GND]
+    pincount: 4
+    pinlabels: [VBUS, D-, D+, GND]
 
 cables:
   W1:
     wirecount: 4
     colors: [RD, WH, GN, BK]
-    notes: "Charging cable — not for data!"
+    notes: "Charging cable -- not for data!"
 
 connections:
   -
     - [X1, [1, 2, 3, 4]]
     - [W1, [1, 2, 3, 4]]
-    - [X2, [1, 2, 3, 5]]
+    - [X2, [1, 2, 3, 4]]
 ....
+--
 
+[.columns]
 === Vega
 
-Full link:https://vega.github.io/vega/[Vega] specification (superset of Vega-Lite)
+[.column]
+--
+link:https://vega.github.io/vega/[Vega] full visualization grammar
 
 [source, asciidoc]
---
+----
 [vega]
 ....
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "marks": [...]
+  "$schema": "...vega/v5.json",
+  "data": [{"name": "table",
+    "values": [...]}],
+  "marks": [{"type": "rect", ...}]
 }
 ....
+----
 --
 
-results in:
-
+[.column]
+--
 [vega]
 ....
 {
@@ -971,6 +1042,7 @@ results in:
   }]
 }
 ....
+--
 
 
 [.columns]
