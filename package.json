@@ -56,7 +56,7 @@
 		]
 	},
 	"scripts": {
-		"precompile": "npm run build:libs-highlight && npm run build:libs-reveal",
+		"precompile": "npm run build:libs-highlight && npm run build:libs-reveal && npm run build:libs-qrcode",
 		"compile": "webpack --mode development",
 		"prewatch": "npm run precompile",
 		"watch": "webpack --watch --mode development",
@@ -67,7 +67,8 @@
 		"lint": "eslint src",
 		"test": "vscode-test",
 		"build:libs-highlight": "node scripts/build-highlight-bundle.js",
-		"build:libs-reveal": "node scripts/build-reveal-bundle.js"
+		"build:libs-reveal": "node scripts/build-reveal-bundle.js",
+		"build:libs-qrcode": "node scripts/build-qrcode-bundle.js"
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.5",
@@ -102,6 +103,7 @@
 		"highlight.js": "^11.10.0",
 		"open": "^11.0.0",
 		"reveal.js": "^6.0.0",
+		"qrcodejs": "^1.0.0",
 		"reveal.js-plugins": "^4.6.0",
 		"serve-favicon": "^2.5.1",
 		"slash": "^5.1.0",
