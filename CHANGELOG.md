@@ -1,5 +1,21 @@
 # Change Log
 
+## [2.3.1]
+- Quickfixes due to open-vsx.org publishing
+- Demo presentation smaller changes
+- Dependencies updates
+
+## [2.3.0]
+- More reveal.js properties can be enabled from presentation (parallax background for example)
+- Infrastructure improvements
+- Dependencies updates
+
+## [2.2.0]
+- New nice logo!
+- Some autocomplete suggestions
+- More plugins (Animate, LoadContent)
+- Repaired QRCode plugin
+
 ## [2.1.0]
 - use as a server express instead of unmaintained koa
 - fixed zoom plugin

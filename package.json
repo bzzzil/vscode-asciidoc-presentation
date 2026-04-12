@@ -2,7 +2,7 @@
 	"name": "vscode-asciidoc-presentation",
 	"displayName": "AsciiDoc Presentation",
 	"description": "Create presentation slides with AsciiDoc and Reveal.js",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"publisher": "bzzzil",
 	"repository": "https://github.com/bzzzil/vscode-asciidoc-presentation.git",
 	"license": "MIT",
