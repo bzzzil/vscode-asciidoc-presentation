@@ -19,7 +19,7 @@
 
 // Parallax background (set image URL to enable)
 :revealjs_parallaxBackgroundImage: media/parallax_bg.svg
-:revealjs_parallaxBackgroundSize: 2000px 1000px
+:revealjs_parallaxBackgroundSize: 200% 200%
 :revealjs_parallaxBackgroundHorizontal: 150
 :revealjs_parallaxBackgroundVertical: 100
 
