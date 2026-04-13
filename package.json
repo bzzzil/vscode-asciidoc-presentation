@@ -98,7 +98,7 @@
 		"asciidoctor-kroki": "^0.18.1",
 		"axios": "^1.15.0",
 		"bufferutil": "^4.1.0",
-		"ejs": "^5.0.1",
+		"ejs": "^5.0.2",
 		"express": "^5.2.1",
 		"highlight.js": "^11.10.0",
 		"open": "^11.0.0",
