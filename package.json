@@ -88,7 +88,7 @@
 		"ts-loader": "^9.5.7",
 		"typescript": "^6.0.2",
 		"webpack": "^5.106.2",
-		"webpack-cli": "^6.0.1"
+		"webpack-cli": "^7.0.2"
 	},
 	"dependencies": {
 		"@asciidoctor/reveal.js": "5.0.1",
