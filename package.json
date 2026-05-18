@@ -96,7 +96,7 @@
 		"@types/ws": "^8.5.12",
 		"asciidoctor": "^3.0.4",
 		"asciidoctor-kroki": "^0.18.1",
-		"axios": "^1.16.0",
+		"axios": "^1.16.1",
 		"bufferutil": "^4.1.0",
 		"ejs": "^5.0.2",
 		"express": "^5.2.1",
