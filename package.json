@@ -109,7 +109,7 @@
 		"slash": "^5.1.0",
 		"utf-8-validate": "^6.0.6",
 		"web-resource-inliner": "^8.0.0",
-		"ws": "^8.20.1"
+		"ws": "^8.21.0"
 	},
 	"author": "flobilosaurus"
 }
