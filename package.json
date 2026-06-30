@@ -94,7 +94,7 @@
 		"@asciidoctor/reveal.js": "5.0.1",
 		"@highlightjs/cdn-assets": "^11.11.1",
 		"@types/ws": "^8.5.12",
-		"asciidoctor": "^3.0.4",
+		"asciidoctor": "^4.0.0",
 		"asciidoctor-kroki": "^0.18.1",
 		"axios": "^1.18.0",
 		"bufferutil": "^4.1.0",
