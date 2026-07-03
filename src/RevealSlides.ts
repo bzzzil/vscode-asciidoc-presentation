@@ -1,4 +1,3 @@
-import { Asciidoctor } from 'asciidoctor/types/index';
 import * as path from 'path';
 import * as vscode from 'vscode';
 /**
@@ -9,7 +8,13 @@ import * as vscode from 'vscode';
  * and thereby already bridged opal.
  * So we still tied to asciidoctor/reveal.js 5.0.1
  *  */
-const asciidoctor: Asciidoctor = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')();
+interface SlideSection {
+    getLineNumber(): number;
+    getId(): string;
+    getSections(): SlideSection[] | undefined;
+}
+
+const asciidoctor: any = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')();
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
@@ -215,13 +220,13 @@ export class RevealSlides {
         const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, sourcemap: true});
 
         try{
-            const sections = doc.getSections();
+            const sections = doc.getSections() as SlideSection[] | undefined;
             if(!sections) {
                 return ''; // title slide
             }
 
             const lineInAsciidoc = lineNumber + 1;
-            const indexOfSectionAfterCursor = sections.findIndex(s => s.getLineNumber() > lineInAsciidoc);
+            const indexOfSectionAfterCursor = sections.findIndex((section: SlideSection) => section.getLineNumber() > lineInAsciidoc);
 
             if(indexOfSectionAfterCursor === 0) {
                 return ''; // title slide
@@ -231,13 +236,13 @@ export class RevealSlides {
             }
 
             const currentSection = sections[indexOfSectionAfterCursor - 1];
-            const subSections = currentSection.getSections();
+            const subSections = currentSection.getSections() as SlideSection[] | undefined;
 
             if(!subSections || subSections.length <= 0) {
                 return sections[indexOfSectionAfterCursor - 1].getId();
             }
 
-            const indexOfSubSectionAfterCursor = subSections.findIndex(ss => ss.getLineNumber() > lineInAsciidoc);
+            const indexOfSubSectionAfterCursor = subSections.findIndex((subSection: SlideSection) => subSection.getLineNumber() > lineInAsciidoc);
 
             if(indexOfSubSectionAfterCursor === 0) {
                 return currentSection.getId();
