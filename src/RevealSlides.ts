@@ -8,12 +8,6 @@ import * as vscode from 'vscode';
  * and thereby already bridged opal.
  * So we still tied to asciidoctor/reveal.js 5.0.1
  *  */
-interface SlideSection {
-    getLineNumber(): number;
-    getId(): string;
-    getSections(): SlideSection[] | undefined;
-}
-
 const asciidoctor: any = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')();
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 const kroki = require("asciidoctor-kroki");
@@ -217,6 +211,12 @@ export class RevealSlides {
     }
 
     private getSlideIdUnderCursor (asciidocText: string, lineNumber: number) {
+        type SlideSection = {
+            getLineNumber(): number;
+            getId(): string;
+            getSections(): SlideSection[] | undefined;
+        };
+
         const doc = asciidoctor.load(asciidocText, {safe: 'safe', header_footer: true, sourcemap: true});
 
         try{
