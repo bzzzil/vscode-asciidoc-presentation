@@ -91,7 +91,7 @@
 		"webpack-cli": "^7.2.1"
 	},
 	"dependencies": {
-		"@asciidoctor/reveal.js": "5.0.1",
+		"@asciidoctor/reveal.js": "5.2.0",
 		"@highlightjs/cdn-assets": "^11.11.1",
 		"@types/ws": "^8.5.12",
 		"asciidoctor": "^4.0.6",
