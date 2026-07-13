@@ -6,9 +6,12 @@ import * as vscode from 'vscode';
  * This can happen if other extensions like joaompinto.asciidoctor-vscode
  * have already required('opal-runtime') or required('asciidoctor.js') or similar
  * and thereby already bridged opal.
- * So we still tied to asciidoctor/reveal.js 5.0.1
- *  */
-const asciidoctor: any = ((<any>global).Opal && (<any>global).Opal.Asciidoctor) || require('@asciidoctor/core')();
+ */
+const globalOpal = (<any>global).Opal;
+if (globalOpal && typeof globalOpal.queue !== 'function') {
+    globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
+}
+const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require('@asciidoctor/core')();
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
