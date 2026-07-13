@@ -1,0 +1,83 @@
+name: Release Publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-publish-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: startsWith(github.event.release.tag_name, 'v')
+    runs-on: ubuntu-latest
+    environment: release
+
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.0.0
+
+      - name: Download VSIX from GitHub release
+        id: download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${{ github.event.release.tag_name }}"
+          VERSION="${TAG#v}"
+
+          mkdir -p dist
+          gh release download "$TAG" --pattern '*.vsix' --dir dist
+
+          COUNT=$(find dist -maxdepth 1 -name '*.vsix' | wc -l)
+          if [ "$COUNT" -ne 1 ]; then
+            echo "::error::Expected exactly one VSIX on release $TAG, found $COUNT."
+            find dist -maxdepth 1 -name '*.vsix' -print
+            exit 1
+          fi
+
+          VSIX_PATH=$(find dist -maxdepth 1 -name '*.vsix' -print)
+          VSIX_FILE=$(basename "$VSIX_PATH")
+
+          if [[ "$VSIX_FILE" != *"-${VERSION}.vsix" ]]; then
+            echo "::error::VSIX filename ($VSIX_FILE) does not match release tag $TAG."
+            exit 1
+          fi
+
+          echo "vsix_path=$VSIX_PATH" >> "$GITHUB_OUTPUT"
+          echo "vsix_file=$VSIX_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to VS Code Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx @vscode/vsce publish --packagePath "${{ steps.download.outputs.vsix_path }}" -p "$VSCE_PAT"
+
+      - name: Publish to Open VSX
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npx ovsx publish "${{ steps.download.outputs.vsix_path }}" -p "$OVSX_PAT"
+
+      - name: Verify release asset attachment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${{ github.event.release.tag_name }}"
+          ASSET="${{ steps.download.outputs.vsix_file }}"
+
+          COUNT=$(gh api "repos/${{ github.repository }}/releases/tags/${TAG}" --jq '.assets[]?.name' | grep -Fx "$ASSET" | wc -l || true)
+
+          if [ "$COUNT" -eq 0 ]; then
+            gh release upload "$TAG" "${{ steps.download.outputs.vsix_path }}" --clobber
+            echo "VSIX asset was missing and has been re-uploaded."
+          else
+            echo "VSIX asset verified on release page."
+          fi
