@@ -74,9 +74,9 @@
 		"@types/ejs": "^3.1.5",
 		"@types/express": "^5.0.6",
 		"@types/mocha": "^10.0.7",
-		"@types/node": "^26.1.0",
+		"@types/node": "^26.1.1",
 		"@types/serve-favicon": "^2.5.7",
-		"@types/vscode": "^1.118.0",
+		"@types/vscode": "^1.125.0",
 		"@types/web-resource-inliner": "^4.2.5",
 		"@typescript-eslint/eslint-plugin": "^8.62.1",
 		"@typescript-eslint/parser": "^8.63.0",
@@ -94,7 +94,7 @@
 		"@asciidoctor/reveal.js": "5.0.1",
 		"@highlightjs/cdn-assets": "^11.11.1",
 		"@types/ws": "^8.5.12",
-		"asciidoctor": "^4.0.2",
+		"asciidoctor": "^4.0.4",
 		"asciidoctor-kroki": "^0.18.1",
 		"axios": "^1.18.1",
 		"bufferutil": "^4.1.0",
@@ -109,7 +109,7 @@
 		"slash": "^5.1.0",
 		"utf-8-validate": "^6.0.6",
 		"web-resource-inliner": "^8.0.0",
-		"ws": "^8.21.0"
+		"ws": "^8.21.1"
 	},
 	"author": "flobilosaurus"
 }
