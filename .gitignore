@@ -1,5 +1,6 @@
 node_modules
 /.vscode-test/
+/.vscode-u/
 /out/
 /dist/
 /package-lock.json
