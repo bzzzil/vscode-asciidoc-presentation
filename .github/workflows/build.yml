@@ -31,19 +31,6 @@ jobs:
         if: contains(matrix.os, 'ubuntu')
         run: xvfb-run npm test
 
-      - name: Test (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          rm -rf .vscode-test .vscode-u
-          echo "DEBUG: listing .vscode-test (if present)"
-          ls -la .vscode-test || true
-          echo "DEBUG: finding files under .vscode-test"
-          find .vscode-test -maxdepth 5 -ls || true
-          npm test
-
-      - name: Test (Windows)
-        if: matrix.os == 'windows-latest'
-        shell: powershell
-        run: |
-          Remove-Item -Path .vscode-test,.vscode-u -Recurse -Force -ErrorAction SilentlyContinue
-          npm test
+      - name: Test (Win/Mac)
+        if: contains(matrix.os, 'ubuntu') == false
+        run: npm test
