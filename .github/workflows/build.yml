@@ -33,4 +33,6 @@ jobs:
 
       - name: Test (Win/Mac)
         if: contains(matrix.os, 'ubuntu') == false
-        run: npm test
+        run: |
+          rm -rf .vscode-test
+          npm test
