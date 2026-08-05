@@ -74,27 +74,27 @@
 		"@types/ejs": "^3.1.5",
 		"@types/express": "^5.0.6",
 		"@types/mocha": "^10.0.7",
-		"@types/node": "^26.1.0",
+		"@types/node": "^26.1.1",
 		"@types/serve-favicon": "^2.5.7",
-		"@types/vscode": "^1.118.0",
+		"@types/vscode": "^1.125.0",
 		"@types/web-resource-inliner": "^4.2.5",
 		"@typescript-eslint/eslint-plugin": "^8.62.1",
 		"@typescript-eslint/parser": "^8.63.0",
 		"@vscode/test-cli": "^0.0.15",
 		"@vscode/test-electron": "^3.0.0",
-		"eslint": "^10.7.0",
+		"eslint": "^10.8.0",
 		"glob": "^13.0.6",
 		"mocha": "^11.7.6",
 		"ts-loader": "^9.6.2",
 		"typescript": "^6.0.3",
-		"webpack": "^5.108.4",
+		"webpack": "^5.109.0",
 		"webpack-cli": "^7.2.1"
 	},
 	"dependencies": {
 		"@asciidoctor/reveal.js": "5.2.0",
 		"@highlightjs/cdn-assets": "^11.11.1",
 		"@types/ws": "^8.5.12",
-		"asciidoctor": "^4.0.0",
+		"asciidoctor": "^4.0.6",
 		"asciidoctor-kroki": "^0.18.1",
 		"axios": "^1.18.1",
 		"bufferutil": "^4.1.0",
@@ -109,7 +109,7 @@
 		"slash": "^5.1.0",
 		"utf-8-validate": "^6.0.6",
 		"web-resource-inliner": "^8.0.0",
-		"ws": "^8.21.0"
+		"ws": "^8.21.1"
 	},
 	"author": "flobilosaurus"
 }
