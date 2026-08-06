@@ -16,6 +16,8 @@ jobs:
     if: startsWith(github.event.release.tag_name, 'v')
     runs-on: ubuntu-latest
     environment: release
+    env:
+      GH_REPO: ${{ github.repository }}
 
     steps:
       - name: Setup Node.js
