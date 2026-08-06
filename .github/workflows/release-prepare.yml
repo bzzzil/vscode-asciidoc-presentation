@@ -2,6 +2,7 @@ name: Release Prepare
 
 on:
   workflow_dispatch:
+    inputs:
       version:
         description: "Explicit version (for example 2.4.0)"
         required: false
