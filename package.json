@@ -14,10 +14,10 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:asciidocSlides.preview",
-		"onCommand:asciidocSlides.exportHtml",
-		"onCommand:asciidocSlides.exportInlinedHtml",
-		"onCommand:asciidocSlides.openInBrowser",
+		"onCommand:asciiDocPresentation.preview",
+		"onCommand:asciiDocPresentation.exportHtml",
+		"onCommand:asciiDocPresentation.exportInlinedHtml",
+		"onCommand:asciiDocPresentation.openInBrowser",
 		"onLanguage:asciidoc"
 	],
 	"icon": "media/favicon.png",
