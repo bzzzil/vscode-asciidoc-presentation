@@ -2,15 +2,6 @@ name: Release Prepare
 
 on:
   workflow_dispatch:
-    inputs:
-      release_type:
-        description: "Semver increment type (patch, minor, major)"
-        required: false
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
       version:
         description: "Explicit version (for example 2.4.0)"
         required: false
@@ -20,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: release-prepare-${{ github.ref }}-${{ inputs.version || inputs.release_type || 'manual' }}
+  group: release-prepare-${{ github.ref }}-${{ inputs.version }}
   cancel-in-progress: false
 
 jobs:
@@ -61,18 +52,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          RELEASE_TYPE="${{ inputs.release_type }}"
           EXPLICIT_VERSION="${{ inputs.version }}"
-
-          if [ -n "$RELEASE_TYPE" ] && [ -n "$EXPLICIT_VERSION" ]; then
-            echo "::error::Provide either release_type or version, not both."
-            exit 1
-          fi
-
-          if [ -z "$RELEASE_TYPE" ] && [ -z "$EXPLICIT_VERSION" ]; then
-            echo "::error::Provide one input: release_type or version."
-            exit 1
-          fi
 
           if [ -n "$EXPLICIT_VERSION" ]; then
             if ! [[ "$EXPLICIT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -81,7 +61,8 @@ jobs:
             fi
             npm version "$EXPLICIT_VERSION" --no-git-tag-version
           else
-            npm version "$RELEASE_TYPE" --no-git-tag-version
+            echo "::error::Provide version."
+            exit 1
           fi
 
           VERSION=$(node -p "require('./package.json').version")
