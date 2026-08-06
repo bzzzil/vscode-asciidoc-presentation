@@ -8,7 +8,7 @@
 	"license": "MIT",
 	"pricing": "Free",
 	"engines": {
-		"vscode": "^1.109.0"
+		"vscode": "^1.125.0"
 	},
 	"categories": [
 		"Other"
