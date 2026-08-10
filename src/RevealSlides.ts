@@ -12,7 +12,26 @@ if (globalOpal && typeof globalOpal.queue !== 'function') {
     globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
 }
 const asciidoctorCore = require('@asciidoctor/core');
-const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || (typeof asciidoctorCore === 'function' ? asciidoctorCore() : asciidoctorCore);
+const resolveAsciidoctor = () => {
+    const globalAsciidoctor = globalOpal?.Asciidoctor;
+    if (globalAsciidoctor) {
+        if (typeof globalAsciidoctor.load === 'function') {
+            return globalAsciidoctor;
+        }
+        if (typeof globalAsciidoctor === 'function') {
+            try {
+                const resolved = globalAsciidoctor();
+                if (resolved && typeof resolved.load === 'function') {
+                    return resolved;
+                }
+            } catch {
+                // fallback to local bundled instance
+            }
+        }
+    }
+    return typeof asciidoctorCore === 'function' ? asciidoctorCore() : asciidoctorCore;
+};
+const asciidoctor: any = resolveAsciidoctor();
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
