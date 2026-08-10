@@ -11,7 +11,8 @@ const globalOpal = (<any>global).Opal;
 if (globalOpal && typeof globalOpal.queue !== 'function') {
     globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
 }
-const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require('@asciidoctor/core')();
+const asciidoctorCore = require('@asciidoctor/core');
+const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || (typeof asciidoctorCore === 'function' ? asciidoctorCore() : asciidoctorCore);
 const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
