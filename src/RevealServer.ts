@@ -70,7 +70,7 @@ export class RevealServer {
 
         this._ready = new Promise((resolve, reject) => {
             this.server.once('error', reject);
-            this.server.listen(0, '127.0.0.1', () => {
+            this.server.listen(0, '0.0.0.0', () => {
                 this.server.off('error', reject);
                 logger(`asciidoc presentation server started at ${this.serverUrl}`);
                 resolve();
