@@ -2,7 +2,7 @@
 	"name": "vscode-asciidoc-presentation",
 	"displayName": "AsciiDoc Presentation",
 	"description": "Create presentation slides with AsciiDoc and Reveal.js",
-	"version": "2.3.2",
+	"version": "2.4.0",
 	"publisher": "bzzzil",
 	"repository": "https://github.com/bzzzil/vscode-asciidoc-presentation.git",
 	"license": "MIT",
@@ -14,10 +14,10 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:asciidocSlides.preview",
-		"onCommand:asciidocSlides.exportHtml",
-		"onCommand:asciidocSlides.exportInlinedHtml",
-		"onCommand:asciidocSlides.openInBrowser",
+		"onCommand:asciiDocPresentation.preview",
+		"onCommand:asciiDocPresentation.exportHtml",
+		"onCommand:asciiDocPresentation.exportInlinedHtml",
+		"onCommand:asciiDocPresentation.openInBrowser",
 		"onLanguage:asciidoc"
 	],
 	"icon": "media/favicon.png",
@@ -74,20 +74,20 @@
 		"@types/ejs": "^3.1.5",
 		"@types/express": "^5.0.6",
 		"@types/mocha": "^10.0.7",
-		"@types/node": "^26.1.1",
+		"@types/node": "^26.1.2",
 		"@types/serve-favicon": "^2.5.7",
 		"@types/vscode": "^1.125.0",
 		"@types/web-resource-inliner": "^4.2.5",
 		"@typescript-eslint/eslint-plugin": "^8.62.1",
-		"@typescript-eslint/parser": "^8.65.0",
+		"@typescript-eslint/parser": "^8.66.0",
 		"@vscode/test-cli": "^0.0.15",
 		"@vscode/test-electron": "^3.1.0",
-		"eslint": "^10.8.0",
+		"eslint": "^10.8.1",
 		"glob": "^13.0.6",
-		"mocha": "^11.7.6",
+		"mocha": "^11.8.0",
 		"ts-loader": "^9.6.2",
 		"typescript": "^6.0.3",
-		"webpack": "^5.109.0",
+		"webpack": "^5.109.2",
 		"webpack-cli": "^7.2.2"
 	},
 	"dependencies": {
@@ -109,7 +109,7 @@
 		"slash": "^5.1.0",
 		"utf-8-validate": "^6.0.6",
 		"web-resource-inliner": "^8.0.0",
-		"ws": "^8.21.1"
+		"ws": "^8.21.3"
 	},
 	"author": "flobilosaurus"
 }
