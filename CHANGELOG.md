@@ -1,8 +1,12 @@
 # Change Log
 
+## [2.4.1]
+- open-vsx.org publishing fixed
+- Dependencies
+
 ## [2.4.0]
 - Asciidoctor Reveal.js 5.2 is used. More features are available. Maybe. Demo is here: https://asciidoctor-revealjs-examples.netlify.app/release-5.2
-Deps and smaller fixes
+- Deps and smaller fixes
 
 ## [2.3.1]
 - Quickfixes due to open-vsx.org publishing
