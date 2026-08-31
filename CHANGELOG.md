@@ -1,5 +1,8 @@
 # Change Log
 
+## [2.4.2]
+- Dependencies
+
 ## [2.4.1]
 - open-vsx.org publishing fixed
 - Dependencies
