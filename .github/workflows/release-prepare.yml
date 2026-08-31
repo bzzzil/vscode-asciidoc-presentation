@@ -38,13 +38,14 @@ jobs:
           node-version: 24.0.0
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Validate clean working tree
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             echo "::error::Working tree is not clean before release prepare."
             git status --short
+
             exit 1
           fi
 
