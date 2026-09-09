@@ -1,0 +1,5 @@
+# Use LF lineending everywhere (in Windows as well)
+* text=auto eol=lf
+
+# Potential Windows specific
+*.bat text eol=crlf
