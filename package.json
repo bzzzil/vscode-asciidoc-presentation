@@ -109,5 +109,9 @@
     "web-resource-inliner": "^8.0.0",
     "ws": "^8.21.3"
   },
-  "author": "flobilosaurus"
+  "author": "flobilosaurus",
+  "allowScripts": {
+    "bufferutil@4.1.0": true,
+    "utf-8-validate@6.0.6": true
+  }
 }
