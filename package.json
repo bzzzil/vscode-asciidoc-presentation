@@ -71,7 +71,7 @@
     "build:libs-qrcode": "node scripts/build-qrcode-bundle.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.12",
+    "@biomejs/biome": "^2.5.13",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/mocha": "^10.0.7",
