@@ -16,7 +16,7 @@ export class Container {
     this.revealSlides = new RevealSlides(editor);
     this.server = new RevealServer(context.extensionPath, this.revealSlides, logger);
     this.disposables.push(vscode.workspace.onDidSaveTextDocument((e) => this.onDidSaveTextDocument(e)));
-    this.disposables.push(vscode.workspace.onDidCloseTextDocument((e) => this.onDidSaveTextDocument(e)));
+    this.disposables.push(vscode.workspace.onDidCloseTextDocument((e) => this.onDidCloseTextDocument(e)));
   }
 
   public onDidSaveTextDocument(e: vscode.TextDocument) {
