@@ -30,7 +30,7 @@ export class Container {
     );
     this.disposables.push(
       vscode.workspace.onDidCloseTextDocument((e) =>
-        this.onDidSaveTextDocument(e),
+        this.onDidCloseTextDocument(e),
       ),
     );
   }
