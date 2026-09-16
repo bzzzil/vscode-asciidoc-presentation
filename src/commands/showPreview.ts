@@ -15,7 +15,9 @@ export function showPreview(containerManager: ContainerManager) {
       "Asciidoc Presentation",
       "Asciidoc Presentation Preview",
       vscode.ViewColumn.Beside,
-      { enableScripts: true },
+      {
+        enableScripts: true,
+      },
     );
     container.setWebviewPanel(panel);
   }

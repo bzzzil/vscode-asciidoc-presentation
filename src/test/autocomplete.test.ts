@@ -10,13 +10,13 @@ suite("Completion providers", function () {
       content,
     });
     const editor = await vscode.window.showTextDocument(doc);
-    return { doc, editor };
+    return {
+      doc,
+      editor,
+    };
   }
 
-  async function getCompletionLabels(
-    doc: vscode.TextDocument,
-    pos: vscode.Position,
-  ): Promise<string[]> {
+  async function getCompletionLabels(doc: vscode.TextDocument, pos: vscode.Position): Promise<string[]> {
     const list = await vscode.commands.executeCommand<vscode.CompletionList>(
       "vscode.executeCompletionItemProvider",
       doc.uri,
@@ -24,16 +24,12 @@ suite("Completion providers", function () {
       ":",
     );
     return (list?.items ?? []).map((i) =>
-      typeof i.label === "string"
-        ? i.label
-        : (i.label as vscode.CompletionItemLabel).label,
+      typeof i.label === "string" ? i.label : (i.label as vscode.CompletionItemLabel).label,
     );
   }
 
   test('Top-level completion items after ":"', async () => {
-    const ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    const ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     await ext!.activate();
 
@@ -42,16 +38,11 @@ suite("Completion providers", function () {
 
     const labels = await getCompletionLabels(doc, pos);
     assert.ok(labels.length > 0, "No completion items returned");
-    assert.ok(
-      labels.includes(":revealjs_theme:"),
-      "Expected :revealjs_theme: in completion items",
-    );
+    assert.ok(labels.includes(":revealjs_theme:"), "Expected :revealjs_theme: in completion items");
   });
 
   test("All expected attribute completion items are present", async () => {
-    const ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    const ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     await ext!.activate();
 
@@ -95,17 +86,12 @@ suite("Completion providers", function () {
     ];
 
     for (const label of expected) {
-      assert.ok(
-        labels.includes(label),
-        `Expected "${label}" in completion items`,
-      );
+      assert.ok(labels.includes(label), `Expected "${label}" in completion items`);
     }
   });
 
   test("No extension completion items returned when line has additional text", async () => {
-    const ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    const ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     await ext!.activate();
 
@@ -121,9 +107,7 @@ suite("Completion providers", function () {
   });
 
   test("Completion insert text omits leading colon", async () => {
-    const ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    const ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     await ext!.activate();
 
@@ -139,20 +123,14 @@ suite("Completion providers", function () {
     assert.ok(list && list.items.length > 0, "No completion items returned");
 
     const themeItem = list.items.find((i) => {
-      const lbl =
-        typeof i.label === "string"
-          ? i.label
-          : (i.label as vscode.CompletionItemLabel).label;
+      const lbl = typeof i.label === "string" ? i.label : (i.label as vscode.CompletionItemLabel).label;
       return lbl === ":revealjs_theme:";
     });
     assert.ok(themeItem, "Expected to find :revealjs_theme: completion item");
 
     // insertText is a SnippetString; it should start with "revealjs_theme:" (no leading colon)
     const insertText = themeItem!.insertText;
-    assert.ok(
-      insertText instanceof vscode.SnippetString,
-      "Expected SnippetString insertText",
-    );
+    assert.ok(insertText instanceof vscode.SnippetString, "Expected SnippetString insertText");
     assert.ok(
       (insertText as vscode.SnippetString).value.startsWith("revealjs_theme:"),
       `Expected insertText to start with "revealjs_theme:", got: ${(insertText as vscode.SnippetString).value}`,

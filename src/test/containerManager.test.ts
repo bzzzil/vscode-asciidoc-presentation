@@ -7,9 +7,7 @@ suite("ContainerManager Tests", function () {
   let containerManager: any;
 
   suiteSetup(async () => {
-    const ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    const ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext, "Extension not found");
     const context = await ext!.activate();
     containerManager = context.containerManager;
@@ -35,11 +33,7 @@ suite("ContainerManager Tests", function () {
     await vscode.window.showTextDocument(doc);
 
     const editor = containerManager.checkActiveEditor();
-    assert.strictEqual(
-      editor,
-      undefined,
-      "Expected undefined for non-asciidoc document",
-    );
+    assert.strictEqual(editor, undefined, "Expected undefined for non-asciidoc document");
   });
 
   test("getOrCreateContainer creates and returns a container", async () => {
@@ -62,11 +56,7 @@ suite("ContainerManager Tests", function () {
 
     const container1 = containerManager.getOrCreateContainer(editor);
     const container2 = containerManager.getOrCreateContainer(editor);
-    assert.strictEqual(
-      container1,
-      container2,
-      "Expected same container for same editor URI",
-    );
+    assert.strictEqual(container1, container2, "Expected same container for same editor URI");
   });
 
   test("container has no webview panel immediately after creation", async () => {
@@ -77,10 +67,6 @@ suite("ContainerManager Tests", function () {
     const editor = await vscode.window.showTextDocument(doc);
 
     const container = containerManager.getOrCreateContainer(editor);
-    assert.strictEqual(
-      container.hasWebviewPanel(),
-      false,
-      "Expected no webview panel on freshly created container",
-    );
+    assert.strictEqual(container.hasWebviewPanel(), false, "Expected no webview panel on freshly created container");
   });
 });

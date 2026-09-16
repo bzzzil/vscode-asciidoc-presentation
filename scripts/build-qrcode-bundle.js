@@ -5,7 +5,9 @@ const qrcodeDir = path.join(__dirname, "..", "node_modules", "qrcodejs");
 const outDir = path.join(__dirname, "..", "libs", "qrcode");
 
 if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
+  fs.mkdirSync(outDir, {
+    recursive: true,
+  });
 }
 
 const srcFile = path.join(qrcodeDir, "qrcode.min.js");

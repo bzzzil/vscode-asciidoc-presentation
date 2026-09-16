@@ -23,11 +23,7 @@ export class RevealServer {
   private logger: (line: string) => void;
   private revealSlides: RevealSlides;
 
-  constructor(
-    extensionPath: string,
-    revealSlides: RevealSlides,
-    logger: (line: string) => void,
-  ) {
+  constructor(extensionPath: string, revealSlides: RevealSlides, logger: (line: string) => void) {
     this.revealSlides = revealSlides;
     this.extensionPath = extensionPath;
     this.logger = logger;
@@ -43,10 +39,7 @@ export class RevealServer {
     this.app.use(favicon(path.join(this.extensionPath, "media/favicon.png")));
 
     // Static files
-    this.app.use(
-      "/libs",
-      express.static(path.join(this.extensionPath, "libs")),
-    );
+    this.app.use("/libs", express.static(path.join(this.extensionPath, "libs")));
 
     // WebSocket server
     this.server = http.createServer(this.app);
@@ -77,12 +70,10 @@ export class RevealServer {
     logger(`asciidoc presentation server static from ${this.revealSlides.absoluteDocumentDirectory}`);
 
     // Error handling
-    this.app.use(
-      (err: any, req: Request, res: Response, next: NextFunction) => {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-      },
-    );
+    this.app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    });
 
     this._ready = new Promise((resolve, reject) => {
       this.server.once("error", reject);
@@ -121,7 +112,12 @@ export class RevealServer {
   public syncCurrentSlideInBrowser(slideId: string) {
     this.websocketServer.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify({ cmd: "goto", slide: slideId }));
+        client.send(
+          JSON.stringify({
+            cmd: "goto",
+            slide: slideId,
+          }),
+        );
       }
     });
   }
