@@ -7,9 +7,7 @@ suite("Extension Test Suite", function () {
   this.timeout(10000); // 10 seconds for all tests
 
   test('Open "demo.adoc"', async () => {
-    var document = await vscode.workspace.openTextDocument(
-      __dirname + "/../../demo.adoc",
-    );
+    var document = await vscode.workspace.openTextDocument(__dirname + "/../../demo.adoc");
     assert.ok(document);
     var editor = await vscode.window.showTextDocument(document);
     assert.ok(editor);
@@ -17,15 +15,11 @@ suite("Extension Test Suite", function () {
 
   test("Ensure server started", async () => {
     const outputFile: string = "temp.html";
-    var document = await vscode.workspace.openTextDocument(
-      __dirname + "/../../demo.adoc",
-    );
+    var document = await vscode.workspace.openTextDocument(__dirname + "/../../demo.adoc");
     assert.ok(document);
     var editor = await vscode.window.showTextDocument(document);
     assert.ok(editor);
-    var ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    var ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
 
     const context = await ext.activate();
@@ -33,10 +27,9 @@ suite("Extension Test Suite", function () {
     assert.ok(context);
 
     // Trigger some server activity by exporting to HTML
-    var result = await vscode.commands.executeCommand(
-      "asciiDocPresentation.exportHtml",
-      [outputFile],
-    );
+    var result = await vscode.commands.executeCommand("asciiDocPresentation.exportHtml", [
+      outputFile,
+    ]);
     assert.ok(result);
     assert.ok(fs.existsSync(outputFile));
     fs.unlinkSync(outputFile);
@@ -53,22 +46,17 @@ suite("Extension Test Suite", function () {
 
   test("Export to HTML", async () => {
     const outputFile: string = "temp.html";
-    var document = await vscode.workspace.openTextDocument(
-      __dirname + "/../../demo.adoc",
-    );
+    var document = await vscode.workspace.openTextDocument(__dirname + "/../../demo.adoc");
     assert.ok(document);
     var editor = await vscode.window.showTextDocument(document);
     assert.ok(editor);
-    var ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    var ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     await ext.activate();
     assert.equal(ext.isActive, true);
-    var result = await vscode.commands.executeCommand(
-      "asciiDocPresentation.exportHtml",
-      [outputFile],
-    );
+    var result = await vscode.commands.executeCommand("asciiDocPresentation.exportHtml", [
+      outputFile,
+    ]);
     assert.ok(result);
     assert.ok(fs.existsSync(outputFile));
     fs.unlinkSync(outputFile);
@@ -76,29 +64,22 @@ suite("Extension Test Suite", function () {
 
   test("Generate new index.html", async () => {
     const outputFile: string = __dirname + "/../../index.html";
-    var document = await vscode.workspace.openTextDocument(
-      __dirname + "/../../demo.adoc",
-    );
+    var document = await vscode.workspace.openTextDocument(__dirname + "/../../demo.adoc");
     assert.ok(document);
     var editor = await vscode.window.showTextDocument(document);
     assert.ok(editor);
-    var ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    var ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     await ext.activate();
     assert.equal(ext.isActive, true);
-    var result = await vscode.commands.executeCommand(
-      "asciiDocPresentation.exportHtml",
-      [outputFile],
-    );
+    var result = await vscode.commands.executeCommand("asciiDocPresentation.exportHtml", [
+      outputFile,
+    ]);
     assert.ok(result);
     assert.ok(fs.existsSync(outputFile));
 
     let content = fs.readFileSync(outputFile, "utf8");
-    let path = content.match(
-      /<link rel=\"stylesheet\" href=\"(.+)libs\/reveal\.js\/reset\.css">/,
-    );
+    let path = content.match(/<link rel=\"stylesheet\" href=\"(.+)libs\/reveal\.js\/reset\.css">/);
     assert.ok(path);
     const regex = new RegExp(path[1], "g");
     content = content.replace(regex, "");
@@ -106,15 +87,11 @@ suite("Extension Test Suite", function () {
   });
 
   test("showPreview command creates a webview panel", async () => {
-    var document = await vscode.workspace.openTextDocument(
-      __dirname + "/../../demo.adoc",
-    );
+    var document = await vscode.workspace.openTextDocument(__dirname + "/../../demo.adoc");
     assert.ok(document);
     var editor = await vscode.window.showTextDocument(document);
     assert.ok(editor);
-    var ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    var ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     const context = await ext.activate();
     assert.equal(ext.isActive, true);
@@ -122,22 +99,15 @@ suite("Extension Test Suite", function () {
     await vscode.commands.executeCommand("asciiDocPresentation.preview");
 
     const container = context.containerManager.getOrCreateContainer(editor);
-    assert.ok(
-      container.hasWebviewPanel(),
-      "Expected webview panel to be created by preview command",
-    );
+    assert.ok(container.hasWebviewPanel(), "Expected webview panel to be created by preview command");
   });
 
   test("onDidSaveTextDocument with non-asciidoc document does not throw", async () => {
-    var document = await vscode.workspace.openTextDocument(
-      __dirname + "/../../demo.adoc",
-    );
+    var document = await vscode.workspace.openTextDocument(__dirname + "/../../demo.adoc");
     assert.ok(document);
     var editor = await vscode.window.showTextDocument(document);
     assert.ok(editor);
-    var ext = vscode.extensions.getExtension(
-      "bzzzil.vscode-asciidoc-presentation",
-    );
+    var ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     assert.ok(ext);
     const context = await ext.activate();
     assert.equal(ext.isActive, true);

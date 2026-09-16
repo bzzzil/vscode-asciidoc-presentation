@@ -1,13 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const hljsDir = path.join(
-  __dirname,
-  "..",
-  "node_modules",
-  "@highlightjs",
-  "cdn-assets",
-);
+const hljsDir = path.join(__dirname, "..", "node_modules", "@highlightjs", "cdn-assets");
 const langDir = path.join(hljsDir, "languages");
 const stylesDir = path.join(hljsDir, "styles");
 const outDir = path.join(__dirname, "..", "libs", "highlight.js");
@@ -29,9 +23,7 @@ let bundle = "";
 bundle += fs.readFileSync(path.join(hljsDir, "highlight.min.js"), "utf8");
 
 // Detect all available languages
-const languageFiles = fs
-  .readdirSync(langDir)
-  .filter((f) => f.endsWith(".min.js"));
+const languageFiles = fs.readdirSync(langDir).filter((f) => f.endsWith(".min.js"));
 
 // Add each language
 languageFiles.forEach((lang) => {
@@ -49,10 +41,7 @@ fs.writeFileSync(outFile, bundle, "utf8");
 // Detect all not minimized styles or other files
 const styleFiles = fs
   .readdirSync(stylesDir)
-  .filter(
-    (f) =>
-      (f.endsWith(".css") && !f.endsWith(".min.css")) || !f.endsWith(".css"),
-  );
+  .filter((f) => (f.endsWith(".css") && !f.endsWith(".min.css")) || !f.endsWith(".css"));
 
 // Copy each style
 styleFiles.forEach((style) => {

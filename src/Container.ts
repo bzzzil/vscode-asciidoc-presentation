@@ -11,28 +11,12 @@ export class Container {
   private webviewPanel?: vscode.WebviewPanel;
   private logger: (line: string) => void;
   private disposables: vscode.Disposable[] = [];
-  constructor(
-    context: vscode.ExtensionContext,
-    editor: vscode.TextEditor,
-    logger: (line: string) => void,
-  ) {
+  constructor(context: vscode.ExtensionContext, editor: vscode.TextEditor, logger: (line: string) => void) {
     this.logger = logger;
     this.revealSlides = new RevealSlides(editor);
-    this.server = new RevealServer(
-      context.extensionPath,
-      this.revealSlides,
-      logger,
-    );
-    this.disposables.push(
-      vscode.workspace.onDidSaveTextDocument((e) =>
-        this.onDidSaveTextDocument(e),
-      ),
-    );
-    this.disposables.push(
-      vscode.workspace.onDidCloseTextDocument((e) =>
-        this.onDidCloseTextDocument(e),
-      ),
-    );
+    this.server = new RevealServer(context.extensionPath, this.revealSlides, logger);
+    this.disposables.push(vscode.workspace.onDidSaveTextDocument((e) => this.onDidSaveTextDocument(e)));
+    this.disposables.push(vscode.workspace.onDidCloseTextDocument((e) => this.onDidCloseTextDocument(e)));
   }
 
   public onDidSaveTextDocument(e: vscode.TextDocument) {
@@ -52,6 +36,7 @@ export class Container {
 
     this.disposables.forEach((d) => d.dispose());
     this.server.shutdown();
+    this.logger("container disposed");
   }
 
   public async exportAsHtml(targetFile: string) {
@@ -60,9 +45,7 @@ export class Container {
       try {
         const resp = await Axios.get(this.server.exportUrl);
         fs.writeFileSync(targetFile, resp.data);
-        vscode.window.showInformationMessage(
-          `Exported slides as HTML to file: ${targetFile}`,
-        );
+        vscode.window.showInformationMessage(`Exported slides as HTML to file: ${targetFile}`);
         return targetFile;
       } catch (e: any) {
         vscode.window.showErrorMessage(`Error while exporting: ${e.message}`);
@@ -77,9 +60,7 @@ export class Container {
         const resp = await Axios.get(this.server.exportInlinedUrl);
         const inlinedHtml = await this.inline(resp.data);
         fs.writeFileSync(targetFile, inlinedHtml);
-        vscode.window.showInformationMessage(
-          `Exported slides as inlined HTML to file: ${targetFile}`,
-        );
+        vscode.window.showInformationMessage(`Exported slides as inlined HTML to file: ${targetFile}`);
       } catch (e: any) {
         vscode.window.showErrorMessage(`Error while exporting: ${e.message}`);
       }
@@ -89,7 +70,12 @@ export class Container {
   private inline(html: string) {
     return new Promise<string>((resolve, reject) => {
       inlineHtml(
-        { fileContent: html, images: true, svgs: true, scripts: true },
+        {
+          fileContent: html,
+          images: true,
+          svgs: true,
+          scripts: true,
+        },
         (error, result) => {
           if (error) {
             reject(error);

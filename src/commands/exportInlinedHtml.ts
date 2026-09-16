@@ -12,13 +12,14 @@ export async function exportInlinedHtml(containerManager: ContainerManager) {
 
   const container = containerManager.getOrCreateContainer(editor);
 
-  const proposedFilename = path.join(
-    path.dirname(editor.document.fileName),
-    container.presentationTitle + ".html",
-  );
+  const proposedFilename = path.join(path.dirname(editor.document.fileName), container.presentationTitle + ".html");
   const exportFileLocation = await vscode.window.showSaveDialog({
     defaultUri: vscode.Uri.file(proposedFilename),
-    filters: { HTML: ["html"] },
+    filters: {
+      HTML: [
+        "html",
+      ],
+    },
   });
   if (exportFileLocation) {
     await container.exportAsInlinedHtml(exportFileLocation.fsPath);

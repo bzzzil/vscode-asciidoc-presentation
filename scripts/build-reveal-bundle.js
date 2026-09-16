@@ -8,7 +8,9 @@ const outDir = path.join(__dirname, "..", "libs", "reveal.js");
 
 function copyEssentialFiles(srcDir, destDir) {
   if (!fs.existsSync(destDir)) {
-    fs.mkdirSync(destDir, { recursive: true });
+    fs.mkdirSync(destDir, {
+      recursive: true,
+    });
   }
   const files = fs.readdirSync(srcDir);
   files.forEach((file) => {
@@ -43,12 +45,7 @@ console.log(`Copied Reveal.js essentials to ${outDir}`);
 
 // Deploy reveal.js-plugins packages from node_modules to libs/reveal.js-plugins
 
-const revealPluginsRoot = path.join(
-  __dirname,
-  "..",
-  "node_modules",
-  "reveal.js-plugins",
-);
+const revealPluginsRoot = path.join(__dirname, "..", "node_modules", "reveal.js-plugins");
 const outPluginsRoot = path.join(__dirname, "..", "libs", "reveal.js-plugins");
 
 function copyRevealPlugins(srcRoot, destRoot) {
@@ -57,7 +54,9 @@ function copyRevealPlugins(srcRoot, destRoot) {
     return;
   }
   if (!fs.existsSync(destRoot)) {
-    fs.mkdirSync(destRoot, { recursive: true });
+    fs.mkdirSync(destRoot, {
+      recursive: true,
+    });
   }
 
   const entries = fs.readdirSync(srcRoot);

@@ -12,8 +12,7 @@ const globalOpal = (<any>global).Opal;
 if (globalOpal && typeof globalOpal.queue !== "function") {
   globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
 }
-const asciidoctor: any =
-  (globalOpal && globalOpal.Asciidoctor) || require("@asciidoctor/core")();
+const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require("@asciidoctor/core")();
 const asciidoctorRevealjs = require("@asciidoctor/reveal.js");
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
@@ -101,7 +100,9 @@ function docAccessor(asciidocText: string, docDir: string) {
   const doc = asciidoctor.load(asciidocText, {
     safe: "safe",
     header_footer: true,
-    attributes: { docDir },
+    attributes: {
+      docDir,
+    },
   });
   return {
     getAttributeOrDefault: <T>(key: string, defaultValue?: T): T | string => {
@@ -125,24 +126,19 @@ export class RevealSlides {
 
   constructor(editor: vscode.TextEditor) {
     this.baseEditor = editor;
-    this.asciidocAttributes = this.extractAsciidocAttributes(
-      editor.document.getText(),
-    );
-    this.revealConfiguration = this.extractRevealConfiguration(
-      this.asciidocAttributes,
-    );
+    this.asciidocAttributes = this.extractAsciidocAttributes(editor.document.getText());
+    this.revealConfiguration = this.extractRevealConfiguration(this.asciidocAttributes);
     this.slidesHtml = this.convertToRevealJsSlides(editor.document.getText());
-    this.slideIdUnderCursor = this.getSlideIdUnderCursor(
-      editor.document.getText(),
-      editor.selection.active.line,
-    );
+    this.slideIdUnderCursor = this.getSlideIdUnderCursor(editor.document.getText(), editor.selection.active.line);
   }
 
   private convertToRevealJsSlides(asciidocText: string) {
     return asciidoctor.convert(asciidocText, {
       safe: "safe",
       backend: "revealjs",
-      attributes: { docDir: this.absoluteDocumentDirectory },
+      attributes: {
+        docDir: this.absoluteDocumentDirectory,
+      },
     }) as string;
   }
 
@@ -152,121 +148,41 @@ export class RevealSlides {
       ...accessor.getFullAttributes(),
       title: accessor.getTitle(),
       imageDir: accessor.getAttributeOrDefault("imagesDir", ""),
-      revealJsTheme: accessor.getAttributeOrDefault(
-        "revealjs_theme",
-        undefined,
-      ),
-      revealJsCustomTheme: accessor.getAttributeOrDefault(
-        "revealjs_customTheme",
-        undefined,
-      ),
+      revealJsTheme: accessor.getAttributeOrDefault("revealjs_theme", undefined),
+      revealJsCustomTheme: accessor.getAttributeOrDefault("revealjs_customTheme", undefined),
       revealJsCenter: accessor.getAttributeOrDefault("revealjs_center", "true"),
-      revealJsControls: accessor.getAttributeOrDefault(
-        "revealjs_controls",
-        "true",
-      ),
-      revealJsControlsLayout: accessor.getAttributeOrDefault(
-        "revealjs_controlsLayout",
-        "bottom-right",
-      ),
-      revealJsControlsBackArrows: accessor.getAttributeOrDefault(
-        "revealjs_controlsBackArrows",
-        "faded",
-      ),
-      revealJsProgress: accessor.getAttributeOrDefault(
-        "revealjs_progress",
-        "false",
-      ),
-      revealJsSlideNumber: accessor.getAttributeOrDefault(
-        "revealjs_slideNumber",
-        "false",
-      ),
-      highlightJsTheme: accessor.getAttributeOrDefault(
-        "highlightjs-theme",
-        "monokai",
-      ),
-      revealJsTransition: accessor.getAttributeOrDefault(
-        "revealjs_transition",
-        "slide",
-      ),
-      revealJsTransitionSpeed: accessor.getAttributeOrDefault(
-        "revealjs_transitionSpeed",
-        "default",
-      ),
-      revealJsBackgroundTransition: accessor.getAttributeOrDefault(
-        "revealjs_backgroundTransition",
-        "fade",
-      ),
+      revealJsControls: accessor.getAttributeOrDefault("revealjs_controls", "true"),
+      revealJsControlsLayout: accessor.getAttributeOrDefault("revealjs_controlsLayout", "bottom-right"),
+      revealJsControlsBackArrows: accessor.getAttributeOrDefault("revealjs_controlsBackArrows", "faded"),
+      revealJsProgress: accessor.getAttributeOrDefault("revealjs_progress", "false"),
+      revealJsSlideNumber: accessor.getAttributeOrDefault("revealjs_slideNumber", "false"),
+      highlightJsTheme: accessor.getAttributeOrDefault("highlightjs-theme", "monokai"),
+      revealJsTransition: accessor.getAttributeOrDefault("revealjs_transition", "slide"),
+      revealJsTransitionSpeed: accessor.getAttributeOrDefault("revealjs_transitionSpeed", "default"),
+      revealJsBackgroundTransition: accessor.getAttributeOrDefault("revealjs_backgroundTransition", "fade"),
       revealJsHash: accessor.getAttributeOrDefault("revealjs_hash", "true"),
-      revealJsHistory: accessor.getAttributeOrDefault(
-        "revealjs_history",
-        "true",
-      ),
-      revealJsOverview: accessor.getAttributeOrDefault(
-        "revealjs_overview",
-        "true",
-      ),
+      revealJsHistory: accessor.getAttributeOrDefault("revealjs_history", "true"),
+      revealJsOverview: accessor.getAttributeOrDefault("revealjs_overview", "true"),
       revealJsLoop: accessor.getAttributeOrDefault("revealjs_loop", "false"),
       revealJsRtl: accessor.getAttributeOrDefault("revealjs_rtl", "false"),
-      revealJsNavigationMode: accessor.getAttributeOrDefault(
-        "revealjs_navigationMode",
-        "default",
-      ),
+      revealJsNavigationMode: accessor.getAttributeOrDefault("revealjs_navigationMode", "default"),
       revealJsTouch: accessor.getAttributeOrDefault("revealjs_touch", "true"),
-      revealJsKeyboard: accessor.getAttributeOrDefault(
-        "revealjs_keyboard",
-        "true",
-      ),
-      revealJsFragments: accessor.getAttributeOrDefault(
-        "revealjs_fragments",
-        "true",
-      ),
-      revealJsShuffle: accessor.getAttributeOrDefault(
-        "revealjs_shuffle",
-        "false",
-      ),
-      revealJsAutoSlide: accessor.getAttributeOrDefault(
-        "revealjs_autoSlide",
-        "0",
-      ),
-      revealJsAutoSlideStoppable: accessor.getAttributeOrDefault(
-        "revealjs_autoSlideStoppable",
-        "true",
-      ),
-      revealJsMouseWheel: accessor.getAttributeOrDefault(
-        "revealjs_mouseWheel",
-        "false",
-      ),
-      revealJsPreviewLinks: accessor.getAttributeOrDefault(
-        "revealjs_previewLinks",
-        "false",
-      ),
-      revealJsViewDistance: accessor.getAttributeOrDefault(
-        "revealjs_viewDistance",
-        "3",
-      ),
-      revealJsParallaxBackgroundImage: accessor.getAttributeOrDefault(
-        "revealjs_parallaxBackgroundImage",
-        "",
-      ),
-      revealJsParallaxBackgroundSize: accessor.getAttributeOrDefault(
-        "revealjs_parallaxBackgroundSize",
-        "",
-      ),
-      revealJsParallaxBackgroundHorizontal: accessor.getAttributeOrDefault(
-        "revealjs_parallaxBackgroundHorizontal",
-        "",
-      ),
-      revealJsParallaxBackgroundVertical: accessor.getAttributeOrDefault(
-        "revealjs_parallaxBackgroundVertical",
-        "",
-      ),
+      revealJsKeyboard: accessor.getAttributeOrDefault("revealjs_keyboard", "true"),
+      revealJsFragments: accessor.getAttributeOrDefault("revealjs_fragments", "true"),
+      revealJsShuffle: accessor.getAttributeOrDefault("revealjs_shuffle", "false"),
+      revealJsAutoSlide: accessor.getAttributeOrDefault("revealjs_autoSlide", "0"),
+      revealJsAutoSlideStoppable: accessor.getAttributeOrDefault("revealjs_autoSlideStoppable", "true"),
+      revealJsMouseWheel: accessor.getAttributeOrDefault("revealjs_mouseWheel", "false"),
+      revealJsPreviewLinks: accessor.getAttributeOrDefault("revealjs_previewLinks", "false"),
+      revealJsViewDistance: accessor.getAttributeOrDefault("revealjs_viewDistance", "3"),
+      revealJsParallaxBackgroundImage: accessor.getAttributeOrDefault("revealjs_parallaxBackgroundImage", ""),
+      revealJsParallaxBackgroundSize: accessor.getAttributeOrDefault("revealjs_parallaxBackgroundSize", ""),
+      revealJsParallaxBackgroundHorizontal: accessor.getAttributeOrDefault("revealjs_parallaxBackgroundHorizontal", ""),
+      revealJsParallaxBackgroundVertical: accessor.getAttributeOrDefault("revealjs_parallaxBackgroundVertical", ""),
     };
   }
 
-  private extractRevealConfiguration(
-    asciidocAttributes: AsciidocAttributes,
-  ): RevealConfiguration {
+  private extractRevealConfiguration(asciidocAttributes: AsciidocAttributes): RevealConfiguration {
     return {
       absolutePath: "",
       documentPath: "",
@@ -302,13 +218,10 @@ export class RevealSlides {
       mouseWheel: asciidocAttributes.revealJsMouseWheel,
       previewLinks: asciidocAttributes.revealJsPreviewLinks,
       viewDistance: asciidocAttributes.revealJsViewDistance,
-      parallaxBackgroundImage:
-        asciidocAttributes.revealJsParallaxBackgroundImage,
+      parallaxBackgroundImage: asciidocAttributes.revealJsParallaxBackgroundImage,
       parallaxBackgroundSize: asciidocAttributes.revealJsParallaxBackgroundSize,
-      parallaxBackgroundHorizontal:
-        asciidocAttributes.revealJsParallaxBackgroundHorizontal,
-      parallaxBackgroundVertical:
-        asciidocAttributes.revealJsParallaxBackgroundVertical,
+      parallaxBackgroundHorizontal: asciidocAttributes.revealJsParallaxBackgroundHorizontal,
+      parallaxBackgroundVertical: asciidocAttributes.revealJsParallaxBackgroundVertical,
       isInlined: false,
     };
   }
@@ -340,24 +253,19 @@ export class RevealSlides {
       if (indexOfSectionAfterCursor === 0) {
         return ""; // title slide
       } else if (indexOfSectionAfterCursor === -1) {
-        const lastSection = sections
-          ? sections[sections.length - 1]
-          : undefined;
+        const lastSection = sections ? sections[sections.length - 1] : undefined;
         return lastSection ? lastSection.getId() : "";
       }
 
       const currentSection = sections[indexOfSectionAfterCursor - 1];
-      const subSections = currentSection.getSections() as
-        | SlideSection[]
-        | undefined;
+      const subSections = currentSection.getSections() as SlideSection[] | undefined;
 
       if (!subSections || subSections.length <= 0) {
         return sections[indexOfSectionAfterCursor - 1].getId();
       }
 
       const indexOfSubSectionAfterCursor = subSections.findIndex(
-        (subSection: SlideSection) =>
-          subSection.getLineNumber() > lineInAsciidoc,
+        (subSection: SlideSection) => subSection.getLineNumber() > lineInAsciidoc,
       );
 
       if (indexOfSubSectionAfterCursor === 0) {
@@ -402,10 +310,7 @@ export class RevealSlides {
   }
 
   public get absoluteImagesDir() {
-    return path.join(
-      this.absoluteDocumentDirectory,
-      this.asciidocAttributes.imageDir,
-    );
+    return path.join(this.absoluteDocumentDirectory, this.asciidocAttributes.imageDir);
   }
 
   public get currentSlideId() {
@@ -417,14 +322,9 @@ export class RevealSlides {
 
     const asciidocText = this.editor.document.getText();
     this.asciidocAttributes = this.extractAsciidocAttributes(asciidocText);
-    this.revealConfiguration = this.extractRevealConfiguration(
-      this.asciidocAttributes,
-    );
+    this.revealConfiguration = this.extractRevealConfiguration(this.asciidocAttributes);
     this.slidesHtml = this.convertToRevealJsSlides(asciidocText);
-    this.slideIdUnderCursor = this.getSlideIdUnderCursor(
-      asciidocText,
-      this.baseEditor.selection.start.line,
-    );
+    this.slideIdUnderCursor = this.getSlideIdUnderCursor(asciidocText, this.baseEditor.selection.start.line);
   }
 
   // workaround for bug: selection of this.baseEditor stays the same as soon as we save another document ...
