@@ -231,8 +231,10 @@ export function activate(context: vscode.ExtensionContext) {
   const outputChannel = vscode.window.createOutputChannel(
     "asciiDocPresentation",
   );
-  const appendLine = (value: string) => outputChannel.appendLine(value);
-  const containerManager = new ContainerManager(context, appendLine);
+  const logger = (value: string) => outputChannel.appendLine(value);
+  logger("extension activated");
+
+  const containerManager = new ContainerManager(context, logger);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("asciiDocPresentation.preview", () =>

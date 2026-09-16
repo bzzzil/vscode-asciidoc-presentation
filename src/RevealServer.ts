@@ -74,9 +74,7 @@ export class RevealServer {
 
     // Serve other static files from the document directory
     this.app.use(express.static(this.revealSlides.absoluteDocumentDirectory));
-    logger(
-      `asciidoc presentation server started at ${this.revealSlides.absoluteDocumentDirectory}`,
-    );
+    logger(`asciidoc presentation server static from ${this.revealSlides.absoluteDocumentDirectory}`);
 
     // Error handling
     this.app.use(

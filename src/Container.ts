@@ -52,6 +52,7 @@ export class Container {
 
     this.disposables.forEach((d) => d.dispose());
     this.server.shutdown();
+    this.logger("container disposed");
   }
 
   public async exportAsHtml(targetFile: string) {
