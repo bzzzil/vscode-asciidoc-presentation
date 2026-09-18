@@ -39,7 +39,7 @@ suite('Extension Test Suite', function() {
         const browserUrl = await container.getBrowserUrl();
         assert.ok(browserUrl);
         // The URL should be something like http://127.0.0.1:12345/#/
-        assert.ok(browserUrl.match(/http:\/\/127\.0\.0\.1:\d+\/#\//));
+        assert.ok(browserUrl.match(/http:\/\/localhost:\d+\/#\//));
     });
 
     test('Export to HTML', async () => {
