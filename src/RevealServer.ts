@@ -41,12 +41,34 @@ export class RevealServer {
     // Static files
     this.app.use("/libs", express.static(path.join(this.extensionPath, "libs")));
 
-    // WebSocket server
-    this.server = http.createServer(this.app);
-    this.websocketServer = new WebSocketServer({
-      server: this.server,
-      path: this.websocketPath,
-    });
+        // WebSocket server
+        this.server = http.createServer(this.app);
+        this.websocketServer = new WebSocketServer({ server: this.server, path: this.websocketPath });
+        this.websocketServer.on("connection", (ws) => {
+            logger("WebSocket client connected");
+            ws.on("close", () => {
+                logger("WebSocket client disconnected");
+            });
+
+            ws.on("message", (message) => {
+                const data = JSON.parse(message.toString());
+                if (data.cmd === "slideChanged") {
+                    this.websocketServer.clients.forEach(function each(client) {
+                        if (client.readyState === WebSocket.OPEN) {
+                            client.send(JSON.stringify(
+                                { 
+                                    cmd: "syncSlide", 
+                                    slide_h: data.slide_h, 
+                                    slide_v: data.slide_v,
+                                    fragment: data.fragment,
+                                }
+                            ));
+                        }
+                    });
+                }
+            });
+
+        });
 
     // Routes
     this.app.get(this.websocketPath, (req, res) => {
@@ -76,9 +98,9 @@ export class RevealServer {
     });
 
         this._ready = new Promise((resolve, reject) => {
-            this.server.once("error", reject);
-            this.server.listen(0, "0.0.0.0", () => {
-                this.server.off("error", reject);
+            this.server.once('error', reject);
+            this.server.listen(0, () => {
+                this.server.off('error', reject);
                 logger(`asciidoc presentation server started at ${this.serverUrl}`);
                 resolve();
             });
@@ -122,15 +144,22 @@ export class RevealServer {
     });
   }
 
-  public get serverUrl() {
-    const addr = this.server.address();
-    if (!addr) {
-      return null;
-    }
-    if (typeof addr === "string") {
-      return addr;
-    }
+    public get serverUrl() {
+        const addr = this.server.address();
+        if (!addr) {
+            return null;
+        }
+        if (typeof addr === 'string') {
+            return addr;
+        }
+        if (addr.address === '::' || addr.address === '0.0.0.0') {
+            return `http://localhost:${addr.port}`;
+        }
 
+        if (addr.family === 'IPv6') {
+            return `http://[${addr.address}]:${addr.port}`;
+        }
+        
     return `http://${addr.address}:${addr.port}`;
   }
 
