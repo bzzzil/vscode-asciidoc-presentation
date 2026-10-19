@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "@asciidoctor/reveal.js": "5.2.0",
-    "@highlightjs/cdn-assets": "^11.11.1",
+    "@highlightjs/cdn-assets": "^11.12.0",
     "@types/ws": "^8.5.12",
     "asciidoctor": "^4.1.0",
     "asciidoctor-kroki": "^0.18.1",
