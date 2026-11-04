@@ -18,7 +18,7 @@ AsciiDoc Presentations requires base extension [AsciiDoc](https://marketplace.vi
 
 1. Install extension.
 2. Download demo [AsciiDoc Presentation](https://raw.githubusercontent.com/bzzzil/vscode-asciidoc-presentation/refs/heads/master/demo.adoc) and open it in Visual Studio Code.
-3. Open command palette (View -> Command Palette  or `Ctrl/Cmd`+`Shift`+`P`) and run command `AsciiDoc Presentation: Open Presentation in Browser`.
+3. Open command palette (View -> Command Palette or `Ctrl/Cmd`+`Shift`+`P`) and run command `AsciiDoc Presentation: Open Presentation in Browser`.
 
 ## Features
 
@@ -26,17 +26,17 @@ AsciiDoc Presentations requires base extension [AsciiDoc](https://marketplace.vi
 
 ![demo slide preview panel](https://github.com/bzzzil/vscode-asciidoc-presentation/raw/master/media/PreviewPanel.gif)
 
-* Shows reveal.js slides of asciidoc document beside it.
-* Preview is updated on every save of base document.
-* Preview is scrolled to the slide of cursor on every save of base document.
+- Shows reveal.js slides of asciidoc document beside it.
+- Preview is updated on every save of base document.
+- Preview is scrolled to the slide of cursor on every save of base document.
 
 ### Open in Browser
 
 ![demo open in browser](https://github.com/bzzzil/vscode-asciidoc-presentation/raw/master/media/openInBrowser.gif)
 
-* Show reveal.js slides of asciidoc document in browser.
-* Website in browser is updated on every save of base document.
-* Website in browser is scrolled to the slide of cursor on every save of base document.
+- Show reveal.js slides of asciidoc document in browser.
+- Website in browser is updated on every save of base document.
+- Website in browser is scrolled to the slide of cursor on every save of base document.
 
 ### Export to reveal.js html file
 
@@ -52,14 +52,14 @@ Export your slides into an inlined html file which will work everywhere (contain
 
 Inlining currently breaks the following plugins:
 
-* notes plugin (reader view)
+- notes plugin (reader view)
 
 Inlining currently does not work for:
 
-* Background Images
-* Background Videos
-* Background IFrames
-* Probably a lot more, see [demo.adoc](https://github.com/bzzzil/vscode-asciidoc-presentation/blob/master/demo.adoc)
+- Background Images
+- Background Videos
+- Background IFrames
+- Probably a lot more, see [demo.adoc](https://github.com/bzzzil/vscode-asciidoc-presentation/blob/master/demo.adoc)
 
 ### [Kroki](https://github.com/Mogztter/asciidoctor-kroki) integration
 
@@ -81,5 +81,4 @@ digraph foo {
 
 ### Print Slides / Export as PDF
 
-While slides are __shown in browser__ or __exported as html/inlined html__ to same computer, they can transformed into a printable format via url parameter `?print-pdf`. The resulting website is printable (or exportable as pdf) via default print menu of chrome/chromium browser (`Ctrl/Cmd` + `P`). 
-
+While slides are **shown in browser** or **exported as html/inlined html** to same computer, they can transformed into a printable format via url parameter `?print-pdf`. The resulting website is printable (or exportable as pdf) via default print menu of chrome/chromium browser (`Ctrl/Cmd` + `P`).
