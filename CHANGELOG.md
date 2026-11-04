@@ -1,44 +1,53 @@
 # Change Log
 
 ## [2.4.2]
+
 - Dependencies
 
 ## [2.4.1]
+
 - open-vsx.org publishing fixed
 - Dependencies
 
 ## [2.4.0]
+
 - Asciidoctor Reveal.js 5.2 is used. More features are available. Maybe. Demo is here: https://asciidoctor-revealjs-examples.netlify.app/release-5.2
 - Deps and smaller fixes
 
 ## [2.3.1]
+
 - Quickfixes due to open-vsx.org publishing
 - Demo presentation smaller changes
 - Dependencies updates
 
 ## [2.3.0]
+
 - More reveal.js properties can be enabled from presentation (parallax background for example)
 - Infrastructure improvements
 - Dependencies updates
 
 ## [2.2.0]
+
 - New nice logo!
 - Some autocomplete suggestions
 - More plugins (Animate, LoadContent)
 - Repaired QRCode plugin
 
 ## [2.1.0]
+
 - use as a server express instead of unmaintained koa
 - fixed zoom plugin
 - greatly reduced extension size
 - tons of smaller updates
 
 ## [2.0.2]
+
 - fix: explicit dependency of AsciiDoc extension: it is essential for plugin to run.
 - more documentation for easy start
 - minor bugs fixed
 
 ## [2.0.1]
+
 - internal: CI infrastructure
 
 ## [2.0.0]
@@ -61,7 +70,7 @@
 
 ## [1.1.1]
 
-- bugfix: path of attribute __imagesdir__ was not handled correctly in preview
+- bugfix: path of attribute **imagesdir** was not handled correctly in preview
 
 ## [1.1.0]
 
