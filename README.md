@@ -1,6 +1,6 @@
 # AsciiDoc Presentations for Visual Studio Code
 
-[![Issues Badge](https://img.shields.io/github/issues-raw/bzzzil/vscode-asciidoc-presentation)](https://github.com/flobilosaurus/vscode-asciidoc-slides/issues)
+[![Issues Badge](https://img.shields.io/github/issues-raw/bzzzil/vscode-asciidoc-presentation)](https://github.com/bzzzil/vscode-asciidoc-presentation/issues)
 [![Visual Studio Marketplace Version](https://badgen.net/vs-marketplace/v/bzzzil.vscode-asciidoc-presentation)](https://marketplace.visualstudio.com/items?itemName=bzzzil.vscode-asciidoc-presentation)
 [![Visual Studio Marketplace Rating](https://badgen.net/vs-marketplace/rating/bzzzil.vscode-asciidoc-presentation)](https://marketplace.visualstudio.com/items?itemName=bzzzil.vscode-asciidoc-presentation)
 [![Open VSX version](https://badgen.net/open-vsx/version/bzzzil/vscode-asciidoc-presentation)](https://open-vsx.org/extension/bzzzil/vscode-asciidoc-presentation)
