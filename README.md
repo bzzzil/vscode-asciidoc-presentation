@@ -65,6 +65,7 @@ Inlining currently does not work for:
 
 Draws images out of textual description of diagrams.
 Example:
+
 ```asciidoc
 [graphviz]
 ....

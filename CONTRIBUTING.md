@@ -9,12 +9,14 @@ Releases are automated with two GitHub Actions workflows.
 Run **Release Prepare** from the Actions tab on `master`.
 
 Inputs:
+
 - `release_type`: `patch`, `minor`, or `major`
 - `version`: explicit `X.Y.Z`
 
 Provide exactly one input.
 
 What it does:
+
 - bumps `package.json` version
 - validates tag/release guardrails
 - runs tests and package build
@@ -28,6 +30,7 @@ After this, edit release notes in the draft release UI if human-written changes 
 ### 2) Release Publish (on release published)
 
 When the draft release is published, **Release Publish** runs automatically and:
+
 - downloads VSIX from the release
 - publishes VSIX to Visual Studio Marketplace
 - publishes VSIX to Open VSX
@@ -36,6 +39,7 @@ When the draft release is published, **Release Publish** runs automatically and:
 ### Required secrets and permissions
 
 Configure repository/environment secrets:
+
 - `VSCE_PAT`: Visual Studio Marketplace publishing token
 - `OVSX_PAT`: Open VSX publishing token
 
@@ -45,6 +49,7 @@ Protect this environment with required reviewers to gate the actual publication 
 ### Rollback guidance
 
 If publish fails:
+
 1. Keep the GitHub release in draft (or unpublish if already published) while fixing credentials/config.
 2. Verify release asset and tag version alignment (`vX.Y.Z` and `*-X.Y.Z.vsix`).
 3. Re-run publish by publishing the draft release again (or re-run failed workflow after fixes).
