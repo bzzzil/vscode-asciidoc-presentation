@@ -138,7 +138,13 @@ jobs:
             echo "::error::VSIX filename ($VSIX_FILE) does not match version $VERSION."
             exit 1
           fi
+          MAP_FILE="dist/extension.js.map"
+          if [ ! -f "$MAP_FILE" ]; then
+            echo "::error::Expected source map artifact $MAP_FILE."
+            exit 1
+          fi
           echo "vsix_file=$VSIX_FILE" >> "$GITHUB_OUTPUT"
+          echo "map_file=$MAP_FILE" >> "$GITHUB_OUTPUT"
 
       - name: Create release tag
         run: git tag "${{ steps.version.outputs.tag }}"
@@ -155,5 +161,7 @@ jobs:
           name: ${{ steps.version.outputs.tag }}
           draft: true
           generate_release_notes: true
-          files: ${{ steps.package.outputs.vsix_file }}
+          files: |
+            ${{ steps.package.outputs.vsix_file }}
+            ${{ steps.package.outputs.map_file }}
           overwrite_files: true
