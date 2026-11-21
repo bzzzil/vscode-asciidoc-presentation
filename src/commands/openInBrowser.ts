@@ -11,9 +11,7 @@ export async function openInBrowser(containerManager: ContainerManager) {
   const container = containerManager.getOrCreateContainer(editor);
 
   try {
-    await vscode.env.openExternal(
-      vscode.Uri.parse(await container.getBrowserUrl())
-    );
+    await vscode.env.openExternal(vscode.Uri.parse(await container.getBrowserUrl()));
   } catch (error) {
     console.error("Failed to open URL in browser:", error);
   }
