@@ -1,8 +1,10 @@
 .git
 .github
 .vscode/**
+.vscode-u/**
 out/**
 src/**
+scripts/*
 .gitignore
 vsc-extension-quickstart.md
 **/tsconfig.json
