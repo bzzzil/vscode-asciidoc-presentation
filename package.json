@@ -63,11 +63,12 @@
   },
   "scripts": {
     "precompile": "npm run build:libs-highlight && npm run build:libs-reveal && npm run build:libs-qrcode",
-    "compile": "webpack --mode development",
+    "compile": "npm run typecheck && webpack --mode development",
     "prewatch": "npm run precompile",
     "watch": "webpack --watch --mode development",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "package": "npm run typecheck && webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
+    "typecheck": "tsc --noEmit -p .",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "npx biome check",
@@ -89,8 +90,8 @@
     "@vscode/test-electron": "^3.1.0",
     "glob": "^13.0.6",
     "mocha": "^12.0.3",
-    "ts-loader": "^9.6.2",
-    "typescript": "^6.0.3",
+    "esbuild-loader": "^4.5.0",
+    "typescript": "^7.0.2",
     "webpack": "^5.112.2",
     "webpack-cli": "^7.3.1"
   },
@@ -117,6 +118,7 @@
   "author": "flobilosaurus",
   "allowScripts": {
     "bufferutil@4.1.0": true,
+    "esbuild@0.28.2": true,
     "utf-8-validate@6.0.6": true
   }
 }
