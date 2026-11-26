@@ -356,8 +356,11 @@ suite("RevealSlides Tests", function () {
     );
     const slides = new RevealSlides(editor);
     const html = await slides.revealJsSlidesHtml;
-    assert.ok(html.includes('class="imageblock kroki"'), "Expected a Kroki image block");
-    assert.ok(html.includes("https://kroki.io/graphviz/svg/"), "Expected a URL to the generated diagram");
+    const diagramImage = html.match(/<div class="imageblock kroki"><img src="([^"]+)"/);
+    assert.ok(diagramImage, "Expected a Kroki image block");
+    const diagramUrl = new URL(diagramImage[1]);
+    assert.strictEqual(diagramUrl.origin, "https://kroki.io");
+    assert.ok(diagramUrl.pathname.startsWith("/graphviz/svg/"), "Expected a Graphviz diagram URL");
   });
 
   test("getSlidesHtmlForExport(false) returns non-empty HTML", async () => {
