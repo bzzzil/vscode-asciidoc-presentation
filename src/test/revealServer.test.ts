@@ -16,32 +16,19 @@ suite("RevealServer Tests", () => {
   });
 
   test("accepts WebSocket origins that match the request host", () => {
-    const token = "test-websocket-token";
-    assert.strictEqual(isAllowedWebSocketOrigin("http://basilisk.lan:43000", "basilisk.lan:43000", token, token), true);
-    assert.strictEqual(isAllowedWebSocketOrigin("http://[::1]:43000", "[::1]:43000", token, token), true);
+    assert.strictEqual(isAllowedWebSocketOrigin("http://slides.example.test:43000", "slides.example.test:43000"), true);
+    assert.strictEqual(isAllowedWebSocketOrigin("http://[::1]:43000", "[::1]:43000"), true);
   });
 
-  test("rejects missing token, invalid origin, or cross-origin WebSocket requests", () => {
-    const token = "test-websocket-token";
-    assert.strictEqual(isAllowedWebSocketOrigin(undefined, "basilisk.lan:43000", token, token), false);
-    assert.strictEqual(isAllowedWebSocketOrigin("http://basilisk.lan:43000", undefined, token, token), false);
+  test("rejects missing, invalid, or cross-origin WebSocket requests", () => {
+    assert.strictEqual(isAllowedWebSocketOrigin(undefined, "slides.example.test:43000"), false);
+    assert.strictEqual(isAllowedWebSocketOrigin("http://slides.example.test:43000", undefined), false);
+    assert.strictEqual(isAllowedWebSocketOrigin("not-an-origin", "slides.example.test:43000"), false);
     assert.strictEqual(
-      isAllowedWebSocketOrigin("http://basilisk.lan:43000", "basilisk.lan:43000", undefined, token),
+      isAllowedWebSocketOrigin("https://slides.example.test:43000", "slides.example.test:43000"),
       false,
     );
-    assert.strictEqual(
-      isAllowedWebSocketOrigin("http://basilisk.lan:43000", "basilisk.lan:43000", "wrong-token", token),
-      false,
-    );
-    assert.strictEqual(isAllowedWebSocketOrigin("not-an-origin", "basilisk.lan:43000", token, token), false);
-    assert.strictEqual(
-      isAllowedWebSocketOrigin("https://basilisk.lan:43000", "basilisk.lan:43000", token, token),
-      false,
-    );
-    assert.strictEqual(
-      isAllowedWebSocketOrigin("http://attacker.example:43000", "basilisk.lan:43000", token, token),
-      false,
-    );
+    assert.strictEqual(isAllowedWebSocketOrigin("http://attacker.example:43000", "slides.example.test:43000"), false);
   });
 
   test("parses valid slide changes and rejects malformed or out-of-range data", () => {
@@ -89,8 +76,7 @@ suite("RevealServer Tests", () => {
       await server.ready;
       const serverUrl = server.serverUrl;
       assert.ok(serverUrl);
-      const websocketToken = server.getRenderConfig().websocketToken;
-      const websocketUrl = `${serverUrl}/refresh?token=${websocketToken}`;
+      const websocketUrl = `${serverUrl}/refresh`;
       const connect = (client: ClientWebSocket) =>
         new Promise<void>((resolve, reject) => {
           client.once("open", resolve);
