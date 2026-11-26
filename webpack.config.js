@@ -22,7 +22,7 @@ const config = {
     vscode: "commonjs vscode",
   },
   resolve: {
-    // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
+    // support reading TypeScript and JavaScript files
     extensions: [
       ".ts",
       ".js",
@@ -35,7 +35,11 @@ const config = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "ts-loader",
+            loader: "esbuild-loader",
+            options: {
+              loader: "ts",
+              target: "es2015",
+            },
           },
         ],
       },
