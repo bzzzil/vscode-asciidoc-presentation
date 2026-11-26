@@ -96,11 +96,12 @@
     "webpack-cli": "^7.3.1"
   },
   "dependencies": {
+    "@asciidoctor/core-legacy": "npm:@asciidoctor/core@^3.0.4",
     "@asciidoctor/reveal.js": "6.0.1",
     "@highlightjs/cdn-assets": "^11.12.0",
     "@types/ws": "^8.5.12",
     "asciidoctor": "^4.2.1",
-    "asciidoctor-kroki": "^0.18.1",
+    "asciidoctor-kroki": "^2.0.0",
     "axios": "^1.21.0",
     "bufferutil": "^4.1.0",
     "ejs": "^7.0.2",

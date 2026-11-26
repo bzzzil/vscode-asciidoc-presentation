@@ -341,6 +341,25 @@ suite("RevealSlides Tests", function () {
     assert.ok(html.includes("Hello World"), "Expected slide title in generated HTML");
   });
 
+  test("revealJsSlidesHtml renders Kroki diagrams", async () => {
+    const editor = await openDoc(
+      [
+        "= Presentation",
+        "",
+        "== Graph",
+        "",
+        "[graphviz]",
+        "....",
+        "digraph G { Hello -> World }",
+        "....",
+      ].join("\n"),
+    );
+    const slides = new RevealSlides(editor);
+    const html = await slides.revealJsSlidesHtml;
+    assert.ok(html.includes('class="imageblock kroki"'), "Expected a Kroki image block");
+    assert.ok(html.includes("https://kroki.io/graphviz/svg/"), "Expected a URL to the generated diagram");
+  });
+
   test("getSlidesHtmlForExport(false) returns non-empty HTML", async () => {
     const editor = await openDoc("= Title\n\n== Slide\n\nContent\n");
     const slides = new RevealSlides(editor);
