@@ -45,6 +45,12 @@ suite("RevealServer Tests", () => {
   });
 
   test("parses valid slide changes and rejects malformed or out-of-range data", () => {
+    assert.deepStrictEqual(parseSlideChangedMessage('{"cmd":"slideChanged","slide_h":2,"slide_v":1,"fragment":-1}'), {
+      cmd: "slideChanged",
+      slide_h: 2,
+      slide_v: 1,
+      fragment: -1,
+    });
     assert.deepStrictEqual(parseSlideChangedMessage('{"cmd":"slideChanged","slide_h":2,"slide_v":1}'), {
       cmd: "slideChanged",
       slide_h: 2,
@@ -60,6 +66,10 @@ suite("RevealServer Tests", () => {
     assert.strictEqual(parseSlideChangedMessage('{"cmd":"goto","slide_h":2,"slide_v":1}'), undefined);
     assert.strictEqual(parseSlideChangedMessage('{"cmd":"slideChanged","slide_h":-1,"slide_v":1}'), undefined);
     assert.strictEqual(parseSlideChangedMessage('{"cmd":"slideChanged","slide_h":1.5,"slide_v":1}'), undefined);
+    assert.strictEqual(
+      parseSlideChangedMessage('{"cmd":"slideChanged","slide_h":1,"slide_v":1,"fragment":-2}'),
+      undefined,
+    );
   });
 
   test("synchronizes a browser slide change to other connected browsers", async () => {
@@ -116,6 +126,26 @@ suite("RevealServer Tests", () => {
         slide_h: 2,
         slide_v: 1,
         fragment: 3,
+      });
+
+      const hiddenFragmentsMessage = new Promise<unknown>((resolve, reject) => {
+        receiver?.once("message", (message) => resolve(JSON.parse(message.toString())));
+        receiver?.once("error", reject);
+      });
+      sender.send(
+        JSON.stringify({
+          cmd: "slideChanged",
+          slide_h: 2,
+          slide_v: 1,
+          fragment: -1,
+        }),
+      );
+
+      assert.deepStrictEqual(await hiddenFragmentsMessage, {
+        cmd: "syncSlide",
+        slide_h: 2,
+        slide_v: 1,
+        fragment: -1,
       });
     } finally {
       const close = (client: ClientWebSocket | undefined) =>
