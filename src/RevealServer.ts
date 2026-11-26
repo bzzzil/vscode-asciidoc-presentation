@@ -68,7 +68,7 @@ export function parseSlideChangedMessage(message: string): SlideChangedMessage |
     typeof slideV !== "number" ||
     !Number.isSafeInteger(slideV) ||
     slideV < 0 ||
-    (fragment !== undefined && (typeof fragment !== "number" || !Number.isSafeInteger(fragment) || fragment < 0))
+    (fragment !== undefined && (typeof fragment !== "number" || !Number.isSafeInteger(fragment) || fragment < -1))
   ) {
     return undefined;
   }
