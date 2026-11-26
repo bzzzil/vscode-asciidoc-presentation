@@ -42,7 +42,7 @@ AsciiDoc Presentations requires base extension [AsciiDoc](https://marketplace.vi
 
 To open and control the active presentation from another device on your local network, set `asciiDocPresentation.remoteControl.enabled` to `true`. The extension logs remote presentation URLs in the `asciiDocPresentation` output channel. Open the URL for the host's network interface on the other device; slide navigation is synchronized between connected browsers.
 
-Remote access is off by default. When enabled, the presentation server listens on all network interfaces and serves the presentation and files in its document directory. Use this only on a trusted network, and turn it off when remote access is no longer needed. WebSocket connections are restricted to the same origin as the presentation page.
+Remote access is off by default. When enabled, the presentation server listens on all network interfaces and serves the presentation and files in its document directory. Use this only on a trusted network, and turn it off when remote access is no longer needed. WebSocket connections require a matching page origin and a per-server random token, so local DNS hostnames such as `basilisk.lan` work without allowing unrelated websites to control slides.
 
 ### Export to reveal.js html file
 
