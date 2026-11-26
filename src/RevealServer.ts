@@ -1,3 +1,4 @@
+import { randomBytes, timingSafeEqual } from "crypto";
 import * as http from "http";
 import * as os from "os";
 
@@ -23,9 +24,10 @@ type SlideChangedMessage = {
 export function isAllowedWebSocketOrigin(
   origin: string | undefined,
   host: string | undefined,
-  allowedHosts: readonly string[],
+  token: string | undefined,
+  expectedToken: string,
 ) {
-  if (!origin || !host) {
+  if (!origin || !host || !token || token.length !== expectedToken.length) {
     return false;
   }
 
@@ -33,9 +35,9 @@ export function isAllowedWebSocketOrigin(
     const originUrl = new URL(origin);
     const requestUrl = new URL(`http://${host}`);
     return (
-      allowedHosts.includes(requestUrl.hostname.toLowerCase()) &&
       originUrl.protocol === "http:" &&
-      originUrl.origin === requestUrl.origin
+      originUrl.origin === requestUrl.origin &&
+      timingSafeEqual(Buffer.from(token), Buffer.from(expectedToken))
     );
   } catch {
     return false;
@@ -92,6 +94,7 @@ export class RevealServer {
   private readonly websocketPath: string = "/refresh";
   private readonly _ready: Promise<void>;
   private readonly remoteControlEnabled: boolean;
+  private readonly websocketToken = randomBytes(32).toString("hex");
   private logger: (line: string) => void;
   private revealSlides: RevealSlides;
   private currentSlide?: SlideChangedMessage;
@@ -137,8 +140,14 @@ export class RevealServer {
 
       if (
         requestUrl.pathname !== this.websocketPath ||
-        requestUrl.search !== "" ||
-        !isAllowedWebSocketOrigin(request.headers.origin, request.headers.host, this.allowedWebSocketHosts)
+        requestUrl.searchParams.size !== 1 ||
+        !requestUrl.searchParams.has("token") ||
+        !isAllowedWebSocketOrigin(
+          request.headers.origin,
+          request.headers.host,
+          requestUrl.searchParams.get("token") ?? undefined,
+          this.websocketToken,
+        )
       ) {
         socket.end("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
         return;
@@ -245,6 +254,7 @@ export class RevealServer {
       slides: this.revealSlides.revealJsSlidesHtml,
       ...this.revealSlides.configuration,
       websocketPath: this.websocketPath,
+      websocketToken: this.websocketToken,
       isPreview: true,
     };
   }
@@ -286,26 +296,6 @@ export class RevealServer {
     if (!loggedUrl) {
       this.logger("No non-loopback IPv4 addresses found for remote presentation access.");
     }
-  }
-
-  private get allowedWebSocketHosts() {
-    const hosts = [
-      "localhost",
-      "127.0.0.1",
-      "[::1]",
-    ];
-    if (this.remoteControlEnabled) {
-      const networkInterfaces = os.networkInterfaces();
-      for (const interfaceName of Object.keys(networkInterfaces)) {
-        const addresses = networkInterfaces[interfaceName] ?? [];
-        for (const networkAddress of addresses) {
-          if (networkAddress.family === "IPv4" && !networkAddress.internal) {
-            hosts.push(networkAddress.address);
-          }
-        }
-      }
-    }
-    return hosts;
   }
 
   public get serverUrl() {
