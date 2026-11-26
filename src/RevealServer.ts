@@ -1,4 +1,5 @@
 import * as http from "http";
+import * as os from "os";
 
 import express = require("express");
 
@@ -12,6 +13,76 @@ import slash from "slash";
 import { WebSocket, WebSocketServer } from "ws";
 import { RevealSlides } from "./RevealSlides";
 
+type SlideChangedMessage = {
+  cmd: "slideChanged";
+  slide_h: number;
+  slide_v: number;
+  fragment?: number;
+};
+
+export function isAllowedWebSocketOrigin(
+  origin: string | undefined,
+  host: string | undefined,
+  allowedHosts: readonly string[],
+) {
+  if (!origin || !host) {
+    return false;
+  }
+
+  try {
+    const originUrl = new URL(origin);
+    const requestUrl = new URL(`http://${host}`);
+    return (
+      allowedHosts.includes(requestUrl.hostname.toLowerCase()) &&
+      originUrl.protocol === "http:" &&
+      originUrl.origin === requestUrl.origin
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function parseSlideChangedMessage(message: string): SlideChangedMessage | undefined {
+  let value: unknown;
+  try {
+    value = JSON.parse(message);
+  } catch {
+    return undefined;
+  }
+
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+
+  const data = value as Record<string, unknown>;
+  const slideH = data.slide_h;
+  const slideV = data.slide_v;
+  const fragment = data.fragment;
+  if (
+    data.cmd !== "slideChanged" ||
+    typeof slideH !== "number" ||
+    !Number.isSafeInteger(slideH) ||
+    slideH < 0 ||
+    typeof slideV !== "number" ||
+    !Number.isSafeInteger(slideV) ||
+    slideV < 0 ||
+    (fragment !== undefined && (typeof fragment !== "number" || !Number.isSafeInteger(fragment) || fragment < 0))
+  ) {
+    return undefined;
+  }
+
+  return {
+    cmd: "slideChanged",
+    slide_h: slideH,
+    slide_v: slideV,
+    ...(fragment === undefined
+      ? {}
+      : {
+          fragment,
+        }),
+  };
+}
+
 export class RevealServer {
   private readonly app: express.Express;
   private readonly ejs: typeof ejs;
@@ -20,13 +91,21 @@ export class RevealServer {
   private readonly websocketServer: WebSocketServer;
   private readonly websocketPath: string = "/refresh";
   private readonly _ready: Promise<void>;
+  private readonly remoteControlEnabled: boolean;
   private logger: (line: string) => void;
   private revealSlides: RevealSlides;
+  private currentSlide?: SlideChangedMessage;
 
-  constructor(extensionPath: string, revealSlides: RevealSlides, logger: (line: string) => void) {
+  constructor(
+    extensionPath: string,
+    revealSlides: RevealSlides,
+    logger: (line: string) => void,
+    remoteControlEnabled = false,
+  ) {
     this.revealSlides = revealSlides;
     this.extensionPath = extensionPath;
     this.logger = logger;
+    this.remoteControlEnabled = remoteControlEnabled;
     this.app = express();
     this.ejs = ejs;
 
@@ -41,34 +120,69 @@ export class RevealServer {
     // Static files
     this.app.use("/libs", express.static(path.join(this.extensionPath, "libs")));
 
-        // WebSocket server
-        this.server = http.createServer(this.app);
-        this.websocketServer = new WebSocketServer({ server: this.server, path: this.websocketPath });
-        this.websocketServer.on("connection", (ws) => {
-            logger("WebSocket client connected");
-            ws.on("close", () => {
-                logger("WebSocket client disconnected");
-            });
+    // WebSocket server
+    this.server = http.createServer(this.app);
+    this.websocketServer = new WebSocketServer({
+      noServer: true,
+      maxPayload: 1024,
+    });
+    this.server.on("upgrade", (request, socket, head) => {
+      let requestUrl: URL;
+      try {
+        requestUrl = new URL(request.url ?? "/", `http://${request.headers.host ?? "localhost"}`);
+      } catch {
+        socket.end("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
+        return;
+      }
 
-            ws.on("message", (message) => {
-                const data = JSON.parse(message.toString());
-                if (data.cmd === "slideChanged") {
-                    this.websocketServer.clients.forEach(function each(client) {
-                        if (client.readyState === WebSocket.OPEN) {
-                            client.send(JSON.stringify(
-                                { 
-                                    cmd: "syncSlide", 
-                                    slide_h: data.slide_h, 
-                                    slide_v: data.slide_v,
-                                    fragment: data.fragment,
-                                }
-                            ));
-                        }
-                    });
-                }
-            });
+      if (
+        requestUrl.pathname !== this.websocketPath ||
+        requestUrl.search !== "" ||
+        !isAllowedWebSocketOrigin(request.headers.origin, request.headers.host, this.allowedWebSocketHosts)
+      ) {
+        socket.end("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
+        return;
+      }
 
+      this.websocketServer.handleUpgrade(request, socket, head, (ws) => {
+        this.websocketServer.emit("connection", ws, request);
+      });
+    });
+
+    this.websocketServer.on("connection", (ws) => {
+      logger("WebSocket client connected");
+      if (this.currentSlide) {
+        ws.send(
+          JSON.stringify({
+            ...this.currentSlide,
+            cmd: "syncSlide",
+          }),
+        );
+      }
+      ws.on("close", () => {
+        logger("WebSocket client disconnected");
+      });
+
+      ws.on("message", (message) => {
+        const data = parseSlideChangedMessage(message.toString());
+        if (!data) {
+          logger("Ignored invalid WebSocket message");
+          return;
+        }
+
+        this.currentSlide = data;
+        this.websocketServer.clients.forEach((client) => {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(
+              JSON.stringify({
+                ...data,
+                cmd: "syncSlide",
+              }),
+            );
+          }
         });
+      });
+    });
 
     // Routes
     this.app.get(this.websocketPath, (req, res) => {
@@ -97,15 +211,19 @@ export class RevealServer {
       res.status(500).send("Internal Server Error");
     });
 
-        this._ready = new Promise((resolve, reject) => {
-            this.server.once('error', reject);
-            this.server.listen(0, () => {
-                this.server.off('error', reject);
-                logger(`asciidoc presentation server started at ${this.serverUrl}`);
-                resolve();
-            });
-        });
-    }
+    this._ready = new Promise((resolve, reject) => {
+      this.server.once("error", reject);
+      this.server.listen(0, this.remoteControlEnabled ? "0.0.0.0" : "127.0.0.1", () => {
+        this.server.off("error", reject);
+        logger(`asciidoc presentation server started at ${this.serverUrl}`);
+        if (this.remoteControlEnabled) {
+          logger("Remote access is enabled. Devices on the local network can view and control this presentation.");
+          this.logRemotePreviewUrls();
+        }
+        resolve();
+      });
+    });
+  }
 
   public get ready() {
     return this._ready;
@@ -132,6 +250,7 @@ export class RevealServer {
   }
 
   public syncCurrentSlideInBrowser(slideId: string) {
+    this.currentSlide = undefined;
     this.websocketServer.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(
@@ -144,22 +263,67 @@ export class RevealServer {
     });
   }
 
-    public get serverUrl() {
-        const addr = this.server.address();
-        if (!addr) {
-            return null;
-        }
-        if (typeof addr === 'string') {
-            return addr;
-        }
-        if (addr.address === '::' || addr.address === '0.0.0.0') {
-            return `http://localhost:${addr.port}`;
-        }
+  private logRemotePreviewUrls() {
+    const address = this.server.address();
+    if (!address || typeof address === "string") {
+      return;
+    }
 
-        if (addr.family === 'IPv6') {
-            return `http://[${addr.address}]:${addr.port}`;
+    const slideId = this.revealSlides.currentSlideId;
+    const slideHash = slideId ? `/${encodeURIComponent(slideId)}` : "/";
+    const networkInterfaces = os.networkInterfaces();
+    let loggedUrl = false;
+    for (const interfaceName of Object.keys(networkInterfaces)) {
+      const addresses = networkInterfaces[interfaceName] ?? [];
+      for (const networkAddress of addresses) {
+        if (networkAddress.family === "IPv4" && !networkAddress.internal) {
+          this.logger(`Remote presentation URL: http://${networkAddress.address}:${address.port}/#${slideHash}`);
+          loggedUrl = true;
         }
-        
+      }
+    }
+
+    if (!loggedUrl) {
+      this.logger("No non-loopback IPv4 addresses found for remote presentation access.");
+    }
+  }
+
+  private get allowedWebSocketHosts() {
+    const hosts = [
+      "localhost",
+      "127.0.0.1",
+      "[::1]",
+    ];
+    if (this.remoteControlEnabled) {
+      const networkInterfaces = os.networkInterfaces();
+      for (const interfaceName of Object.keys(networkInterfaces)) {
+        const addresses = networkInterfaces[interfaceName] ?? [];
+        for (const networkAddress of addresses) {
+          if (networkAddress.family === "IPv4" && !networkAddress.internal) {
+            hosts.push(networkAddress.address);
+          }
+        }
+      }
+    }
+    return hosts;
+  }
+
+  public get serverUrl() {
+    const addr = this.server.address();
+    if (!addr) {
+      return null;
+    }
+    if (typeof addr === "string") {
+      return addr;
+    }
+    if (addr.address === "::" || addr.address === "0.0.0.0") {
+      return `http://localhost:${addr.port}`;
+    }
+
+    if (addr.family === "IPv6") {
+      return `http://[${addr.address}]:${addr.port}`;
+    }
+
     return `http://${addr.address}:${addr.port}`;
   }
 
@@ -177,6 +341,8 @@ export class RevealServer {
 
   public shutdown() {
     this.logger("asciidoc presentation server shutdown");
+    this.websocketServer.clients.forEach((client) => client.close(1001, "Server shutting down"));
+    this.websocketServer.close();
     this.server.close();
   }
 }

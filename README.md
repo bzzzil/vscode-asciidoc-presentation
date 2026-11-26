@@ -38,6 +38,12 @@ AsciiDoc Presentations requires base extension [AsciiDoc](https://marketplace.vi
 - Website in browser is updated on every save of base document.
 - Website in browser is scrolled to the slide of cursor on every save of base document.
 
+### Remote slide control
+
+To open and control the active presentation from another device on your local network, set `asciiDocPresentation.remoteControl.enabled` to `true`. The extension logs remote presentation URLs in the `asciiDocPresentation` output channel. Open the URL for the host's network interface on the other device; slide navigation is synchronized between connected browsers.
+
+Remote access is off by default. When enabled, the presentation server listens on all network interfaces and serves the presentation and files in its document directory. Use this only on a trusted network, and turn it off when remote access is no longer needed. WebSocket connections are restricted to the same origin as the presentation page.
+
 ### Export to reveal.js html file
 
 Export your slides into a html file which will work locally on your computer (containing links to all required resources as scripts, styles and images).
