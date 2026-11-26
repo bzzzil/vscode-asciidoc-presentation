@@ -1,11 +1,16 @@
 import * as path from "path";
 import * as vscode from "vscode";
 
-const asciidoctor: any = require("asciidoctor");
+const globalOpal = (<any>global).Opal;
+if (globalOpal && typeof globalOpal.queue !== "function") {
+  globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
+}
+const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require("@asciidoctor/core")();
+const asciidoctorV4: any = require("asciidoctor");
 const asciidoctorRevealjs = require("@asciidoctor/reveal.js");
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
-kroki.register(asciidoctor.Extensions);
+kroki.register(asciidoctorV4.Extensions);
 
 export type AsciidocAttributes = {
   title: string;
@@ -123,7 +128,7 @@ export class RevealSlides {
 
   private convertToRevealJsSlides(asciidocText: string): Promise<string> {
     return Promise.resolve(
-      asciidoctor.convert(asciidocText, {
+      asciidoctorV4.convert(asciidocText, {
         safe: "safe",
         backend: "revealjs",
         attributes: {
@@ -286,7 +291,7 @@ export class RevealSlides {
       imagesDir: this.absoluteImagesDir,
     };
     return Promise.resolve(
-      asciidoctor.convert(this.editor.document.getText(), {
+      asciidoctorV4.convert(this.editor.document.getText(), {
         safe: "safe",
         backend: "revealjs",
         attributes,
