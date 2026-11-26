@@ -1,18 +1,7 @@
 import * as path from "path";
 import * as vscode from "vscode";
 
-/**
- * Check if Opal has been loaded already, if not, require through asciidoctor.js
- * workaround to don't bridge opal runtime again because it will throw.
- * This can happen if other extensions like joaompinto.asciidoctor-vscode
- * have already required('opal-runtime') or required('asciidoctor.js') or similar
- * and thereby already bridged opal.
- */
-const globalOpal = (<any>global).Opal;
-if (globalOpal && typeof globalOpal.queue !== "function") {
-  globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
-}
-const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require("@asciidoctor/core")();
+const asciidoctor: any = require("asciidoctor");
 const asciidoctorRevealjs = require("@asciidoctor/reveal.js");
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
@@ -119,7 +108,7 @@ function docAccessor(asciidocText: string, docDir: string) {
 
 export class RevealSlides {
   private baseEditor: vscode.TextEditor;
-  private slidesHtml: string;
+  private slidesHtml: Promise<string>;
   private asciidocAttributes: AsciidocAttributes;
   private slideIdUnderCursor: string;
   private revealConfiguration: RevealConfiguration;
@@ -132,14 +121,16 @@ export class RevealSlides {
     this.slideIdUnderCursor = this.getSlideIdUnderCursor(editor.document.getText(), editor.selection.active.line);
   }
 
-  private convertToRevealJsSlides(asciidocText: string) {
-    return asciidoctor.convert(asciidocText, {
-      safe: "safe",
-      backend: "revealjs",
-      attributes: {
-        docDir: this.absoluteDocumentDirectory,
-      },
-    }) as string;
+  private convertToRevealJsSlides(asciidocText: string): Promise<string> {
+    return Promise.resolve(
+      asciidoctor.convert(asciidocText, {
+        safe: "safe",
+        backend: "revealjs",
+        attributes: {
+          docDir: this.absoluteDocumentDirectory,
+        },
+      }),
+    );
   }
 
   private extractAsciidocAttributes(asciidocText: string): AsciidocAttributes {
@@ -289,16 +280,18 @@ export class RevealSlides {
     return this.slidesHtml;
   }
 
-  public getSlidesHtmlForExport(forInlined: boolean) {
+  public getSlidesHtmlForExport(forInlined: boolean): Promise<string> {
     const attributes: any = {
       docDir: this.absoluteDocumentDirectory,
       imagesDir: this.absoluteImagesDir,
     };
-    return asciidoctor.convert(this.editor.document.getText(), {
-      safe: "safe",
-      backend: "revealjs",
-      attributes,
-    }) as string;
+    return Promise.resolve(
+      asciidoctor.convert(this.editor.document.getText(), {
+        safe: "safe",
+        backend: "revealjs",
+        attributes,
+      }),
+    );
   }
 
   public get configuration() {
