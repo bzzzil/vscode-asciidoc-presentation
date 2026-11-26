@@ -2,7 +2,7 @@
   "name": "vscode-asciidoc-presentation",
   "displayName": "AsciiDoc Presentation",
   "description": "Create presentation slides with AsciiDoc and Reveal.js",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "publisher": "bzzzil",
   "repository": "https://github.com/bzzzil/vscode-asciidoc-presentation.git",
   "license": "MIT",
@@ -77,7 +77,7 @@
     "build:libs-qrcode": "node scripts/build-qrcode-bundle.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.6.7",
+    "@biomejs/biome": "^2.6.8",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/mocha": "^10.0.7",
@@ -92,7 +92,7 @@
     "ts-loader": "^9.6.2",
     "typescript": "^6.0.3",
     "webpack": "^5.112.2",
-    "webpack-cli": "^7.2.3"
+    "webpack-cli": "^7.3.1"
   },
   "dependencies": {
     "@asciidoctor/reveal.js": "5.2.0",
@@ -105,7 +105,6 @@
     "ejs": "^7.0.2",
     "express": "^5.3.0",
     "highlight.js": "^11.12.0",
-    "open": "^11.0.4",
     "qrcodejs": "^1.0.0",
     "reveal.js": "^6.0.2",
     "reveal.js-plugins": "^4.6.0",

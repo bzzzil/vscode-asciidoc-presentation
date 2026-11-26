@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.5.0]
+
+- Improved cross-platform browser launching by using VS Code’s external URL handler.
+- Fixed cleanup of documents after they are closed.
+- Improved diagnostic logging.
+- Updated Reveal.js to 6.0.2, including fixes for iframe preview URL validation, keyboard focus, and slide navigation.
+- Updated dependencies, including Asciidoctor.js, Express, EJS, highlight.js, and Axios.
+- Release drafts now include the JavaScript source map.
+- Switched code-quality checks from ESLint to Biome and upgraded the TypeScript toolchain.
+
 ## [2.4.2]
 
 - Dependencies
