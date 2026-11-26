@@ -5,12 +5,13 @@ const globalOpal = (<any>global).Opal;
 if (globalOpal && typeof globalOpal.queue !== "function") {
   globalOpal.queue = (callback: (opal: any) => void) => callback(globalOpal);
 }
-const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require("@asciidoctor/core")();
+const asciidoctor: any = (globalOpal && globalOpal.Asciidoctor) || require("@asciidoctor/core-legacy")();
 const asciidoctorV4: any = require("asciidoctor");
 const asciidoctorRevealjs = require("@asciidoctor/reveal.js");
 const kroki = require("asciidoctor-kroki");
 asciidoctorRevealjs.register();
-kroki.register(asciidoctorV4.Extensions);
+const krokiExtensions = asciidoctorV4.Extensions.create();
+kroki.register(krokiExtensions);
 
 export type AsciidocAttributes = {
   title: string;
@@ -131,6 +132,7 @@ export class RevealSlides {
       asciidoctorV4.convert(asciidocText, {
         safe: "safe",
         backend: "revealjs",
+        extension_registry: krokiExtensions,
         attributes: {
           docDir: this.absoluteDocumentDirectory,
         },
@@ -294,6 +296,7 @@ export class RevealSlides {
       asciidoctorV4.convert(this.editor.document.getText(), {
         safe: "safe",
         backend: "revealjs",
+        extension_registry: krokiExtensions,
         attributes,
       }),
     );
