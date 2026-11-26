@@ -1,4 +1,3 @@
-import { randomBytes, timingSafeEqual } from "crypto";
 import * as http from "http";
 import * as os from "os";
 
@@ -21,24 +20,15 @@ type SlideChangedMessage = {
   fragment?: number;
 };
 
-export function isAllowedWebSocketOrigin(
-  origin: string | undefined,
-  host: string | undefined,
-  token: string | undefined,
-  expectedToken: string,
-) {
-  if (!origin || !host || !token || token.length !== expectedToken.length) {
+export function isAllowedWebSocketOrigin(origin: string | undefined, host: string | undefined) {
+  if (!origin || !host) {
     return false;
   }
 
   try {
     const originUrl = new URL(origin);
     const requestUrl = new URL(`http://${host}`);
-    return (
-      originUrl.protocol === "http:" &&
-      originUrl.origin === requestUrl.origin &&
-      timingSafeEqual(Buffer.from(token), Buffer.from(expectedToken))
-    );
+    return originUrl.protocol === "http:" && originUrl.origin === requestUrl.origin;
   } catch {
     return false;
   }
@@ -94,7 +84,6 @@ export class RevealServer {
   private readonly websocketPath: string = "/refresh";
   private readonly _ready: Promise<void>;
   private readonly remoteControlEnabled: boolean;
-  private readonly websocketToken = randomBytes(32).toString("hex");
   private logger: (line: string) => void;
   private revealSlides: RevealSlides;
   private currentSlide?: SlideChangedMessage;
@@ -140,14 +129,8 @@ export class RevealServer {
 
       if (
         requestUrl.pathname !== this.websocketPath ||
-        requestUrl.searchParams.size !== 1 ||
-        !requestUrl.searchParams.has("token") ||
-        !isAllowedWebSocketOrigin(
-          request.headers.origin,
-          request.headers.host,
-          requestUrl.searchParams.get("token") ?? undefined,
-          this.websocketToken,
-        )
+        requestUrl.search !== "" ||
+        !isAllowedWebSocketOrigin(request.headers.origin, request.headers.host)
       ) {
         socket.end("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
         return;
@@ -254,7 +237,6 @@ export class RevealServer {
       slides: this.revealSlides.revealJsSlidesHtml,
       ...this.revealSlides.configuration,
       websocketPath: this.websocketPath,
-      websocketToken: this.websocketToken,
       isPreview: true,
     };
   }

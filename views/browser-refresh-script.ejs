@@ -6,7 +6,7 @@
     // when webpage is not running in iframe
     if(!runningInIFrame) {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const websocketUrl = protocol + '//' + window.location.host + "<%= websocketPath %>?token=<%= websocketToken %>";
+        const websocketUrl = protocol + '//' + window.location.host + "<%= websocketPath %>";
         let socket;
         let applyingRemoteSlide = false;
         let lastSentSlide;
