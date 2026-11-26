@@ -2,6 +2,7 @@
 <script type="text/javascript" src="<%= absolutePath %>libs/qrcode/index.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/highlight.js/highlight.min.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js/plugin/math.js"></script>
+<script type="text/javascript" src="<%= absolutePath %>libs/reveal.js/plugin/highlight.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js-plugins/loadcontent/plugin.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js-plugins/animate/svg.min.js"></script>
 <script type="text/javascript" src="<%= absolutePath %>libs/reveal.js-plugins/animate/plugin.js"></script>
@@ -46,7 +47,7 @@
             { src: '<%= absolutePath %>libs/reveal.js/plugin/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes)}  },
             { src: '<%= absolutePath %>libs/reveal.js/plugin/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom)} },
         ],
-        plugins: [ Plugin.MathJax2, RevealLoadContent, RevealAnimate, RevealQRCode ]
+        plugins: [ Plugin.MathJax2, RevealHighlight, RevealLoadContent, RevealAnimate, RevealQRCode ]
     })
 </script>
 <% } else { %>
@@ -81,10 +82,7 @@
         <% if (parallaxBackgroundVertical) { %>parallaxBackgroundVertical: +'<%- parallaxBackgroundVertical %>',<% } %>
         slideNumber: ['true', 'false'].includes('<%- slideNumber %>') ? '<%- slideNumber %>' === 'true' : '<%- slideNumber %>',
         dependencies: [],
-        plugins: [ Plugin.MathJax2, RevealQRCode ]
+        plugins: [ Plugin.MathJax2, RevealHighlight, RevealQRCode ]
     });
 </script>
 <% } %>
-<script>
-    hljs.highlightAll();
-</script>

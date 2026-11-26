@@ -341,6 +341,67 @@ suite("RevealSlides Tests", function () {
     assert.ok(html.includes("Hello World"), "Expected slide title in generated HTML");
   });
 
+  test("revealJsSlidesHtml marks callout explanations as fragments", async () => {
+    const editor = await openDoc(
+      [
+        ":source-highlighter: highlight.js",
+        ":icons: font",
+        "",
+        "= Presentation",
+        "",
+        "== Callouts",
+        "",
+        "[source, javascript]",
+        "----",
+        "let a = 2; <1>",
+        "let b = 3; <2>",
+        "console.log(a+b); <3>",
+        "----",
+        "",
+        "[%step]",
+        "<1> First explanation",
+        "<2> Second explanation",
+        "<3> Third explanation",
+      ].join("\n"),
+    );
+    const slides = new RevealSlides(editor);
+    const html = await slides.revealJsSlidesHtml;
+    assert.ok(html.includes('<i class="conum" data-value="1"></i>'), "Expected callout markers in source");
+    assert.strictEqual((html.match(/<tr class="fragment">/g) || []).length, 3);
+  });
+
+  test("revealJsSlidesHtml preserves synchronized line-highlight fragments", async () => {
+    const editor = await openDoc(
+      [
+        ":source-highlighter: highlight.js",
+        "",
+        "= Presentation",
+        "",
+        "== Highlighting",
+        "",
+        '[.fragment, java, highlight="1|2|3", step=0]',
+        "----",
+        "Optional<String> foo();",
+        "Optional<String> bar();",
+        "Optional<String> foobar();",
+        "----",
+        "",
+        "[.fragment, data-fragment-index=0]",
+        "First explanation",
+        "[.fragment, data-fragment-index=1]",
+        "Second explanation",
+        "[.fragment, data-fragment-index=2]",
+        "Third explanation",
+      ].join("\n"),
+    );
+    const slides = new RevealSlides(editor);
+    const html = await slides.revealJsSlidesHtml;
+    assert.ok(html.includes('data-line-numbers="1|2|3"'), "Expected line highlight steps");
+    assert.ok(html.includes('class="listingblock fragment fragment" data-fragment-index="0"'));
+    assert.ok(html.includes('class="paragraph fragment" data-fragment-index="1"'));
+    assert.ok(html.includes('class="paragraph fragment" data-fragment-index="2"'));
+  });
+
   test("revealJsSlidesHtml renders Kroki diagrams", async () => {
     const editor = await openDoc(
       [
