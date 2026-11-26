@@ -49,7 +49,17 @@
         "title": "Export presentation to inlined HTML file",
         "category": "AsciiDoc Presentation"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "AsciiDoc Presentation",
+      "properties": {
+        "asciiDocPresentation.remoteControl.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow devices on the local network to view and control the active presentation. This exposes the presentation and files in its directory; enable only on a trusted network."
+        }
+      }
+    }
   },
   "scripts": {
     "precompile": "npm run build:libs-highlight && npm run build:libs-reveal && npm run build:libs-qrcode",

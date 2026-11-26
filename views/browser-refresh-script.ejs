@@ -6,31 +6,41 @@
     // when webpage is not running in iframe
     if(!runningInIFrame) {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        let socket = new WebSocket(protocol + '//' + window.location.host + "<%= websocketPath %>");
-        socket.onmessage = function(event) {
-            const data = JSON.parse(event.data)
-            if(data.cmd === 'goto') {
-                location.href = '/#/' + data.slide
-                location.reload()
-            } else if(data.cmd === 'syncSlide') {
-                console.log('Syncing slide to h:' + data.slide_h + ' v:' + data.slide_v, 'f:' + data.fragment);
-                const slideIndex = Reveal.getIndices();
-                if ( slideIndex.h != data.slide_h || slideIndex.v != data.slide_v || slideIndex.f != data.fragment) {
-                    Reveal.slide(data.slide_h, data.slide_v, data.fragment);
+        const websocketUrl = protocol + '//' + window.location.host + "<%= websocketPath %>";
+        let socket;
+        const connect = function() {
+            socket = new WebSocket(websocketUrl);
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data)
+                if(data.cmd === 'goto') {
+                    location.href = '/#/' + data.slide
+                    location.reload()
+                } else if(data.cmd === 'syncSlide') {
+                    const slideIndex = Reveal.getIndices();
+                    if ( slideIndex.h != data.slide_h || slideIndex.v != data.slide_v || slideIndex.f != data.fragment) {
+                        Reveal.slide(data.slide_h, data.slide_v, data.fragment);
+                    }
                 }
-            }
+            };
+            socket.onclose = function() {
+                window.setTimeout(connect, 1000);
+            };
+            socket.onerror = function() {
+                socket.close();
+            };
         }
 
+        connect();
         Reveal.addEventListener('slidechanged', function(event) {
             const slideIndex = Reveal.getIndices();
-            socket.send(JSON.stringify({
-                cmd: 'slideChanged',
-                slide_h: slideIndex.h,
-                slide_v: slideIndex.v,
-                fragment: slideIndex.f
-            }))
-            console.log(socket);
-            console.log('Sent slide changed event: h:' + slideIndex.h + ' v:' + slideIndex.v, 'f:' + slideIndex.f);
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    cmd: 'slideChanged',
+                    slide_h: slideIndex.h,
+                    slide_v: slideIndex.v,
+                    fragment: slideIndex.f
+                }));
+            }
         });
     }
 </script>

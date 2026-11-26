@@ -14,7 +14,10 @@ export class Container {
   constructor(context: vscode.ExtensionContext, editor: vscode.TextEditor, logger: (line: string) => void) {
     this.logger = logger;
     this.revealSlides = new RevealSlides(editor);
-    this.server = new RevealServer(context.extensionPath, this.revealSlides, logger);
+    const remoteControlEnabled = vscode.workspace
+      .getConfiguration("asciiDocPresentation.remoteControl")
+      .get<boolean>("enabled", false);
+    this.server = new RevealServer(context.extensionPath, this.revealSlides, logger, remoteControlEnabled);
     this.disposables.push(vscode.workspace.onDidSaveTextDocument((e) => this.onDidSaveTextDocument(e)));
     this.disposables.push(vscode.workspace.onDidCloseTextDocument((e) => this.onDidCloseTextDocument(e)));
   }
