@@ -8,6 +8,31 @@
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const websocketUrl = protocol + '//' + window.location.host + "<%= websocketPath %>?token=<%= websocketToken %>";
         let socket;
+        let applyingRemoteSlide = false;
+        let lastSentSlide;
+        const getSlidePosition = function() {
+            const indices = Reveal.getIndices();
+            return { h: indices.h, v: indices.v || 0, f: Number.isInteger(indices.f) ? indices.f : -1 };
+        };
+        const sameSlidePosition = function(first, second) {
+            return first && second && first.h === second.h && first.v === second.v && first.f === second.f;
+        };
+        const sendCurrentSlide = function() {
+            if (applyingRemoteSlide || !socket || socket.readyState !== WebSocket.OPEN) {
+                return;
+            }
+            const position = getSlidePosition();
+            if (sameSlidePosition(position, lastSentSlide)) {
+                return;
+            }
+            socket.send(JSON.stringify({
+                cmd: 'slideChanged',
+                slide_h: position.h,
+                slide_v: position.v,
+                fragment: position.f
+            }));
+            lastSentSlide = position;
+        };
         const connect = function() {
             socket = new WebSocket(websocketUrl);
             socket.onmessage = function(event) {
@@ -16,9 +41,15 @@
                     location.href = '/#/' + data.slide
                     location.reload()
                 } else if(data.cmd === 'syncSlide') {
-                    const slideIndex = Reveal.getIndices();
-                    if ( slideIndex.h != data.slide_h || slideIndex.v != data.slide_v || slideIndex.f != data.fragment) {
-                        Reveal.slide(data.slide_h, data.slide_v, data.fragment);
+                    const current = getSlidePosition();
+                    const target = { h: data.slide_h, v: data.slide_v, f: Number.isInteger(data.fragment) ? data.fragment : -1 };
+                    if (!sameSlidePosition(current, target)) {
+                        applyingRemoteSlide = true;
+                        lastSentSlide = target;
+                        Reveal.slide(target.h, target.v, target.f);
+                        window.setTimeout(function() {
+                            applyingRemoteSlide = false;
+                        }, 0);
                     }
                 }
             };
@@ -31,17 +62,9 @@
         }
 
         connect();
-        Reveal.addEventListener('slidechanged', function(event) {
-            const slideIndex = Reveal.getIndices();
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify({
-                    cmd: 'slideChanged',
-                    slide_h: slideIndex.h,
-                    slide_v: slideIndex.v,
-                    fragment: slideIndex.f
-                }));
-            }
-        });
+        Reveal.addEventListener('slidechanged', sendCurrentSlide);
+        Reveal.addEventListener('fragmentshown', sendCurrentSlide);
+        Reveal.addEventListener('fragmenthidden', sendCurrentSlide);
     }
 </script>
 <% } %>
