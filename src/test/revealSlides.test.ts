@@ -7,14 +7,7 @@ suite("RevealSlides Tests", function () {
   let RevealSlides: typeof import("../RevealSlides").RevealSlides;
 
   suiteSetup(async function () {
-    // Activate the extension first so that the VS Code test host loads all
-    // installed extensions (including joaompinto.asciidoctor-vscode).  That
-    // extension sets global.Opal to its own older asciidoctor-opal-runtime
-    // which DOES support passing arrays to add_stubs() — matching the way
-    // @asciidoctor/reveal.js 5.0.1 (compiled with Opal 0.11.99.dev) calls it.
-    // Without this, loading out/RevealSlides.js would require @asciidoctor/
-    // opal-runtime 3.0.1 directly, whose add_stubs() only accepts strings,
-    // causing "TypeError: stubs.split is not a function".
+    // Activate the extension before loading its compiled RevealSlides module.
     const ext = vscode.extensions.getExtension("bzzzil.vscode-asciidoc-presentation");
     if (ext && !ext.isActive) {
       await ext.activate();
@@ -336,7 +329,7 @@ suite("RevealSlides Tests", function () {
   test("revealJsSlidesHtml returns non-empty HTML containing <section> elements", async () => {
     const editor = await openDoc("= Title\n\n== Slide One\n\nContent\n\n== Slide Two\n\nMore\n");
     const slides = new RevealSlides(editor);
-    const html = slides.revealJsSlidesHtml;
+    const html = await slides.revealJsSlidesHtml;
     assert.ok(html && html.length > 0, "Expected non-empty HTML");
     assert.ok(html.includes("<section"), "Expected HTML to contain <section> elements");
   });
@@ -344,14 +337,14 @@ suite("RevealSlides Tests", function () {
   test("revealJsSlidesHtml includes slide titles from the document", async () => {
     const editor = await openDoc("= Presentation Title\n\n== Hello World\n\nBody text\n");
     const slides = new RevealSlides(editor);
-    const html = slides.revealJsSlidesHtml;
+    const html = await slides.revealJsSlidesHtml;
     assert.ok(html.includes("Hello World"), "Expected slide title in generated HTML");
   });
 
   test("getSlidesHtmlForExport(false) returns non-empty HTML", async () => {
     const editor = await openDoc("= Title\n\n== Slide\n\nContent\n");
     const slides = new RevealSlides(editor);
-    const html = slides.getSlidesHtmlForExport(false);
+    const html = await slides.getSlidesHtmlForExport(false);
     assert.ok(html && html.length > 0, "Expected non-empty HTML for export");
     assert.ok(html.includes("<section"), "Expected HTML to contain <section> elements");
   });
@@ -359,7 +352,7 @@ suite("RevealSlides Tests", function () {
   test("getSlidesHtmlForExport(true) returns non-empty HTML", async () => {
     const editor = await openDoc("= Title\n\n== Slide\n\nContent\n");
     const slides = new RevealSlides(editor);
-    const html = slides.getSlidesHtmlForExport(true);
+    const html = await slides.getSlidesHtmlForExport(true);
     assert.ok(html && html.length > 0, "Expected non-empty HTML for inlined export");
   });
 
@@ -370,7 +363,7 @@ suite("RevealSlides Tests", function () {
     const slides = new RevealSlides(editor);
 
     assert.ok(
-      slides.revealJsSlidesHtml.includes("Original Slide"),
+      (await slides.revealJsSlidesHtml).includes("Original Slide"),
       'Expected initial HTML to contain "Original Slide"',
     );
 
@@ -383,7 +376,10 @@ suite("RevealSlides Tests", function () {
 
     slides.update();
 
-    assert.ok(slides.revealJsSlidesHtml.includes("Updated Slide"), 'Expected updated HTML to contain "Updated Slide"');
+    assert.ok(
+      (await slides.revealJsSlidesHtml).includes("Updated Slide"),
+      'Expected updated HTML to contain "Updated Slide"',
+    );
   });
 
   test("update() reflects changed attribute values", async () => {

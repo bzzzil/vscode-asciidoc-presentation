@@ -181,16 +181,16 @@ export class RevealServer {
       res.sendStatus(200); // WebSocket handled separately
     });
 
-    this.app.get("/export-inlined", (req, res) => {
-      res.render("reveal", this.getExportRenderConfig(true));
+    this.app.get("/export-inlined", async (req, res) => {
+      res.render("reveal", await this.getExportRenderConfig(true));
     });
 
-    this.app.get("/export", (req, res) => {
-      res.render("reveal", this.getExportRenderConfig(false));
+    this.app.get("/export", async (req, res) => {
+      res.render("reveal", await this.getExportRenderConfig(false));
     });
 
-    this.app.get("/", (req, res) => {
-      res.render("reveal", this.getRenderConfig());
+    this.app.get("/", async (req, res) => {
+      res.render("reveal", await this.getRenderConfig());
     });
 
     // Serve other static files from the document directory
@@ -221,9 +221,9 @@ export class RevealServer {
     return this._ready;
   }
 
-  public getExportRenderConfig(isInlined: boolean) {
+  public async getExportRenderConfig(isInlined: boolean) {
     return {
-      slides: this.revealSlides.getSlidesHtmlForExport(isInlined),
+      slides: await this.revealSlides.getSlidesHtmlForExport(isInlined),
       ...this.revealSlides.configuration,
       documentPath: slash(this.revealSlides.absoluteDocumentDirectory) + "/",
       absolutePath: slash(this.extensionPath) + "/",
@@ -232,9 +232,9 @@ export class RevealServer {
     };
   }
 
-  public getRenderConfig() {
+  public async getRenderConfig() {
     return {
-      slides: this.revealSlides.revealJsSlidesHtml,
+      slides: await this.revealSlides.revealJsSlidesHtml,
       ...this.revealSlides.configuration,
       websocketPath: this.websocketPath,
       isPreview: true,
